@@ -25,6 +25,7 @@ public class UserEntity {
 
     private String username;
     private String password;
+    private String email;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
