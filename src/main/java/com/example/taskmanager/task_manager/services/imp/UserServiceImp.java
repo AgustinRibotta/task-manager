@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import com.example.taskmanager.task_manager.dtos.UserDto;
+import com.example.taskmanager.task_manager.entities.UserEntity;
+import com.example.taskmanager.task_manager.exceptions.ResourceNotFoundException;
 import com.example.taskmanager.task_manager.mappers.IUserMapper;
 import com.example.taskmanager.task_manager.repositories.IUserRepository;
 import com.example.taskmanager.task_manager.services.IUserService;
@@ -31,11 +33,11 @@ public class UserServiceImp implements IUserService {
 
     }
 
-
     @Override
     public UserDto getById(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getById'");
+        UserEntity user = userRepository.findById(id)
+            .orElseThrow(ResourceNotFoundException::new);
+        return userMapper.userToUserDto(user);
     }
 
     @Override

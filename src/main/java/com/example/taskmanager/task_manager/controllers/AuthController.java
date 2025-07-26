@@ -23,6 +23,8 @@ import  com.example.taskmanager.task_manager.services.imp.UserDetailsServiceImpl
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
 
 
 @RestController
@@ -56,5 +58,11 @@ public class AuthController {
         return userService.getAll();
         
     }
+
+    @GetMapping("/user/{id}")
+    public UserDto getMethodName(@PathVariable Long id) {
+        return userService.getById(id);
+    }
+    
     
 }
