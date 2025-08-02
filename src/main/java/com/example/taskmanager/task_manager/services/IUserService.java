@@ -10,6 +10,6 @@ public interface IUserService {
     UserDto getById (Long id);
     UserDto post (UserDto user);
     UserDto put (Long id, UserDto user);
-    Boolean delete (Long id);
+    void delete (Long id);
 
 }

@@ -23,16 +23,16 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         UserEntity user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+            .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
         String[] roles = user.getRoleEntities().stream()
-                .map(RoleEntity::getName)
-                .toArray(String[]::new);
+            .map(RoleEntity::getName)
+            .toArray(String[]::new);
 
         return org.springframework.security.core.userdetails.User
-                .withUsername(user.getUsername())
-                .password(user.getPassword())
-                .roles(roles)
-                .build();
+            .withUsername(user.getUsername())
+            .password(user.getPassword())
+            .roles(roles)
+            .build();
     }
 }
