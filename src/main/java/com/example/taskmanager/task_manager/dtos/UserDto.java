@@ -18,7 +18,7 @@ import lombok.Setter;
 public class UserDto {
 
     private Long id;
-
+    
     @NotBlank(message = "Username is required")
     private String username;
 

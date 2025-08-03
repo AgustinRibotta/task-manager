@@ -10,6 +10,6 @@ public interface IRoleService {
     RoleDto getById (Long id);
     RoleDto post (RoleDto user);
     RoleDto put (Long id, RoleDto user);
-    Boolean delete (Long id);
+    void delete (Long id);
 
 }
