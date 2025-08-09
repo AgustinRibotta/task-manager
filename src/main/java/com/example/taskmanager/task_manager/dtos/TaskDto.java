@@ -8,12 +8,19 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-public class RoleDto {
+@NoArgsConstructor
+public class TaskDto {
 
     private Long id; 
 
-    @NotBlank(message = "Username is required")
+    @NotBlank(message = "Name is required")
     private String name;
+
+    @NotBlank(message = "Desciption is required")
+    private String description;
+
+    @NotBlank(message = "Project is required")
+    private ProjecDto projecDto;
+
 }

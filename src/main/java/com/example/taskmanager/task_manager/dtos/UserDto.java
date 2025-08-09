@@ -30,5 +30,7 @@ public class UserDto {
     @Email(message = "Invalid email format")
     private String email;
 
-    private Set<RoleDto> roleEntities;
+    private Set<RoleDto> roleDtos;
+
+    private Set<ProjecDto> projecDtos;
 }
