@@ -29,9 +29,9 @@ public class UserServiceImp implements IUserService {
 
     @Override
     public List<UserDto> getAll() {
-        return userRepository.findAll().stream()
+        return this.userRepository.findAll().stream()
         .map(user -> {
-            UserDto dto = userMapper.userToUserDto(user);
+            UserDto dto = this.userMapper.userToUserDto(user);
             dto.setPassword(null);
             return dto;
         })
@@ -41,37 +41,37 @@ public class UserServiceImp implements IUserService {
 
     @Override
     public UserDto getById(Long id) {
-        UserEntity user = userRepository.findById(id)
+        UserEntity user = this.userRepository.findById(id)
             .orElseThrow(ResourceNotFoundException::new);
-        return userMapper.userToUserDto(user);
+        return this.userMapper.userToUserDto(user);
     }
 
     @Override
     public UserDto post(UserDto userDto) {
-        if (userRepository.findByUsername(userDto.getUsername()).isPresent()) {
+        if (this.userRepository.findByUsername(userDto.getUsername()).isPresent()) {
             throw new RuntimeException("Username '" + userDto.getUsername() + "' is already taken");
         }
 
-        UserEntity user = userMapper.userDtoToUser(userDto);
+        UserEntity user = this.userMapper.userDtoToUser(userDto);
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(this.passwordEncoder.encode(user.getPassword()));
 
         Set<RoleEntity> roles = userDto.getRoleEntities().stream()
-            .map( roleDto -> roleRepository.findById(roleDto.getId())
+            .map( roleDto -> this.roleRepository.findById(roleDto.getId())
                 .orElseThrow(ResourceNotFoundException::new))
             .collect(Collectors.toSet());
 
         user.setRoleEntities(roles);
 
-        user = userRepository.save(user);
+        user = this.userRepository.save(user);
 
-        return userMapper.userToUserDto(user);
+        return this.userMapper.userToUserDto(user);
     }
 
     @Override
     public UserDto put(Long id, UserDto userDto) {
 
-        UserEntity user = userRepository.findById(id)
+        UserEntity user = this.userRepository.findById(id)
             .orElseThrow(ResourceNotFoundException::new);
         
         user.setUsername(userDto.getUsername());
@@ -79,20 +79,20 @@ public class UserServiceImp implements IUserService {
         user.setPassword(passwordEncoder.encode((userDto.getPassword())));
         
         Set<RoleEntity> roles = userDto.getRoleEntities().stream()
-            .map( roleDto -> roleRepository.findById(roleDto.getId())
+            .map( roleDto -> this.roleRepository.findById(roleDto.getId())
                 .orElseThrow(ResourceNotFoundException::new))
             .collect(Collectors.toSet());
         
         user.setRoleEntities(roles);
 
-        user = userRepository.save(user);
+        user = this.userRepository.save(user);
 
-        return userMapper.userToUserDto(user);
+        return this.userMapper.userToUserDto(user);
     }
 
     @Override
     public void delete(Long id) {
-        userRepository.deleteById(id);
+        this.userRepository.deleteById(id);
     }
 
 

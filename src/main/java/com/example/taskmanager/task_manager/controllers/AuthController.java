@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -52,28 +53,31 @@ public class AuthController {
         }
 
         final UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
-        final String jwtToken = jwtService.generateToken(userDetails);
+        final String jwtToken = this.jwtService.generateToken(userDetails);
 
         return ResponseEntity.ok(new AuthenticationResponse(jwtToken));
     }
 
     // GET - 200 OK - []
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/users")
     public ResponseEntity<List<UserDto>> getAll() {
-        return ResponseEntity.ok(userService.getAll());
+        return ResponseEntity.ok(this.userService.getAll());
         
     }
 
     // GET - 200 OK - 404 Not Found
+    @PreAuthorize("@securytiConfigUser.isUser(#id) or hasRole('ADMIN')")
     @GetMapping("/users/{id}")
     public ResponseEntity<UserDto> getById(@PathVariable Long id) {
-        return ResponseEntity.ok(userService.getById(id));
+        return ResponseEntity.ok(this.userService.getById(id));
     }
 
     // POST - 201 Created - 400 Bad Request - 409 Conflict
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/users")
     public ResponseEntity<UserDto> post(@Valid @RequestBody UserDto userDto) {
-        UserDto createdUser = userService.post(userDto);
+        UserDto createdUser = this.userService.post(userDto);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
             .path("/{id}")
             .buildAndExpand(createdUser.getId())
@@ -83,16 +87,18 @@ public class AuthController {
     }
  
     // PUT - 200 OK - 404 Not Found
+    @PreAuthorize("@securytiConfigUser.isUser(#id) or hasRole('ADMIN')")
     @PutMapping("/users/{id}")
     public ResponseEntity<UserDto> put(@PathVariable Long id, @RequestBody UserDto userDto) {
-        UserDto updatedUser = userService.put(id, userDto);
+        UserDto updatedUser = this.userService.put(id, userDto);
         return ResponseEntity.ok(updatedUser);
     }
     
     // DELETE - 204 No Content - 404 Not Found
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/users/{id}")
     public ResponseEntity<?> delete (@PathVariable Long id){
-        userService.delete(id);
+        this.userService.delete(id);
         return ResponseEntity.noContent().build();
     }
     

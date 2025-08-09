@@ -22,7 +22,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        UserEntity user = userRepository.findByUsername(username)
+        UserEntity user = this.userRepository.findByUsername(username)
             .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
         String[] roles = user.getRoleEntities().stream()

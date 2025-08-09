@@ -24,9 +24,9 @@ public class RoleServiceImp implements IRoleService {
     @Override
     public List<RoleDto> getAll() {
 
-       List<RoleDto> roleDtos = roleRepository.findAll().stream()
+       List<RoleDto> roleDtos = this.roleRepository.findAll().stream()
             .map(role -> {
-                RoleDto dto = roleMapper.roleEntityToRoleDto(role);
+                RoleDto dto = this.roleMapper.roleEntityToRoleDto(role);
                 return dto;
             })
             .collect(Collectors.toList());
@@ -37,43 +37,43 @@ public class RoleServiceImp implements IRoleService {
     @Override
     public RoleDto getById(Long id) {
         
-        RoleEntity roleEntity = roleRepository.findById(id)
+        RoleEntity roleEntity = this.roleRepository.findById(id)
             .orElseThrow(ResourceNotFoundException::new);
 
-        return roleMapper.roleEntityToRoleDto(roleEntity);
+        return this.roleMapper.roleEntityToRoleDto(roleEntity);
     }
 
     @Override
     public RoleDto post(RoleDto roleDto) {
         String upperName = roleDto.getName() != null ? roleDto.getName().toUpperCase() : null;
 
-        if (roleRepository.findByName(roleDto.getName()).isPresent()) {
+        if (this.roleRepository.findByName(roleDto.getName()).isPresent()) {
             throw new RuntimeException("Name '" + roleDto.getName() + "' is already taken");
         }
         roleDto.setName(upperName);
-        RoleEntity roleEntity = roleMapper.roleDtoToRoleEntity(roleDto);
-        roleEntity = roleRepository.save(roleEntity);
+        RoleEntity roleEntity = this.roleMapper.roleDtoToRoleEntity(roleDto);
+        roleEntity = this.roleRepository.save(roleEntity);
 
-        return roleMapper.roleEntityToRoleDto(roleEntity);
+        return this.roleMapper.roleEntityToRoleDto(roleEntity);
     }
 
     @Override
     public RoleDto put(Long id, RoleDto roleDto) {
 
-        RoleEntity roleEntity = roleRepository.findById(id)
+        RoleEntity roleEntity = this.roleRepository.findById(id)
             .orElseThrow(ResourceNotFoundException::new);
 
         roleEntity.setName(roleDto.getName().toUpperCase());
-        roleRepository.save(roleEntity);
+        this.roleRepository.save(roleEntity);
 
-        return roleMapper.roleEntityToRoleDto(roleEntity);
+        return this.roleMapper.roleEntityToRoleDto(roleEntity);
     }
 
     @Override
     public void delete(Long id) {
-        roleRepository.findById(id)
+        this.roleRepository.findById(id)
             .orElseThrow(ResourceNotFoundException::new);
-        roleRepository.deleteById(id);
+        this.roleRepository.deleteById(id);
     }
 
 

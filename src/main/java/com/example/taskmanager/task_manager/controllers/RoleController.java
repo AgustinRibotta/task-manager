@@ -33,7 +33,7 @@ public class RoleController {
     @GetMapping("")
     public ResponseEntity<List<RoleDto>> getAll() {
 
-        List<RoleDto> roles = roleService.getAll(); 
+        List<RoleDto> roles = this.roleService.getAll(); 
 
         return ResponseEntity.ok().body(roles);
     }
@@ -42,7 +42,7 @@ public class RoleController {
     @GetMapping("/{id}")
     public ResponseEntity<RoleDto> getById (@PathVariable Long id) {
 
-        RoleDto roleDto = roleService.getById(id);
+        RoleDto roleDto = this.roleService.getById(id);
 
         return ResponseEntity.ok().body(roleDto);
     }
@@ -51,7 +51,7 @@ public class RoleController {
     @PostMapping("")
     public ResponseEntity<RoleDto> post(@RequestBody RoleDto roleDto) {
 
-        RoleDto newRole = roleService.post(roleDto);  
+        RoleDto newRole = this.roleService.post(roleDto);  
         URI location = ServletUriComponentsBuilder
             .fromCurrentRequest()
             .path("/{id}")
@@ -65,7 +65,7 @@ public class RoleController {
     @PutMapping("/{id}")
     public ResponseEntity<RoleDto> put(@PathVariable Long id, @RequestBody RoleDto roleDto) {
     
-        RoleDto updaRole = roleService.put(id, roleDto); 
+        RoleDto updaRole = this.roleService.put(id, roleDto); 
     
         return ResponseEntity.ok().body(updaRole);
     }
@@ -73,7 +73,7 @@ public class RoleController {
     // DELETE - 204 No Content - 404 Not Found
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete (@PathVariable Long id) {
-        roleService.delete(id);
+        this.roleService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }

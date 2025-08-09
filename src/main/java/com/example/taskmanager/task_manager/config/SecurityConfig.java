@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -25,6 +26,7 @@ import java.util.Collections;
 import java.util.stream.Collectors;
 
 @Configuration
+@EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
     @Autowired
@@ -41,8 +43,8 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 // Public endpoints accessible without authentication
                 // .requestMatchers("/**").permitAll()
-                .requestMatchers("/auth/login").permitAll()
-                .requestMatchers("/auth/users/**","/roles/**").hasAnyRole("ADMIN")
+                .requestMatchers("/auth/**").permitAll()
+                .requestMatchers("/auth/users/**", "/roles/**").hasAnyRole("ADMIN")
                 .anyRequest().authenticated()
             )
             // Configure OAuth2 Resource Server to use JWT tokens
