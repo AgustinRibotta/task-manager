@@ -32,5 +32,5 @@ public class UserDto {
 
     private Set<RoleDto> roleDtos;
 
-    private Set<ProjecDto> projecDtos;
+    private Set<ProjectSummaryDto> projecDtos;
 }

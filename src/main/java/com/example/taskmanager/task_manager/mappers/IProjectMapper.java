@@ -1,14 +1,19 @@
 package com.example.taskmanager.task_manager.mappers;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import com.example.taskmanager.task_manager.dtos.ProjecDto;
 import com.example.taskmanager.task_manager.entities.ProjectEntity;
 
-@Mapper(componentModel = "spring", uses = { IRoleMapper.class, IUserMapper.class, ITaskMapper.class })
+@Mapper(componentModel = "spring", uses = { IRoleMapper.class, ITaskMapper.class, IUserForProjectMapper.class })
 public interface IProjectMapper {
 
-    ProjecDto projectEntityToProjecDto (ProjectEntity projectEntity);
+    @Mapping(source = "users", target = "usersDtos")
+    @Mapping(source = "taskEntities", target = "tasksDtos")
+    ProjecDto projectEntityToProjecDto(ProjectEntity projectEntity);
 
-    ProjectEntity projectDtoToProjectEntity (ProjecDto projecDto);
+    @Mapping(source = "usersDtos", target = "users")
+    @Mapping(source = "tasksDtos", target = "taskEntities")
+    ProjectEntity projectDtoToProjectEntity(ProjecDto projecDto);
 }

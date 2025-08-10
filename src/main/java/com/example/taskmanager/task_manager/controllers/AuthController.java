@@ -59,7 +59,7 @@ public class AuthController {
     }
 
     // GET - 200 OK - []
-    @PreAuthorize("hasRole('ADMIN')")
+    // @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/users")
     public ResponseEntity<List<UserDto>> getAll() {
         return ResponseEntity.ok(this.userService.getAll());
@@ -74,7 +74,7 @@ public class AuthController {
     }
 
     // POST - 201 Created - 400 Bad Request - 409 Conflict
-    @PreAuthorize("hasRole('ADMIN')")
+    // @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/users")
     public ResponseEntity<UserDto> post(@Valid @RequestBody UserDto userDto) {
         UserDto createdUser = this.userService.post(userDto);

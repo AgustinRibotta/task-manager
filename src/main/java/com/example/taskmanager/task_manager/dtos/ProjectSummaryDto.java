@@ -10,10 +10,10 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class RoleDto {
+public class ProjectSummaryDto {
 
     private Long id; 
 
-    @NotBlank(message = "Username is required")
+    @NotBlank(message = "Name is required")
     private String name;
 }

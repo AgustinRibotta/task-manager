@@ -22,4 +22,6 @@ public class RoleEntity {
 
     @Column(unique = true)
     private String name;
+
+
 }

@@ -20,6 +20,7 @@ import java.util.Set;
 @Setter
 @Table(name = "user_data")
 public class UserEntity {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -38,5 +39,8 @@ public class UserEntity {
 
     @ManyToMany(mappedBy = "users")
     private Set<ProjectEntity> projectEntities;
+
+    @ManyToMany(mappedBy = "users")
+    private Set<TaskEntity> taskEntities;
 
 }

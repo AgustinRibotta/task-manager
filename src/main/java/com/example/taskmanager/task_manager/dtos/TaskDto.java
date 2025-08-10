@@ -1,5 +1,7 @@
 package com.example.taskmanager.task_manager.dtos;
 
+import com.example.taskmanager.task_manager.enums.TaskStatus;
+
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,6 +23,8 @@ public class TaskDto {
     private String description;
 
     @NotBlank(message = "Project is required")
-    private ProjecDto projecDto;
+    private ProjectSummaryDto projecDto;
 
+    @NotBlank(message = "Project is required")
+    private TaskStatus status;
 }

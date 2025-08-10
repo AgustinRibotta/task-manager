@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.taskmanager.task_manager.dtos.RoleDto;
 import com.example.taskmanager.task_manager.entities.RoleEntity;
+import com.example.taskmanager.task_manager.exceptions.ResourceAlreadyExistsException;
 import com.example.taskmanager.task_manager.exceptions.ResourceNotFoundException;
 import com.example.taskmanager.task_manager.mappers.IRoleMapper;
 import com.example.taskmanager.task_manager.repositories.IRoleRepository;
@@ -20,8 +21,8 @@ public class RoleServiceImp implements IRoleService {
     
     private final IRoleRepository roleRepository;
     private final IRoleMapper roleMapper;
-
     @Override
+
     public List<RoleDto> getAll() {
 
        List<RoleDto> roleDtos = this.roleRepository.findAll().stream()
@@ -38,7 +39,7 @@ public class RoleServiceImp implements IRoleService {
     public RoleDto getById(Long id) {
         
         RoleEntity roleEntity = this.roleRepository.findById(id)
-            .orElseThrow(ResourceNotFoundException::new);
+            .orElseThrow(() -> new ResourceNotFoundException(id));
 
         return this.roleMapper.roleEntityToRoleDto(roleEntity);
     }
@@ -48,7 +49,7 @@ public class RoleServiceImp implements IRoleService {
         String upperName = roleDto.getName() != null ? roleDto.getName().toUpperCase() : null;
 
         if (this.roleRepository.findByName(roleDto.getName()).isPresent()) {
-            throw new RuntimeException("Name '" + roleDto.getName() + "' is already taken");
+            throw new ResourceAlreadyExistsException(roleDto.getName());
         }
         roleDto.setName(upperName);
         RoleEntity roleEntity = this.roleMapper.roleDtoToRoleEntity(roleDto);
@@ -61,7 +62,7 @@ public class RoleServiceImp implements IRoleService {
     public RoleDto put(Long id, RoleDto roleDto) {
 
         RoleEntity roleEntity = this.roleRepository.findById(id)
-            .orElseThrow(ResourceNotFoundException::new);
+            .orElseThrow(() -> new ResourceNotFoundException(id));
 
         roleEntity.setName(roleDto.getName().toUpperCase());
         this.roleRepository.save(roleEntity);
@@ -72,7 +73,7 @@ public class RoleServiceImp implements IRoleService {
     @Override
     public void delete(Long id) {
         this.roleRepository.findById(id)
-            .orElseThrow(ResourceNotFoundException::new);
+            .orElseThrow(() -> new ResourceNotFoundException(id));
         this.roleRepository.deleteById(id);
     }
 

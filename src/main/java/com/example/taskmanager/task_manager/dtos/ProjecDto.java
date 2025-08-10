@@ -22,7 +22,7 @@ public class ProjecDto {
 
     private String description;
 
-    private List<TaskDto> tasksdDtos;
+    private List<TaskSummaryDto> tasksDtos;
 
-    private Set<UserDto> usersdDtos;
+    private Set<UserSummaryDto> usersDtos;
 }

@@ -5,7 +5,8 @@ import com.example.taskmanager.task_manager.entities.UserEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring", uses = { IRoleMapper.class, IProjectMapper.class })
+
+@Mapper(componentModel = "spring", uses = { IRoleMapper.class, IProjectForUserMapper.class })
 public interface IUserMapper {
 
     @Mapping(source = "projectEntities", target = "projecDtos")

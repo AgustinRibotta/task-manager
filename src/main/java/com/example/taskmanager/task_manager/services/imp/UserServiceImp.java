@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.example.taskmanager.task_manager.dtos.UserDto;
 import com.example.taskmanager.task_manager.entities.RoleEntity;
 import com.example.taskmanager.task_manager.entities.UserEntity;
+import com.example.taskmanager.task_manager.exceptions.ResourceAlreadyExistsException;
 import com.example.taskmanager.task_manager.exceptions.ResourceNotFoundException;
 import com.example.taskmanager.task_manager.mappers.IUserMapper;
 import com.example.taskmanager.task_manager.repositories.IRoleRepository;
@@ -41,15 +42,16 @@ public class UserServiceImp implements IUserService {
 
     @Override
     public UserDto getById(Long id) {
+        
         UserEntity user = this.userRepository.findById(id)
-            .orElseThrow(ResourceNotFoundException::new);
+            .orElseThrow(() -> new ResourceNotFoundException(id));
         return this.userMapper.userToUserDto(user);
     }
 
     @Override
     public UserDto post(UserDto userDto) {
         if (this.userRepository.findByUsername(userDto.getUsername()).isPresent()) {
-            throw new RuntimeException("Username '" + userDto.getUsername() + "' is already taken");
+            throw new ResourceAlreadyExistsException(userDto.getUsername());
         }
 
         UserEntity user = this.userMapper.userDtoToUser(userDto);
@@ -58,7 +60,7 @@ public class UserServiceImp implements IUserService {
 
         Set<RoleEntity> roles = userDto.getRoleDtos().stream()
             .map( roleDto -> this.roleRepository.findById(roleDto.getId())
-                .orElseThrow(ResourceNotFoundException::new))
+                .orElseThrow(() -> new ResourceNotFoundException(roleDto.getId())))
             .collect(Collectors.toSet());
 
         user.setRoleEntities(roles);
@@ -72,7 +74,7 @@ public class UserServiceImp implements IUserService {
     public UserDto put(Long id, UserDto userDto) {
 
         UserEntity user = this.userRepository.findById(id)
-            .orElseThrow(ResourceNotFoundException::new);
+            .orElseThrow(() -> new ResourceNotFoundException(id));
         
         user.setUsername(userDto.getUsername());
         user.setEmail(userDto.getEmail());
@@ -80,7 +82,7 @@ public class UserServiceImp implements IUserService {
         
         Set<RoleEntity> roles = userDto.getRoleDtos().stream()
             .map( roleDto -> this.roleRepository.findById(roleDto.getId())
-                .orElseThrow(ResourceNotFoundException::new))
+                .orElseThrow(() -> new ResourceNotFoundException(roleDto.getId())))
             .collect(Collectors.toSet());
         
         user.setRoleEntities(roles);
