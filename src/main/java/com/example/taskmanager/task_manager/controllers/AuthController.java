@@ -87,7 +87,7 @@ public class AuthController {
     }
  
     // PUT - 200 OK - 404 Not Found
-    @PreAuthorize("@securytiConfigUser.isUser(#id) or hasRole('ADMIN')")
+    // @PreAuthorize("@securytiConfigUser.isUser(#id) or hasRole('ADMIN')")
     @PutMapping("/users/{id}")
     public ResponseEntity<UserDto> put(@PathVariable Long id, @RequestBody UserDto userDto) {
         UserDto updatedUser = this.userService.put(id, userDto);

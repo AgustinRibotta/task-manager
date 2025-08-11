@@ -4,6 +4,7 @@ import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import jakarta.persistence.ManyToMany;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -33,4 +34,7 @@ public class UserDto {
     private Set<RoleDto> roleDtos;
 
     private Set<ProjectSummaryDto> projecDtos;
+
+    @ManyToMany(mappedBy = "users")
+    private Set<TaskSummaryDto> taskDto;
 }

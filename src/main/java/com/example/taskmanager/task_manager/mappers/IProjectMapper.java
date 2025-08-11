@@ -15,5 +15,6 @@ public interface IProjectMapper {
 
     @Mapping(source = "usersDtos", target = "users")
     @Mapping(source = "tasksDtos", target = "taskEntities")
+    @Mapping(target = "id", ignore = true)
     ProjectEntity projectDtoToProjectEntity(ProjecDto projecDto);
 }

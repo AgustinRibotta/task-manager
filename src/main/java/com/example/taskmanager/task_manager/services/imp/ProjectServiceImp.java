@@ -72,14 +72,37 @@ public class ProjectServiceImp implements IProjectService {
 
     @Override
     public ProjecDto put(ProjecDto projecDto, Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'put'");
+
+        projectRepository.findByName(projecDto.getName())
+            .filter(existing -> existing.getId() != id)
+            .ifPresent(existing -> {
+                throw new ResourceAlreadyExistsException(projecDto.getName());
+            });
+
+        ProjectEntity projectEntity = this.projectRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException(id));
+
+        projectEntity.setName(projecDto.getName());
+        projectEntity.setDescription(projecDto.getDescription());
+
+        Set<UserEntity> userEntities = projecDto.getUsersDtos().stream()
+            .map(userDto -> this.userRepository.findById(userDto.getId())
+                .orElseThrow(() -> new ResourceNotFoundException(userDto.getId())))
+            .collect(Collectors.toSet());
+
+        projectEntity.setUsers(userEntities);
+
+        projectEntity = this.projectRepository.save(projectEntity);
+
+        return this.projectMapper.projectEntityToProjecDto(projectEntity);
     }
 
     @Override
     public void delete(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+        this.projectRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException(id));
+            
+        this.projectRepository.deleteById(id);
     }
 
 }

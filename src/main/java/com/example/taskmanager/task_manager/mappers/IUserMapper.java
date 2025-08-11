@@ -11,9 +11,11 @@ public interface IUserMapper {
 
     @Mapping(source = "projectEntities", target = "projecDtos")
     @Mapping(source = "roleEntities", target = "roleDtos")
+    @Mapping(source = "taskEntities", target = "taskDto")
     UserDto userToUserDto(UserEntity user);
 
     @Mapping(source = "projecDtos", target = "projectEntities")
     @Mapping(source = "roleDtos", target = "roleEntities")
+    @Mapping(source = "taskDto", target = "taskEntities")
     UserEntity userDtoToUser(UserDto userDto);
 }
