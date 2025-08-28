@@ -67,10 +67,12 @@ public class AuthController {
     }
 
     // GET - 200 OK - 404 Not Found
-    @PreAuthorize("@securytiConfigUser.isUser(#id) or hasRole('ADMIN')")
+    // @PreAuthorize("@securytiConfigUser.isUser(#id) or hasRole('ADMIN')")
     @GetMapping("/users/{id}")
     public ResponseEntity<UserDto> getById(@PathVariable Long id) {
-        return ResponseEntity.ok(this.userService.getById(id));
+        UserDto userDto = this.userService.getById(id);
+
+        return ResponseEntity.ok(userDto);
     }
 
     // POST - 201 Created - 400 Bad Request - 409 Conflict
@@ -95,6 +97,7 @@ public class AuthController {
     }
     
     // DELETE - 204 No Content - 404 Not Found
+    // @PreAuthorize("hasRole('ADMIN')")
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/users/{id}")
     public ResponseEntity<?> delete (@PathVariable Long id){

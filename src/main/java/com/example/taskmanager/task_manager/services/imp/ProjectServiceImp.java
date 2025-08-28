@@ -60,8 +60,8 @@ public class ProjectServiceImp implements IProjectService {
         
         Set<UserEntity> userEntities = projecDto.getUsersDtos().stream()
             .map( userDto -> this.userRepository.findById(userDto.getId())
-                .orElseThrow(() -> new ResourceAlreadyExistsException(userDto.getId())))
-            .collect(Collectors.toSet());
+                .orElseThrow(() -> new ResourceAlreadyExistsException(userDto.getId()))
+            ).collect(Collectors.toSet());
 
         projectEntity.setUsers(userEntities);
 
@@ -73,7 +73,7 @@ public class ProjectServiceImp implements IProjectService {
     @Override
     public ProjecDto put(ProjecDto projecDto, Long id) {
 
-        projectRepository.findByName(projecDto.getName())
+        this.projectRepository.findByName(projecDto.getName())
             .filter(existing -> existing.getId() != id)
             .ifPresent(existing -> {
                 throw new ResourceAlreadyExistsException(projecDto.getName());
@@ -87,8 +87,8 @@ public class ProjectServiceImp implements IProjectService {
 
         Set<UserEntity> userEntities = projecDto.getUsersDtos().stream()
             .map(userDto -> this.userRepository.findById(userDto.getId())
-                .orElseThrow(() -> new ResourceNotFoundException(userDto.getId())))
-            .collect(Collectors.toSet());
+                .orElseThrow(() -> new ResourceNotFoundException(userDto.getId()))
+            ).collect(Collectors.toSet());
 
         projectEntity.setUsers(userEntities);
 

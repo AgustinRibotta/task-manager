@@ -5,7 +5,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/task_manager
     username: postgres
-    password: mysecretpassword
+    password: postgres
     driver-class-name: org.postgresql.Driver
 
   jpa:
@@ -21,8 +21,11 @@ logging:
   level:
     org.springframework.security: DEBUG
     org.springframework.web: DEBUG
-    
 
 jwt:
   secret: Zk3w9fG$7k@vBn4!sLpT8dQcYzR2x#MmXe9VuKaFtH0gNs1jCq
   expiration: 3600000
+
+server:
+  servlet:
+    context-path: /api/v1

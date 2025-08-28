@@ -39,7 +39,8 @@ public class RoleServiceImp implements IRoleService {
     public RoleDto getById(Long id) {
         
         RoleEntity roleEntity = this.roleRepository.findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException(id));
+            .orElseThrow(() -> new ResourceNotFoundException(id)
+            );
 
         return this.roleMapper.roleEntityToRoleDto(roleEntity);
     }
