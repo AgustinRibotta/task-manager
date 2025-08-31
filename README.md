@@ -1,71 +1,75 @@
-# 🏗️ Gestor de Tareas con Usuarios y Roles (Trello básico)
+# 🏗️ Task Manager with Users and Roles (Basic Trello)
 
-## 💡 ¿Qué es?
+## 💡 What is it?
 
-Una **API backend** que permite:
+A **backend API** that allows you to:
 
-- Gestionar usuarios y su autenticación.
-- Crear y organizar **proyectos**.
-- Dentro de cada proyecto, tener **tareas** con diferentes estados.
-- Controlar qué usuarios pueden hacer qué acciones según su **rol**:
-  - `ADMIN`
-  - `PROJECT_MANAGER`
-  - `USER`
+* Manage users and their authentication.
+* Create and organize **projects**.
+* Within each project, manage **tasks** with different states.
+* Control what users can do based on their **role**:
 
----
-
-## 🧱 Arquitectura general
-
-### 📁 Entidades principales
-
-| Entidad     | Descripción |
-|-------------|-------------|
-| `Usuario`   | Tiene nombre, email, contraseña (hashed), y un rol (`ADMIN`, `PROJECT_MANAGER`, `USER`) |
-| `Proyecto`  | Grupo de tareas. Tiene nombre, descripción, y un dueño (PROJECT_MANAGER o ADMIN) |
-| `Tarea`     | Pertenece a un proyecto. Tiene título, estado (`TODO`, `IN_PROGRESS`, `DONE`), prioridad, etc. |
+  * `ADMIN`
+  * `PROJECT_MANAGER`
+  * `USER`
 
 ---
 
-## 🔐 Seguridad y Autenticación
+## 🧱 General Architecture
 
-- Autenticación con **JWT** (generado con `jjwt`).
-- Validación de tokens con **Spring Security + OAuth2 Resource Server**.
-- Los roles se incluyen en el JWT (`roles: ["PROJECT_MANAGER"]`, por ejemplo).
-- Acceso restringido con anotaciones como `@PreAuthorize`.
-- Endpoints públicos:
-  - `/login`
-  - `/register`
-- Endpoints protegidos:
-  - `/api/usuarios`
-  - `/api/proyectos`
-  - `/api/tareas`
+### 📁 Main Entities
+
+| Entity    | Description                                                                              |
+| --------- | ---------------------------------------------------------------------------------------- |
+| `User`    | Has a name, email, password (hashed), and a role (`ADMIN`, `PROJECT_MANAGER`, `USER`)    |
+| `Project` | Group of tasks. Has a name, description, and an owner (PROJECT\_MANAGER or ADMIN)        |
+| `Task`    | Belongs to a project. Has a title, state (`TODO`, `IN_PROGRESS`, `DONE`), priority, etc. |
 
 ---
 
-## 🔄 Flujo básico del sistema
+## 🔐 Security and Authentication
 
-1. El usuario se registra (`/register`), elige su rol o se le asigna.
-2. Se autentica (`/login`) y recibe un JWT.
-3. Usa ese token en sus peticiones autenticadas.
-4. Dependiendo del rol:
-   - `ADMIN`: acceso completo al sistema, gestión de usuarios.
-   - `PROJECT_MANAGER`: puede crear y gestionar proyectos y tareas propias.
-   - `USER`: puede ver tareas asignadas, colaborar en proyectos.
+* Authentication with **JWT** (generated with `jjwt`).
+* Token validation with **Spring Security + OAuth2 Resource Server**.
+* Roles are included in the JWT (`roles: ["PROJECT_MANAGER"]`, for example).
+* Access restrictions with annotations like `@PreAuthorize`.
+* Public endpoints:
 
+  * `/login`
+  * `/register`
+* Protected endpoints:
 
-## 🧠 Tecnologías usadas
-
-| Tecnología                   | Rol |
-|-----------------------------|-----|
-| Spring Boot                 | Base del proyecto |
-| Spring Security             | Seguridad y control de acceso |
-| OAuth2 Resource Server      | Validación de JWT |
-| JJWT                        | Generación y parsing de tokens |
-| Spring Data JPA             | Persistencia de datos |
-| PostgreSQL                  | Base de datos relacional |
-| Liquibase                   | Versionado del schema |
-| Bean Validation             | Validaciones en DTOs |
-| MapStruct                   | Mapeo entre entidades y DTOs |
-| Lombok                     | Reducción de boilerplate |
+  * `/api/users`
+  * `/api/projects`
+  * `/api/tasks`
 
 ---
+
+## 🔄 Basic System Flow
+
+1. A user registers (`/register`), choosing a role or being assigned one.
+2. The user authenticates (`/login`) and receives a JWT.
+3. They use that token for authenticated requests.
+4. Depending on the role:
+
+   * `ADMIN`: full system access, user management.
+   * `PROJECT_MANAGER`: can create and manage their own projects and tasks.
+   * `USER`: can view assigned tasks, collaborate on projects.
+
+---
+
+## 🧠 Technologies Used
+
+| Technology             | Purpose                      |
+| ---------------------- | ---------------------------- |
+| Spring Boot            | Project foundation           |
+| Spring Security        | Security and access control  |
+| OAuth2 Resource Server | JWT validation               |
+| JJWT                   | Token generation and parsing |
+| Spring Data JPA        | Data persistence             |
+| PostgreSQL             | Relational database          |
+| Liquibase              | Schema versioning            |
+| Bean Validation        | DTO validations              |
+| MapStruct              | Entity-to-DTO mapping        |
+| Lombok                 | Reduces boilerplate          |
+

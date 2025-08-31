@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -25,10 +25,15 @@ import java.util.Collections;
 import java.util.stream.Collectors;
 
 @Configuration
+@EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
     @Autowired
     private UserDetailsServiceImpl userDetailsServiceImpl;
+
+    public SecurityConfig(UserDetailsServiceImpl userDetailsServiceImpl) {
+        this.userDetailsServiceImpl = userDetailsServiceImpl;
+    }
 
     @Value("${jwt.secret}")
     private String secretKey;
@@ -40,7 +45,8 @@ public class SecurityConfig {
             .csrf(AbstractHttpConfigurer::disable) 
             .authorizeHttpRequests(auth -> auth
                 // Public endpoints accessible without authentication
-                .requestMatchers("/**").permitAll()
+                .requestMatchers("/auth/**","/projects/**","/tasks/**").permitAll()
+                .requestMatchers("/auth/users/**", "/roles/**","/projects/new").hasAnyRole("ADMIN")
                 .anyRequest().authenticated()
             )
             // Configure OAuth2 Resource Server to use JWT tokens
@@ -74,7 +80,7 @@ public class SecurityConfig {
             }
 
             return roles.stream()
-                .map(role -> role.startsWith("ROLE_") ? role : "ROLE_" + role) // Ensure roles have 'ROLE_' prefix
+                .map(role -> role.startsWith("ROLE_") ? role : "ROLE_" + role) 
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
         });
@@ -88,18 +94,16 @@ public class SecurityConfig {
         return authConfig.getAuthenticationManager();
     }
 
-    // Configures a DaoAuthenticationProvider with a UserDetailsService and PasswordEncoder
-    @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsServiceImpl);
-        authProvider.setPasswordEncoder(passwordEncoder());
-        return authProvider;
-    }
-
     // Password encoder bean using BCrypt hashing algorithm
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
+
+    @Bean
+    public UserDetailsServiceImpl userDetailsService() {
+        return userDetailsServiceImpl;
+    }
+
+
 }

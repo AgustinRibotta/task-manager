@@ -1,5 +1,6 @@
 package com.example.taskmanager.task_manager.entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -19,12 +20,15 @@ import java.util.Set;
 @Setter
 @Table(name = "user_data")
 public class UserEntity {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
     private String username;
     private String password;
+    private String email;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -32,5 +36,11 @@ public class UserEntity {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<RoleEntity> roleEntities;
+
+    @ManyToMany(mappedBy = "users")
+    private Set<ProjectEntity> projectEntities;
+
+    @ManyToMany(mappedBy = "users")
+    private Set<TaskEntity> taskEntities;
 
 }
