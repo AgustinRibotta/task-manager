@@ -59,7 +59,7 @@ public class AuthController {
     }
 
     // GET - 200 OK - []
-    // @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/users")
     public ResponseEntity<List<UserDto>> getAll() {
         return ResponseEntity.ok(this.userService.getAll());
@@ -67,7 +67,7 @@ public class AuthController {
     }
 
     // GET - 200 OK - 404 Not Found
-    // @PreAuthorize("@securytiConfigUser.isUser(#id) or hasRole('ADMIN')")
+    @PreAuthorize("@securytiConfigUser.isUser(#id) or hasRole('ADMIN')")
     @GetMapping("/users/{id}")
     public ResponseEntity<UserDto> getById(@PathVariable Long id) {
         UserDto userDto = this.userService.getById(id);
@@ -76,7 +76,7 @@ public class AuthController {
     }
 
     // POST - 201 Created - 400 Bad Request - 409 Conflict
-    // @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/users")
     public ResponseEntity<UserDto> post(@Valid @RequestBody UserDto userDto) {
         UserDto createdUser = this.userService.post(userDto);
@@ -89,7 +89,7 @@ public class AuthController {
     }
  
     // PUT - 200 OK - 404 Not Found
-    // @PreAuthorize("@securytiConfigUser.isUser(#id) or hasRole('ADMIN')")
+    @PreAuthorize("@securytiConfigUser.isUser(#id) or hasRole('ADMIN')")
     @PutMapping("/users/{id}")
     public ResponseEntity<UserDto> put(@PathVariable Long id, @RequestBody UserDto userDto) {
         UserDto updatedUser = this.userService.put(id, userDto);
@@ -97,7 +97,6 @@ public class AuthController {
     }
     
     // DELETE - 204 No Content - 404 Not Found
-    // @PreAuthorize("hasRole('ADMIN')")
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/users/{id}")
     public ResponseEntity<?> delete (@PathVariable Long id){

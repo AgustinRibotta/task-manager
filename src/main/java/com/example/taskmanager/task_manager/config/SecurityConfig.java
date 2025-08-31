@@ -45,9 +45,8 @@ public class SecurityConfig {
             .csrf(AbstractHttpConfigurer::disable) 
             .authorizeHttpRequests(auth -> auth
                 // Public endpoints accessible without authentication
-                .requestMatchers("/**").permitAll()
-                // .requestMatchers("/auth/**","/projects/**").permitAll()
-                // .requestMatchers("/auth/users/**", "/roles/**").hasAnyRole("ADMIN")
+                .requestMatchers("/auth/**","/projects/**","/tasks/**").permitAll()
+                .requestMatchers("/auth/users/**", "/roles/**","/projects/new").hasAnyRole("ADMIN")
                 .anyRequest().authenticated()
             )
             // Configure OAuth2 Resource Server to use JWT tokens

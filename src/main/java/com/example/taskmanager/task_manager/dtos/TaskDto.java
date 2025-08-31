@@ -5,6 +5,7 @@ import java.util.Set;
 import com.example.taskmanager.task_manager.enums.TaskStatus;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,11 +25,12 @@ public class TaskDto {
     @NotBlank(message = "Desciption is required")
     private String description;
 
-    @NotBlank(message = "Project is required")
-    private ProjectSummaryDto projecDto;
+    @NotNull(message = "Project is required")
+    private ProjectSummaryDto projectDto;
 
-    @NotBlank(message = "Project is required")
+    @NotNull(message = "Status is required")
     private TaskStatus status;
 
+    @NotNull(message = "Project is required")
     private Set<UserSummaryDto> userSummaryDto;
 }
