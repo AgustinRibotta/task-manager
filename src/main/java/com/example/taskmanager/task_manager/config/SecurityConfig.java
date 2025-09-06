@@ -23,6 +23,7 @@ import com.example.taskmanager.task_manager.services.imp.UserDetailsServiceImpl;
 import javax.crypto.spec.SecretKeySpec;
 import java.util.Collections;
 import java.util.stream.Collectors;
+import org.springframework.security.config.Customizer;
 
 @Configuration
 @EnableMethodSecurity(prePostEnabled = true)
@@ -43,6 +44,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .csrf(AbstractHttpConfigurer::disable) 
+            .cors(Customizer.withDefaults())
             .authorizeHttpRequests(auth -> auth
                 // Public endpoints accessible without authentication
                 .requestMatchers("/auth/**","/projects/**","/tasks/**").permitAll()

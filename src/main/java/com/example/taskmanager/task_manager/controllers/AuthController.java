@@ -9,7 +9,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,9 +18,10 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import  com.example.taskmanager.task_manager.dtos.AuthenticationRequest;
 import  com.example.taskmanager.task_manager.dtos.AuthenticationResponse;
 import com.example.taskmanager.task_manager.dtos.UserDto;
+import com.example.taskmanager.task_manager.entities.UserEntity;
+import com.example.taskmanager.task_manager.repositories.IUserRepository;
 import com.example.taskmanager.task_manager.services.IUserService;
 import  com.example.taskmanager.task_manager.services.JwtService;
-import  com.example.taskmanager.task_manager.services.imp.UserDetailsServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -37,9 +37,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
-    private final UserDetailsServiceImpl userDetailsService;
     private final JwtService jwtService;
     private final IUserService userService;
+    private final IUserRepository userRepository;
 
     // POST - 200 OK - 401 Unauthorized
     @PostMapping("/login")
@@ -52,8 +52,10 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
-        final UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
-        final String jwtToken = this.jwtService.generateToken(userDetails);
+        UserEntity userEntity = userRepository.findByUsername(request.getUsername())
+                                            .orElseThrow(() -> new RuntimeException("User not found"));
+
+        final String jwtToken = this.jwtService.generateToken(userEntity);
 
         return ResponseEntity.ok(new AuthenticationResponse(jwtToken));
     }

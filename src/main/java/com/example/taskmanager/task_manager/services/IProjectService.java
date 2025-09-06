@@ -7,6 +7,7 @@ import com.example.taskmanager.task_manager.dtos.ProjecDto;
 public interface IProjectService {
 
     List<ProjecDto> getAll();
+    List<ProjecDto> getAllByUserId(Long id);
     ProjecDto getById (Long id);
     ProjecDto post (ProjecDto projecDto);
     ProjecDto put (ProjecDto projecDto, Long id);

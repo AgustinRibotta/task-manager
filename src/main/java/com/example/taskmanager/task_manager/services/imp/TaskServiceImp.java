@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.taskmanager.task_manager.dtos.TaskDto;
 import com.example.taskmanager.task_manager.dtos.UserSummaryDto;
+import com.example.taskmanager.task_manager.entities.ProjectEntity;
 import com.example.taskmanager.task_manager.entities.TaskEntity;
 import com.example.taskmanager.task_manager.entities.UserEntity;
 import com.example.taskmanager.task_manager.exceptions.ResourceAlreadyExistsException;
@@ -61,7 +62,7 @@ public class TaskServiceImp implements ITaskService {
 
         this.projectRepository.findById(taskDto.getProjectDto().getId())
             .orElseThrow(() -> new ResourceNotFoundException( taskDto.getProjectDto().getId()));
-            
+        
         Set<Long> userIds = taskDto.getUserSummaryDto().stream()
             .map(UserSummaryDto::getId)   
             .collect(Collectors.toSet());
@@ -80,6 +81,10 @@ public class TaskServiceImp implements ITaskService {
             ).collect(Collectors.toSet());
         
         taskEntity.setUsers(userEntities);
+
+        ProjectEntity projectEntity = this.projectRepository.findById(taskDto.getProjectDto().getId())
+            .orElseThrow(() -> new ResourceNotFoundException(taskDto.getProjectDto().getId()));
+        taskEntity.setProjectEntity(projectEntity);
 
         taskEntity = this.taskRepository.save(taskEntity);
         
@@ -136,6 +141,19 @@ public class TaskServiceImp implements ITaskService {
             );
         
             this.taskRepository.delete(taskEntity);
+    }
+
+    @Override
+    public List<TaskDto> getAllByUserId(Long id) {
+
+        List<TaskDto>  listTaskDtos = this.taskRepository.findByUsers_Id(id).stream()
+            .map(task -> {
+                TaskDto dto = this.taskMapper.tasktEntityTopTaskDto(task);
+                return dto;
+            })
+            .collect(Collectors.toList());
+
+        return listTaskDtos;
     }
 
 

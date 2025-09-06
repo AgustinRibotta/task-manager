@@ -37,6 +37,13 @@ public class TaskController {
     }
 
     // GET - 200 OK - [] - 401 Unauthorized
+    @PreAuthorize("@securityConfigTask.isTask(#id) or hasAnyRole('USER','MANAGER')")
+    @GetMapping("/my/{id}")
+    public ResponseEntity<List<TaskDto>> getAllById (@PathVariable Long id) {
+        return ResponseEntity.ok(this.taskService.getAllByUserId(id));
+    }
+
+    // GET - 200 OK - [] - 401 Unauthorized
     @PreAuthorize("@securityConfigTask.isTask(#id) or hasAnyRole('ADMIN','MANAGER')")
     @GetMapping("/task/{id}")
     public ResponseEntity<TaskDto> getById(@PathVariable Long id) {
@@ -44,7 +51,7 @@ public class TaskController {
     }
     
     // POST - 201 Created - 400 Bad Request - 409 Conflict
-    @PreAuthorize("hasRole('ADMIN', 'MANAGER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     @PostMapping("/task/new")
     public ResponseEntity<TaskDto> post (@Valid @RequestBody TaskDto taskDto) {
         
@@ -65,7 +72,7 @@ public class TaskController {
     }
 
     // DELETE - 204 No Content - 404 Not Found
-    @PreAuthorize("hasRole('ADMIN', 'MANAGER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     @DeleteMapping("/task/{id}")
     public ResponseEntity<?> delete (@PathVariable Long id) {
         this.taskService.delete(id);

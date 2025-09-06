@@ -105,4 +105,17 @@ public class ProjectServiceImp implements IProjectService {
         this.projectRepository.deleteById(id);
     }
 
+    @Override
+    public List<ProjecDto> getAllByUserId(Long id) {
+
+        List<ProjecDto> projecDtos = this.projectRepository.findByUsers_Id(id).stream()
+        .map(project -> {
+            ProjecDto dto = this.projectMapper.projectEntityToProjecDto(project);
+            return dto;
+        })
+        .collect(Collectors.toList());
+
+        return projecDtos;
+    }
+
 }

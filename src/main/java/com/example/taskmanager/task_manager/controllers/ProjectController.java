@@ -30,10 +30,17 @@ public class ProjectController {
     private final IProjectService projectService;
 
     // GET - 200 OK - [] - 401 Unauthorized
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping("/all")
     public ResponseEntity<List<ProjecDto>> getAll() {
         return ResponseEntity.ok(this.projectService.getAll());
+    }
+
+    // GET - 200 OK - [] - 401 Unauthorized
+    @PreAuthorize("hasAnyRole('USER', 'MANAGER')")
+    @GetMapping("/my/{id}")
+    public ResponseEntity<List<ProjecDto>> getAllById(@PathVariable Long id) {
+        return ResponseEntity.ok(this.projectService.getAllByUserId(id));
     }
 
     // GET - 200 OK - [] - 401 Unauthorized

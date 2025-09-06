@@ -5,8 +5,9 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+
+import com.example.taskmanager.task_manager.entities.UserEntity;
 
 import java.util.Date;
 import java.util.stream.Collectors;
@@ -20,10 +21,10 @@ public class JwtService {
     @Value("${jwt.expiration}")
     private long expirationTimeInMillis;
 
-    public String generateToken(UserDetails userDetails) {
-        Claims claims = Jwts.claims().setSubject(userDetails.getUsername());
-        
-        claims.put("roles", userDetails.getAuthorities().stream()
+    public String generateToken(UserEntity userEntity) {
+        Claims claims = Jwts.claims().setSubject(userEntity.getUsername());
+        claims.put("userId", userEntity.getId());
+        claims.put("roles", userEntity.getAuthorities().stream()
                                     .map(auth -> auth.getAuthority())
                                     .collect(Collectors.toList()));
 

@@ -13,13 +13,20 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Set;
+import java.util.stream.Collectors;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Getter
 @Setter
 @Table(name = "user_data")
-public class UserEntity {
+public class UserEntity implements UserDetails {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,5 +49,14 @@ public class UserEntity {
 
     @ManyToMany(mappedBy = "users")
     private Set<TaskEntity> taskEntities;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        if (roleEntities == null) return Collections.emptyList();
+
+        return roleEntities.stream()
+                .map(role -> new SimpleGrantedAuthority(role.getName())) 
+                .collect(Collectors.toList());
+    }
 
 }

@@ -27,5 +27,7 @@ jwt:
   expiration: 3600000
 
 server:
+  address: 0.0.0.0
+  port: 8080
   servlet:
     context-path: /api/v1
