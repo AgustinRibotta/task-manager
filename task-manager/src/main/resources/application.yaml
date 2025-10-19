@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: task-manager
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+
+  liquibase:
+    enabled: false
+    change-log: classpath:db.changelog/db.changelog-master.xml
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.web: DEBUG
+
+jwt:
+  secret: Zk3w9fG$7k@vBn4!sLpT8dQcYzR2x#MmXe9VuKaFtH0gNs1jCq
+  expiration: 3600000
+
+server:
+  servlet:
+    context-path: /api/v1
