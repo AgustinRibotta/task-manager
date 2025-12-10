@@ -60,17 +60,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [token, setToken] = useState<string | null>(localStorage.getItem('token'));
   const [user, setUser] = useState<User | null>(null);
 
-  useEffect(() => {
-    if (token) { 
-      const parsedUser = parseJWT(token);
-      setUser(parsedUser);
-      console.log('Parsed User from JWT:', parsedUser);
-    } else {
-      setUser(null);
-      console.log('No token found, user is null');
-    }
-  }, [token]);
-
   const login = (tokenOrResponse: string | { jwtToken: string }) => {
     const newToken = typeof tokenOrResponse === 'string' 
       ? tokenOrResponse 
