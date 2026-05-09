@@ -1,18 +1,25 @@
 -- ===================================
 -- Roles
 -- ===================================
-INSERT INTO role (id, name) VALUES (1, 'ADMIN');
-INSERT INTO role (id, name) VALUES (2, 'USER');
-INSERT INTO role (id, name) VALUES (3, 'MANAGER');
-INSERT INTO role (id, name) VALUES (4, 'DEVELOPER');
+INSERT INTO role_data (name) VALUES ('ADMIN')
+    ON CONFLICT (name) DO NOTHING;
+
+INSERT INTO role_data (name) VALUES ('USER')
+    ON CONFLICT (name) DO NOTHING;
+
+INSERT INTO role_data (name) VALUES ('MANAGER')
+    ON CONFLICT (name) DO NOTHING;
+
+INSERT INTO role_data (name) VALUES ('DEVELOPER')
+    ON CONFLICT (name) DO NOTHING;
 
 -- ===================================
 -- Users
 -- ===================================
-INSERT INTO user_data (id, username, password, email) VALUES
-(1, 'admin', '$2a$10$iLCE.3nsDFIHMXVN5MhC3.ltbmxIm2Ji.WLqcYid5lpLhYHfE4Y4.', 'admin@example.com'),
-(2, 'johndoe', '$2a$10$iLCE.3nsDFIHMXVN5MhC3.ltbmxIm2Ji.WLqcYid5lpLhYHfE4Y4.', 'johndoe@example.com'),
-(3, 'janedoe', '$2a$10$iLCE.3nsDFIHMXVN5MhC3.ltbmxIm2Ji.WLqcYid5lpLhYHfE4Y4.', 'janedoe@example.com');
+INSERT INTO user_data (username, password, email) VALUES
+('admin', '$2a$10$iLCE.3nsDFIHMXVN5MhC3.ltbmxIm2Ji.WLqcYid5lpLhYHfE4Y4.', 'admin@example.com'),
+('johndoe', '$2a$10$iLCE.3nsDFIHMXVN5MhC3.ltbmxIm2Ji.WLqcYid5lpLhYHfE4Y4.', 'johndoe@example.com'),
+('janedoe', '$2a$10$iLCE.3nsDFIHMXVN5MhC3.ltbmxIm2Ji.WLqcYid5lpLhYHfE4Y4.', 'janedoe@example.com');
 
 -- ===================================
 -- User Roles
