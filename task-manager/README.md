@@ -54,7 +54,7 @@
 | ------------------ | ------ | ---------------------------------------- | ----------------- |
 | `/auth/users`      | GET    | ADMIN                                    | Get all users     |
 | `/auth/users/{id}` | GET    | ADMIN or the user itself (`isUser(#id)`) | Get user by ID    |
-| `/auth/users/{id}` | PUT    | ADMIN or the user itself (`isUser(#id)`) | Update user by ID |
+| `/auth/users/{id}` | PUT    | ADMIN                                    | Update user by ID |
 | `/auth/users/{id}` | DELETE | ADMIN                                    | Delete user by ID |
 
 **User JSON Example (POST/PUT):**
