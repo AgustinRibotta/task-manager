@@ -105,4 +105,9 @@ public class ProjectServiceImp implements IProjectService {
         this.projectRepository.deleteById(id);
     }
 
+	@Override
+	public void deleteUserFromProjects(Long userId) {
+        this.projectRepository.deleteUserFromProjects(userId);
+    }
+
 }

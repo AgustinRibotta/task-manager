@@ -11,5 +11,6 @@ public interface IProjectService {
     ProjecDto post (ProjecDto projecDto);
     ProjecDto put (ProjecDto projecDto, Long id);
     void delete (Long id);
+    void deleteUserFromProjects(Long userId);
     
 }

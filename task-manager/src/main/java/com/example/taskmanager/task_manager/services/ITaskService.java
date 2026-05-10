@@ -11,5 +11,6 @@ public interface ITaskService {
     TaskDto post (TaskDto taskDto);
     TaskDto put (TaskDto taskDto, Long taskId);
     void delete (Long taskId);
+    void deleteUserFromTask(Long userId);
 
 }

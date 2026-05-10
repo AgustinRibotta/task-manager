@@ -21,6 +21,8 @@ import  com.example.taskmanager.task_manager.dtos.AuthenticationResponse;
 import com.example.taskmanager.task_manager.dtos.UserDto;
 import com.example.taskmanager.task_manager.services.IUserService;
 import  com.example.taskmanager.task_manager.services.JwtService;
+import com.example.taskmanager.task_manager.services.imp.ProjectServiceImp;
+import com.example.taskmanager.task_manager.services.imp.TaskServiceImp;
 import  com.example.taskmanager.task_manager.services.imp.UserDetailsServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -40,6 +42,8 @@ public class AuthController {
     private final UserDetailsServiceImpl userDetailsService;
     private final JwtService jwtService;
     private final IUserService userService;
+    private final ProjectServiceImp projectService;
+    private final TaskServiceImp taskService;
 
     // POST - 200 OK - 401 Unauthorized
     @PostMapping("/login")
@@ -100,6 +104,8 @@ public class AuthController {
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/users/{id}")
     public ResponseEntity<?> delete (@PathVariable Long id){
+        this.projectService.deleteUserFromProjects(id);
+        this.taskService.deleteUserFromTask(id);
         this.userService.delete(id);
         return ResponseEntity.noContent().build();
     }

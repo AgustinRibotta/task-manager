@@ -138,5 +138,11 @@ public class TaskServiceImp implements ITaskService {
             this.taskRepository.delete(taskEntity);
     }
 
+	@Override
+	public void deleteUserFromTask(Long userId) {
+	
+       this.taskRepository.deleteUserFromTask(userId); 
+    }
+
 
 }
