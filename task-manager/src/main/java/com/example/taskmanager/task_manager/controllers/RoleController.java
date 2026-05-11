@@ -56,9 +56,9 @@ public class RoleController {
             .fromCurrentRequest()
             .path("/{id}")
             .buildAndExpand(newRole.getId())
-            .toUri();       
+            .toUri();
 
-        return ResponseEntity.created(location).body(roleDto) ;
+        return ResponseEntity.created(location).body(newRole) ;
     }
     
     // PUT - 200 OK - 404 Not Found

@@ -74,8 +74,8 @@
 
 | Endpoint      | Method | Roles / Access | Description     |
 | ------------- | ------ | -------------- | --------------- |
-| `/roles`      | GET    | Public         | Get all roles   |
-| `/roles/{id}` | GET    | Public         | Get role by ID  |
+| `/roles`      | GET    | ADMIN         | Get all roles   |
+| `/roles/{id}` | GET    | ADMIN         | Get role by ID  |
 | `/roles`      | POST   | ADMIN          | Create new role |
 | `/roles/{id}` | PUT    | ADMIN          | Update role     |
 | `/roles/{id}` | DELETE | ADMIN          | Delete role     |

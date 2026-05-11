@@ -79,7 +79,7 @@ public class AuthController {
         return ResponseEntity.ok(userDto);
     }
 
-    // POST - 201 Created - 400 Bad Request - 409 Conflict
+    // POST - 201 Creatrd - 400 Bad Request - 409 Conflict
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/users")
     public ResponseEntity<UserDto> post(@Valid @RequestBody UserDto userDto) {
