@@ -3,6 +3,7 @@ package com.example.taskmanager.task_manager.services.imp;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.example.taskmanager.task_manager.dtos.RoleDto;
@@ -25,7 +26,7 @@ public class RoleServiceImp implements IRoleService {
 
     public List<RoleDto> getAll() {
 
-       List<RoleDto> roleDtos = this.roleRepository.findAll().stream()
+       List<RoleDto> roleDtos = this.roleRepository.findAll(Sort.by("id")).stream()
             .map(role -> {
                 RoleDto dto = this.roleMapper.roleEntityToRoleDto(role);
                 return dto;

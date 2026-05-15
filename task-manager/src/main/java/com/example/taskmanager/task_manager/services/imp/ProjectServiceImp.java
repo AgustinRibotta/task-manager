@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.example.taskmanager.task_manager.dtos.ProjecDto;
@@ -29,7 +30,7 @@ public class ProjectServiceImp implements IProjectService {
     @Override
     public List<ProjecDto> getAll() {
         
-        List<ProjecDto> projecDtos = this.projectRepository.findAll().stream()
+        List<ProjecDto> projecDtos = this.projectRepository.findAll(Sort.by("id")).stream()
         .map(project -> {
             ProjecDto dto = this.projectMapper.projectEntityToProjecDto(project);
             return dto;

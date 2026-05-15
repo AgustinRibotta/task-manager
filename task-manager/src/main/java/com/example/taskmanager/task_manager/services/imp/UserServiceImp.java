@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +31,7 @@ public class UserServiceImp implements IUserService {
 
     @Override
     public List<UserDto> getAll() {
-        return this.userRepository.findAll().stream()
+        return this.userRepository.findAll(Sort.by("id")).stream()
         .map(user -> {
             UserDto dto = this.userMapper.userToUserDto(user);
             dto.setPassword(null);
