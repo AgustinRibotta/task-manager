@@ -60,7 +60,7 @@ public class ProjectController {
     }
 
     // PUT - 200 OK - 404 Not Found
-    @PreAuthorize("@securityConfigProject.isProject(#id) or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
     @PutMapping("project/{id}")
     public ResponseEntity<ProjecDto> put(@PathVariable Long id, @RequestBody ProjecDto projecDto) {
         
