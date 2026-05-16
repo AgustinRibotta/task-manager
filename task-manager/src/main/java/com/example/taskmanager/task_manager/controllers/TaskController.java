@@ -44,7 +44,7 @@ public class TaskController {
     }
     
     // POST - 201 Created - 400 Bad Request - 409 Conflict
-    @PreAuthorize("hasRole('ADMIN', 'MANAGER')")
+    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
     @PostMapping("/task/new")
     public ResponseEntity<TaskDto> post (@Valid @RequestBody TaskDto taskDto) {
         

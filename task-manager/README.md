@@ -147,8 +147,10 @@
 {
   "name": "",
   "description": "",
-  "usersDtos":[
-    { "id": }
+  "status": "",
+  "projectDto":{ "id":  },
+  "userSummaryDto": [
+    { "id":  }
   ]
 }
 ```

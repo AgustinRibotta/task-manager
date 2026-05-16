@@ -26,7 +26,7 @@ public class TaskDto {
     private String description;
 
     @NotNull(message = "Project is required")
-    private ProjectSummaryDto projectDto;
+    private ProjectSummaryDto projectSummaryDto;
 
     @NotNull(message = "Status is required")
     private TaskStatus status;

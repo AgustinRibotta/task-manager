@@ -9,11 +9,11 @@ import com.example.taskmanager.task_manager.entities.TaskEntity;
 @Mapper(componentModel = "spring")
 public interface ITaskMapper {  
 
-    @Mapping(source = "projectEntity", target = "projectDto")
+    @Mapping(source = "projectEntity", target = "projectSummaryDto")
     @Mapping(source = "users", target = "userSummaryDto")
     TaskDto tasktEntityTopTaskDto (TaskEntity tasktEntity);
 
-    @Mapping(source = "projectDto", target = "projectEntity")
+    @Mapping(source = "projectSummaryDto", target = "projectEntity")
     @Mapping(source = "userSummaryDto", target = "users")
     TaskEntity tasktDtoToTaskEntity (TaskDto taskDto);
 }
