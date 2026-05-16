@@ -65,7 +65,7 @@ public class TaskController {
     }
 
     // DELETE - 204 No Content - 404 Not Found
-    @PreAuthorize("hasRole('ADMIN', 'MANAGER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     @DeleteMapping("/task/{id}")
     public ResponseEntity<?> delete (@PathVariable Long id) {
         this.taskService.delete(id);

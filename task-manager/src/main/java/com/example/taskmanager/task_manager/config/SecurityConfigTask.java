@@ -16,9 +16,10 @@ public class SecurityConfigTask {
     private final IUserRepository userRepository;
 
     @Transactional
-    public boolean isTask(Long projectId) {
+    public boolean isTask(Long taskId) {
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        
+
         if (authentication == null || !authentication.isAuthenticated()) {
             return false;
         }
@@ -26,8 +27,8 @@ public class SecurityConfigTask {
         String username = authentication.getName();
 
         return userRepository.findByUsernameWithTask(username)
-            .map(user -> user.getProjectEntities().stream()
-                    .anyMatch(project -> project.getId() == projectId))
+            .map(user -> user.getTaskEntities().stream()
+                .anyMatch(task -> task.getId() == taskId))
             .orElse(false);
     }
 }
