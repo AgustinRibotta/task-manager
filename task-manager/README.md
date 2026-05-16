@@ -97,7 +97,7 @@
 | `/projects/all`          | GET    | ADMIN                                        | Get all projects     |
 | `/projects/project/{id}` | GET    | ADMIN or associated users (`isProject(#id)`) | Get project by ID    |
 | `/projects/project/new`  | POST   | ADMIN                                        | Create new project   |
-| `/projects/project/{id}` | PUT    | ADMIN or associated users (`isProject(#id)`) | Update project by ID |
+| `/projects/project/{id}` | PUT    | ADMIN, MANAGER                               | Update project by ID |
 | `/projects/project/{id}` | DELETE | ADMIN                                        | Delete project by ID |
 
 **Project JSON Example (POST/PUT):**
