@@ -21,7 +21,7 @@
 
 * **Response:**
 
-  * 200 OK: `{ "token": "jwt_token_here" }`
+  * 200 OK: `{ "token": "" }`
   * 401 Unauthorized: Invalid credentials
 * **Access:** Public
 
@@ -32,10 +32,10 @@
 
 ```json
 {
-  "email": "test@gemail.com",
-  "username": "test6",
-  "password": "test",
-  "roleDtos": [{"id": 1}]
+  "email": "",
+  "username": "",
+  "password": "",
+  "roleDtos": [{"id": }]
 }
 ```
 
@@ -57,17 +57,51 @@
 | `/auth/users/{id}` | PUT    | ADMIN                                    | Update user by ID |
 | `/auth/users/{id}` | DELETE | ADMIN                                    | Delete user by ID |
 
-**User JSON Example (POST/PUT):**
+**User JSON Example Request:**
 
 ```json
-{
-  "username": "test6",
-  "email": "test@gemail.com",
-  "password": "test",
-  "roleDtos": [{"id": 1}]
-}
-```
 
+{
+  "username": "",
+  "email": "",
+  "password": "",
+  "roleDtos": [{"id": }]
+}
+
+```
+**User JSON Example Response:**
+
+```json
+
+{
+    "id": ,
+    "username": "",
+    "email": "",
+    "roleDtos": [
+        {
+            "id": ,
+            "name": ""
+        },
+            {
+                "id": ,
+                "name": ""
+            }
+        ],
+        "projecDtos": [
+            {
+                "id": ,
+                "name": ""
+            }
+        ],
+        "taskDto": [
+            {
+                "id": ,
+                "name": ""
+            }
+        ]
+},
+
+```
 ---
 
 ## 3. Roles
@@ -80,14 +114,21 @@
 | `/roles/{id}` | PUT    | ADMIN          | Update role     |
 | `/roles/{id}` | DELETE | ADMIN          | Delete role     |
 
-**Role JSON Example (POST/PUT):**
+**Role JSON Example Request:**
 
 ```json
 {
-  "name": "admin"
+  "name": ""
 }
 ```
+**Role JSON Example Response:**
 
+```json
+{
+    "id":,
+    "name": ""
+}
+```
 ---
 
 ## 4. Projects
@@ -100,18 +141,46 @@
 | `/projects/project/{id}` | PUT    | ADMIN, MANAGER                               | Update project by ID |
 | `/projects/project/{id}` | DELETE | ADMIN                                        | Delete project by ID |
 
-**Project JSON Example (POST/PUT):**
+**Project JSON Example Request:**
 
 ```json
 {
-  "name": "project4",
-  "description": "test5",
+  "name": "",
+  "description": "",
   "usersDtos":[
-    { "id": 1 }
+    { "id": }
   ]
 }
 ```
+**Project JSON Example Response:**
 
+```json
+{
+    "id": ,
+    "name": "",
+    "description": "",
+    "tasksDtos": [
+        {
+            "id": ,
+            "name":""
+        },
+        {
+            "id": ,
+            "name": ""
+        }
+    ],
+    "usersDtos": [
+        {
+            "id": ,
+            "username": ""
+        },
+        {
+            "id": ,
+            "username": ""
+        }
+    ]
+}
+```
 ---
 
 ## 5. Tasks
@@ -124,34 +193,37 @@
 | `/tasks/task/{id}` | PUT    | ADMIN, MANAGER or associated users (`isTask(#id)`) | Update task by ID |
 | `/tasks/task/{id}` | DELETE | ADMIN, MANAGER                                     | Delete task by ID |
 
-**Task JSON Example (POST/PUT):**
+**Task JSON Example Request:**
 
 ```json
 {
-  "name": "new22",
-  "description": "new task",
-  "status": "DONE",
+  "name": "",
+  "description": "",
+  "status": "",
   "userSummaryDto": [
-    { "id": 1 }
+    { "id":  }
   ]
 }
 ```
+**Task JSON Example Response:**
 
----
-
-## 6. Security Notes
-
-* JWT authentication is required for restricted endpoints.
-* Roles must be in the format `ROLE_XXX` in the token.
-* Spring Security configuration:
-
-  * Public: `/auth/login`, `/projects/**`, `/tasks/**`
-  * ADMIN: `/auth/users/**`, `/roles/**`, `/projects/new`
-  * Others: Authenticated
-* `@PreAuthorize` methods implement access based on:
-
-  * `isUser(#id)` → user owns the resource
-  * `isProject(#id)` → user associated with the project
-  * `isTask(#id)` → user associated with the task
+```json
+{
+    "id": ,
+    "name": "",
+    "description": "",
+    "projectDto": {
+        "id": ,
+        "name": ""
+    },
+    "status": "",
+    "userSummaryDto": [
+        {
+            "id": ,
+            "username": ""
+        }
+    ]
+}
+```
 
 
