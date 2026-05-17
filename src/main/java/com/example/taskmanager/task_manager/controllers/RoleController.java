@@ -1,5 +1,7 @@
 package com.example.taskmanager.task_manager.controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -30,6 +32,11 @@ public class RoleController {
     final private IRoleService roleService;
 
      // GET - 200 OK - []
+     @Tag(name = "Role Controller", description = "Role management")
+     @Operation(
+             summary = "Get all roles",
+             description = "Requires authentication with JWT and ADMIN role"
+     )
     @GetMapping("")
     public ResponseEntity<List<RoleDto>> getAll() {
 
@@ -39,6 +46,11 @@ public class RoleController {
     }
 
     // GET - 200 OK - 404 Not Found
+    @Tag(name = "Role Controller", description = "Role management")
+    @Operation(
+            summary = "Get roles by ID",
+            description = "Requires authentication with JWT and ADMIN role"
+    )
     @GetMapping("/{id}")
     public ResponseEntity<RoleDto> getById (@PathVariable Long id) {
 
@@ -48,6 +60,11 @@ public class RoleController {
     }
 
     // POST - 201 Created - 400 Bad Request - 409 Conflict
+    @Tag(name = "Role Controller", description = "Role management")
+    @Operation(
+            summary = "Create new roles",
+            description = "Requires authentication with JWT and ADMIN role"
+    )
     @PostMapping("")
     public ResponseEntity<RoleDto> post(@RequestBody RoleDto roleDto) {
 
@@ -62,6 +79,11 @@ public class RoleController {
     }
     
     // PUT - 200 OK - 404 Not Found
+    @Tag(name = "Role Controller", description = "Role management")
+    @Operation(
+            summary = "Update roles by ID",
+            description = "Requires authentication with JWT and ADMIN role"
+    )
     @PutMapping("/{id}")
     public ResponseEntity<RoleDto> put(@PathVariable Long id, @RequestBody RoleDto roleDto) {
     
@@ -71,6 +93,11 @@ public class RoleController {
     }
 
     // DELETE - 204 No Content - 404 Not Found
+    @Tag(name = "Role Controller", description = "Role management")
+    @Operation(
+            summary = "Delete roles by ID",
+            description = "Requires authentication with JWT and ADMIN role"
+    )
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete (@PathVariable Long id) {
         this.roleService.delete(id);

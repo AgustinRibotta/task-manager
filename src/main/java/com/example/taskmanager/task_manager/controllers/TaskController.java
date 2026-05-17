@@ -1,5 +1,7 @@
 package com.example.taskmanager.task_manager.controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -30,6 +32,11 @@ public class TaskController {
     private final ITaskService taskService;
 
     // GET - 200 OK - [] - 401 Unauthorized
+    @Tag(name = "Task Controller", description = "Task management")
+    @Operation(
+            summary = "Get all task",
+            description = "Requires authentication with JWT and ADMIN role"
+    )
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/all")
     public ResponseEntity<List<TaskDto>> getAll () {
@@ -37,6 +44,11 @@ public class TaskController {
     }
 
     // GET - 200 OK - [] - 401 Unauthorized
+    @Tag(name = "Task Controller", description = "Task management")
+    @Operation(
+            summary = "Get task by ID",
+            description = "Requires authentication with JWT and ADMIN role  or be the owner"
+    )
     @PreAuthorize("@securityConfigTask.isTask(#id) or hasAnyRole('ADMIN','MANAGER')")
     @GetMapping("/task/{id}")
     public ResponseEntity<TaskDto> getById(@PathVariable Long id) {
@@ -44,6 +56,11 @@ public class TaskController {
     }
     
     // POST - 201 Created - 400 Bad Request - 409 Conflict
+    @Tag(name = "Task Controller", description = "Task management")
+    @Operation(
+            summary = "Create task",
+            description = "Requires authentication with JWT and ADMIN or MANAGER role"
+    )
     @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
     @PostMapping("/task/new")
     public ResponseEntity<TaskDto> post (@Valid @RequestBody TaskDto taskDto) {
@@ -58,6 +75,11 @@ public class TaskController {
     }
 
     // PUT - 200 OK - 404 Not Found
+    @Tag(name = "Task Controller", description = "Task management")
+    @Operation(
+            summary = "Update task by ID",
+            description = "Requires authentication with JWT and ADMIN role or MANAGER role or be the owner"
+    )
     @PreAuthorize("@securityConfigTask.isTask(#id) or hasAnyRole('ADMIN','MANAGER')")
     @PutMapping("/task/{id}")
     public ResponseEntity<TaskDto> put(@PathVariable Long id,@Valid @RequestBody TaskDto taskDto) {        
@@ -65,6 +87,11 @@ public class TaskController {
     }
 
     // DELETE - 204 No Content - 404 Not Found
+    @Tag(name = "Task Controller", description = "Task management")
+    @Operation(
+            summary = "Delete task by ID",
+            description = "Requires authentication with JWT and ADMIN or MANAGER role "
+    )
     @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     @DeleteMapping("/task/{id}")
     public ResponseEntity<?> delete (@PathVariable Long id) {

@@ -1,4 +1,3 @@
-com/example/taskmanager/task_manager/dtos/ProjecDto.class
 com/example/taskmanager/task_manager/repositories/ITaskRepository.class
 com/example/taskmanager/task_manager/services/IProjectService.class
 com/example/taskmanager/task_manager/repositories/IUserRepository.class
@@ -24,6 +23,7 @@ com/example/taskmanager/task_manager/services/imp/RoleServiceImp.class
 com/example/taskmanager/task_manager/entities/UserEntity.class
 com/example/taskmanager/task_manager/mappers/IProjectForUserMapper.class
 com/example/taskmanager/task_manager/mappers/IProjectMapperImpl.class
+com/example/taskmanager/task_manager/dtos/ProjectDto.class
 com/example/taskmanager/task_manager/repositories/IProjectRepository.class
 com/example/taskmanager/task_manager/repositories/IRoleRepository.class
 com/example/taskmanager/task_manager/config/SecurityConfig.class

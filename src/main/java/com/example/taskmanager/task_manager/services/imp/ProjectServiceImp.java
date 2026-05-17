@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.example.taskmanager.task_manager.dtos.ProjectDto;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.example.taskmanager.task_manager.dtos.ProjecDto;
 import com.example.taskmanager.task_manager.entities.ProjectEntity;
 import com.example.taskmanager.task_manager.entities.UserEntity;
 import com.example.taskmanager.task_manager.exceptions.ResourceAlreadyExistsException;
@@ -28,11 +28,11 @@ public class ProjectServiceImp implements IProjectService {
     private final IUserRepository userRepository;
 
     @Override
-    public List<ProjecDto> getAll() {
+    public List<ProjectDto> getAll() {
         
-        List<ProjecDto> projecDtos = this.projectRepository.findAll(Sort.by("id")).stream()
+        List<ProjectDto> projecDtos = this.projectRepository.findAll(Sort.by("id")).stream()
         .map(project -> {
-            ProjecDto dto = this.projectMapper.projectEntityToProjecDto(project);
+            ProjectDto dto = this.projectMapper.projectEntityToProjecDto(project);
             return dto;
         })
         .collect(Collectors.toList());
@@ -41,7 +41,7 @@ public class ProjectServiceImp implements IProjectService {
     }
 
     @Override
-    public ProjecDto getById(Long id) {
+    public ProjectDto getById(Long id) {
 
         ProjectEntity projectEntity = this.projectRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException(id)
@@ -51,7 +51,7 @@ public class ProjectServiceImp implements IProjectService {
     }
 
     @Override
-    public ProjecDto post(ProjecDto projecDto) {
+    public ProjectDto post(ProjectDto projecDto) {
 
         if (this.projectRepository.findByName(projecDto.getName()).isPresent()) {
             throw new ResourceAlreadyExistsException(projecDto.getName());
@@ -72,7 +72,7 @@ public class ProjectServiceImp implements IProjectService {
     }
 
     @Override
-    public ProjecDto put(ProjecDto projecDto, Long id) {
+    public ProjectDto put(ProjectDto projecDto, Long id) {
 
         this.projectRepository.findByName(projecDto.getName())
             .filter(existing -> existing.getId() != id)

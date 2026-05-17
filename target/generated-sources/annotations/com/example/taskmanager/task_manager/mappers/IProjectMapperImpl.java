@@ -1,6 +1,6 @@
 package com.example.taskmanager.task_manager.mappers;
 
-import com.example.taskmanager.task_manager.dtos.ProjecDto;
+import com.example.taskmanager.task_manager.dtos.ProjectDto;
 import com.example.taskmanager.task_manager.dtos.TaskSummaryDto;
 import com.example.taskmanager.task_manager.dtos.UserSummaryDto;
 import com.example.taskmanager.task_manager.entities.ProjectEntity;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2026-05-17T11:42:22+0200",
+    date = "2026-05-17T14:07:55+0200",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.10 (Ubuntu)"
 )
 @Component
@@ -26,24 +26,24 @@ public class IProjectMapperImpl implements IProjectMapper {
     private IUserForProjectMapper iUserForProjectMapper;
 
     @Override
-    public ProjecDto projectEntityToProjecDto(ProjectEntity projectEntity) {
+    public ProjectDto projectEntityToProjecDto(ProjectEntity projectEntity) {
         if ( projectEntity == null ) {
             return null;
         }
 
-        ProjecDto projecDto = new ProjecDto();
+        ProjectDto projectDto = new ProjectDto();
 
-        projecDto.setUsersDtos( userEntitySetToUserSummaryDtoSet( projectEntity.getUsers() ) );
-        projecDto.setTasksDtos( taskEntityListToTaskSummaryDtoList( projectEntity.getTaskEntities() ) );
-        projecDto.setId( projectEntity.getId() );
-        projecDto.setName( projectEntity.getName() );
-        projecDto.setDescription( projectEntity.getDescription() );
+        projectDto.setUsersDtos( userEntitySetToUserSummaryDtoSet( projectEntity.getUsers() ) );
+        projectDto.setTasksDtos( taskEntityListToTaskSummaryDtoList( projectEntity.getTaskEntities() ) );
+        projectDto.setId( projectEntity.getId() );
+        projectDto.setName( projectEntity.getName() );
+        projectDto.setDescription( projectEntity.getDescription() );
 
-        return projecDto;
+        return projectDto;
     }
 
     @Override
-    public ProjectEntity projectDtoToProjectEntity(ProjecDto projecDto) {
+    public ProjectEntity projectDtoToProjectEntity(ProjectDto projecDto) {
         if ( projecDto == null ) {
             return null;
         }
