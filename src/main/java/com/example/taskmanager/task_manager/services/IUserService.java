@@ -1,8 +1,10 @@
 package com.example.taskmanager.task_manager.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.example.taskmanager.task_manager.dtos.UserDto;
+import com.example.taskmanager.task_manager.entities.UserEntity;
 
 public interface IUserService {
 
@@ -11,5 +13,5 @@ public interface IUserService {
     UserDto post (UserDto user);
     UserDto put (Long id, UserDto user);
     void delete (Long id);
-
+    Optional<UserDto> findByUsername(String username);
 }

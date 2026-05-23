@@ -1,5 +1,7 @@
 package com.example.taskmanager.task_manager.services;
 
+import com.example.taskmanager.task_manager.dtos.RoleDto;
+import com.example.taskmanager.task_manager.dtos.UserDto;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -20,11 +22,11 @@ public class JwtService {
     @Value("${jwt.expiration}")
     private long expirationTimeInMillis;
 
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(UserDto userDetails) {
         Claims claims = Jwts.claims().setSubject(userDetails.getUsername());
-        
-        claims.put("roles", userDetails.getAuthorities().stream()
-                                    .map(auth -> auth.getAuthority())
+        claims.put("userId", userDetails.getId());
+        claims.put("roles", userDetails.getRoleDtos().stream()
+                                    .map(RoleDto::getName)
                                     .collect(Collectors.toList()));
 
         return Jwts.builder()

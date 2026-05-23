@@ -3,6 +3,7 @@ package com.example.taskmanager.task_manager.controllers;
 import java.net.URI;
 import java.util.List;
 
+import com.example.taskmanager.task_manager.entities.UserEntity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -45,7 +46,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
-    private final UserDetailsServiceImpl userDetailsService;
     private final JwtService jwtService;
     private final IUserService userService;
     private final ProjectServiceImp projectService;
@@ -66,9 +66,11 @@ public class AuthController {
         } catch (AuthenticationException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
+        UserDto user = userService.findByUsername(request.getUsername())
+                .orElseThrow();
 
-        final UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
-        final String jwtToken = this.jwtService.generateToken(userDetails);
+        // 🔥 GENERAR TOKEN CON ENTITY
+        String jwtToken = jwtService.generateToken(user);
 
         return ResponseEntity.ok(new AuthenticationResponse(jwtToken));
     }

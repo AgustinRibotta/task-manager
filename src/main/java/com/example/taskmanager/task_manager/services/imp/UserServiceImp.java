@@ -1,6 +1,7 @@
 package com.example.taskmanager.task_manager.services.imp;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -98,5 +99,10 @@ public class UserServiceImp implements IUserService {
         this.userRepository.deleteById(id);
     }
 
+    @Override
+    public Optional<UserDto> findByUsername(String username) {
+        return userRepository.findByUsername(username)
+                .map(userMapper::userToUserDto);
+    }
 
 }
