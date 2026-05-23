@@ -24,15 +24,15 @@ public class TaskDto {
     @NotBlank(message = "Name is required")
     private String name;
 
-    @NotBlank(message = "Desciption is required")
+    @NotBlank(message = "Description is required")
     private String description;
 
     @NotNull(message = "Project is required")
-    private ProjectSummaryDto projectSummaryDto;
+    private ProjectResponseDto projectResponseDto;
 
     @NotNull(message = "Status is required")
     private TaskStatus status;
 
     @NotNull(message = "Project is required")
-    private Set<UserSummaryDto> userSummaryDto;
+    private Set<UserDto> userDto;
 }

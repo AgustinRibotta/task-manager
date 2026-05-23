@@ -1,8 +1,8 @@
 package com.example.taskmanager.task_manager.mappers;
 
-import com.example.taskmanager.task_manager.dtos.ProjectSummaryDto;
+import com.example.taskmanager.task_manager.dtos.ProjectResponseDto;
 import com.example.taskmanager.task_manager.dtos.TaskDto;
-import com.example.taskmanager.task_manager.dtos.UserSummaryDto;
+import com.example.taskmanager.task_manager.dtos.UserDto;
 import com.example.taskmanager.task_manager.entities.ProjectEntity;
 import com.example.taskmanager.task_manager.entities.TaskEntity;
 import com.example.taskmanager.task_manager.entities.UserEntity;
@@ -13,26 +13,26 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2026-05-23T10:05:31+0200",
+    date = "2026-05-23T22:08:19+0200",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.10 (Ubuntu)"
 )
 @Component
 public class ITaskMapperImpl implements ITaskMapper {
 
     @Override
-    public TaskDto tasktEntityTopTaskDto(TaskEntity tasktEntity) {
-        if ( tasktEntity == null ) {
+    public TaskDto tasktEntityTopTaskDto(TaskEntity taskEntity) {
+        if ( taskEntity == null ) {
             return null;
         }
 
         TaskDto taskDto = new TaskDto();
 
-        taskDto.setProjectSummaryDto( projectEntityToProjectSummaryDto( tasktEntity.getProjectEntity() ) );
-        taskDto.setUserSummaryDto( userEntitySetToUserSummaryDtoSet( tasktEntity.getUsers() ) );
-        taskDto.setId( tasktEntity.getId() );
-        taskDto.setName( tasktEntity.getName() );
-        taskDto.setDescription( tasktEntity.getDescription() );
-        taskDto.setStatus( tasktEntity.getStatus() );
+        taskDto.setProjectResponseDto( projectEntityToProjectResponseDto( taskEntity.getProjectEntity() ) );
+        taskDto.setUserDto( userEntitySetToUserDtoSet( taskEntity.getUsers() ) );
+        taskDto.setId( taskEntity.getId() );
+        taskDto.setName( taskEntity.getName() );
+        taskDto.setDescription( taskEntity.getDescription() );
+        taskDto.setStatus( taskEntity.getStatus() );
 
         return taskDto;
     }
@@ -45,8 +45,8 @@ public class ITaskMapperImpl implements ITaskMapper {
 
         TaskEntity taskEntity = new TaskEntity();
 
-        taskEntity.setProjectEntity( projectSummaryDtoToProjectEntity( taskDto.getProjectSummaryDto() ) );
-        taskEntity.setUsers( userSummaryDtoSetToUserEntitySet( taskDto.getUserSummaryDto() ) );
+        taskEntity.setProjectEntity( projectResponseDtoToProjectEntity( taskDto.getProjectResponseDto() ) );
+        taskEntity.setUsers( userDtoSetToUserEntitySet( taskDto.getUserDto() ) );
         if ( taskDto.getId() != null ) {
             taskEntity.setId( taskDto.getId() );
         }
@@ -57,81 +57,87 @@ public class ITaskMapperImpl implements ITaskMapper {
         return taskEntity;
     }
 
-    protected ProjectSummaryDto projectEntityToProjectSummaryDto(ProjectEntity projectEntity) {
+    protected ProjectResponseDto projectEntityToProjectResponseDto(ProjectEntity projectEntity) {
         if ( projectEntity == null ) {
             return null;
         }
 
-        ProjectSummaryDto projectSummaryDto = new ProjectSummaryDto();
+        ProjectResponseDto projectResponseDto = new ProjectResponseDto();
 
-        projectSummaryDto.setId( projectEntity.getId() );
-        projectSummaryDto.setName( projectEntity.getName() );
+        projectResponseDto.setId( projectEntity.getId() );
+        projectResponseDto.setName( projectEntity.getName() );
+        projectResponseDto.setDescription( projectEntity.getDescription() );
 
-        return projectSummaryDto;
+        return projectResponseDto;
     }
 
-    protected UserSummaryDto userEntityToUserSummaryDto(UserEntity userEntity) {
+    protected UserDto userEntityToUserDto(UserEntity userEntity) {
         if ( userEntity == null ) {
             return null;
         }
 
-        UserSummaryDto userSummaryDto = new UserSummaryDto();
+        UserDto userDto = new UserDto();
 
-        userSummaryDto.setId( userEntity.getId() );
-        userSummaryDto.setUsername( userEntity.getUsername() );
+        userDto.setId( userEntity.getId() );
+        userDto.setUsername( userEntity.getUsername() );
+        userDto.setPassword( userEntity.getPassword() );
+        userDto.setEmail( userEntity.getEmail() );
 
-        return userSummaryDto;
+        return userDto;
     }
 
-    protected Set<UserSummaryDto> userEntitySetToUserSummaryDtoSet(Set<UserEntity> set) {
+    protected Set<UserDto> userEntitySetToUserDtoSet(Set<UserEntity> set) {
         if ( set == null ) {
             return null;
         }
 
-        Set<UserSummaryDto> set1 = new LinkedHashSet<UserSummaryDto>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
+        Set<UserDto> set1 = new LinkedHashSet<UserDto>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
         for ( UserEntity userEntity : set ) {
-            set1.add( userEntityToUserSummaryDto( userEntity ) );
+            set1.add( userEntityToUserDto( userEntity ) );
         }
 
         return set1;
     }
 
-    protected ProjectEntity projectSummaryDtoToProjectEntity(ProjectSummaryDto projectSummaryDto) {
-        if ( projectSummaryDto == null ) {
+    protected ProjectEntity projectResponseDtoToProjectEntity(ProjectResponseDto projectResponseDto) {
+        if ( projectResponseDto == null ) {
             return null;
         }
 
         ProjectEntity projectEntity = new ProjectEntity();
 
-        if ( projectSummaryDto.getId() != null ) {
-            projectEntity.setId( projectSummaryDto.getId() );
+        if ( projectResponseDto.getId() != null ) {
+            projectEntity.setId( projectResponseDto.getId() );
         }
-        projectEntity.setName( projectSummaryDto.getName() );
+        projectEntity.setName( projectResponseDto.getName() );
+        projectEntity.setDescription( projectResponseDto.getDescription() );
 
         return projectEntity;
     }
 
-    protected UserEntity userSummaryDtoToUserEntity(UserSummaryDto userSummaryDto) {
-        if ( userSummaryDto == null ) {
+    protected UserEntity userDtoToUserEntity(UserDto userDto) {
+        if ( userDto == null ) {
             return null;
         }
 
         UserEntity userEntity = new UserEntity();
 
-        userEntity.setId( userSummaryDto.getId() );
-        userEntity.setUsername( userSummaryDto.getUsername() );
+        userEntity.setId( userDto.getId() );
+        userEntity.setUsername( userDto.getUsername() );
+        userEntity.setPassword( userDto.getPassword() );
+        userEntity.setEmail( userDto.getEmail() );
 
         return userEntity;
     }
 
-    protected Set<UserEntity> userSummaryDtoSetToUserEntitySet(Set<UserSummaryDto> set) {
+    protected Set<UserEntity> userDtoSetToUserEntitySet(Set<UserDto> set) {
         if ( set == null ) {
             return null;
         }
 
         Set<UserEntity> set1 = new LinkedHashSet<UserEntity>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
-        for ( UserSummaryDto userSummaryDto : set ) {
-            set1.add( userSummaryDtoToUserEntity( userSummaryDto ) );
+        for ( UserDto userDto : set ) {
+            set1.add( userDtoToUserEntity( userDto ) );
         }
 
         return set1;

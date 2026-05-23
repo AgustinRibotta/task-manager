@@ -7,7 +7,6 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -25,7 +24,7 @@ public class JwtService {
     public String generateToken(UserDto userDetails) {
         Claims claims = Jwts.claims().setSubject(userDetails.getUsername());
         claims.put("userId", userDetails.getId());
-        claims.put("roles", userDetails.getRoleDtos().stream()
+        claims.put("roles", userDetails.getRoleDto().stream()
                                     .map(RoleDto::getName)
                                     .collect(Collectors.toList()));
 

@@ -33,10 +33,10 @@ public class UserDto {
     @Email(message = "Invalid email format")
     private String email;
 
-    private Set<RoleDto> roleDtos;
+    private Set<RoleDto> roleDto;
 
-    private Set<ProjectSummaryDto> projecDtos;
+    private Set<ProjectResponseDto> projectResponseDto;
 
     @ManyToMany(mappedBy = "users")
-    private Set<TaskSummaryDto> taskDto;
+    private Set<TaskDto> taskDto;
 }

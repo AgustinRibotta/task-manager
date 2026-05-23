@@ -1,15 +1,14 @@
 package com.example.taskmanager.task_manager.services.imp;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.example.taskmanager.task_manager.dtos.ProjectDto;
+import com.example.taskmanager.task_manager.dtos.ProjectRequestDto;
+import com.example.taskmanager.task_manager.dtos.ProjectResponseDto;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.example.taskmanager.task_manager.entities.ProjectEntity;
-import com.example.taskmanager.task_manager.entities.UserEntity;
 import com.example.taskmanager.task_manager.exceptions.ResourceAlreadyExistsException;
 import com.example.taskmanager.task_manager.exceptions.ResourceNotFoundException;
 import com.example.taskmanager.task_manager.mappers.IProjectMapper;
@@ -28,74 +27,56 @@ public class ProjectServiceImp implements IProjectService {
     private final IUserRepository userRepository;
 
     @Override
-    public List<ProjectDto> getAll() {
-        
-        List<ProjectDto> projecDtos = this.projectRepository.findAll(Sort.by("id")).stream()
-        .map(project -> {
-            ProjectDto dto = this.projectMapper.projectEntityToProjecDto(project);
-            return dto;
-        })
-        .collect(Collectors.toList());
+    public List<ProjectResponseDto> getAll() {
 
-        return projecDtos;
+        return this.projectRepository.findAll(Sort.by("id")).stream()
+        .map(this.projectMapper::entityToResponse)
+        .collect(Collectors.toList());
     }
 
     @Override
-    public ProjectDto getById(Long id) {
+    public ProjectResponseDto getById(Long id) {
 
         ProjectEntity projectEntity = this.projectRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException(id)
             );
 
-        return this.projectMapper.projectEntityToProjecDto(projectEntity);
+        return this.projectMapper.entityToResponse(projectEntity);
     }
 
     @Override
-    public ProjectDto post(ProjectDto projecDto) {
+    public ProjectResponseDto post(ProjectRequestDto projectDto) {
 
-        if (this.projectRepository.findByName(projecDto.getName()).isPresent()) {
-            throw new ResourceAlreadyExistsException(projecDto.getName());
+
+        if (this.projectRepository.findByName(projectDto.getName()).isPresent()) {
+            throw new ResourceAlreadyExistsException(projectDto.getName());
         }
 
-        ProjectEntity projectEntity = this.projectMapper.projectDtoToProjectEntity(projecDto);
-        
-        Set<UserEntity> userEntities = projecDto.getUsersDtos().stream()
-            .map( userDto -> this.userRepository.findById(userDto.getId())
-                .orElseThrow(() -> new ResourceAlreadyExistsException(userDto.getId()))
-            ).collect(Collectors.toSet());
-
-        projectEntity.setUsers(userEntities);
+        ProjectEntity projectEntity = this.projectMapper.requestToEntity(projectDto);
 
         projectEntity = this.projectRepository.save(projectEntity);
-        
-        return this.projectMapper.projectEntityToProjecDto(projectEntity);
+
+        return this.projectMapper.entityToResponse(projectEntity);
     }
 
     @Override
-    public ProjectDto put(ProjectDto projecDto, Long id) {
+    public ProjectResponseDto put(ProjectRequestDto projectDto, Long id) {
 
-        this.projectRepository.findByName(projecDto.getName())
+        this.projectRepository.findByName(projectDto.getName())
             .filter(existing -> existing.getId() != id)
             .ifPresent(existing -> {
-                throw new ResourceAlreadyExistsException(projecDto.getName());
+                throw new ResourceAlreadyExistsException(projectDto.getName());
             });
 
         ProjectEntity projectEntity = this.projectRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException(id));
 
-        projectEntity.setName(projecDto.getName());
-        projectEntity.setDescription(projecDto.getDescription());
-
-        Set<UserEntity> userEntities = projecDto.getUsersDtos().stream()
-            .map(userDto -> this.userRepository.findById(userDto.getId())
-                .orElseThrow(() -> new ResourceNotFoundException(userDto.getId()))
-            ).collect(Collectors.toSet());
-
-        projectEntity.setUsers(userEntities);
+        projectEntity.setName(projectDto.getName());
+        projectEntity.setDescription(projectDto.getDescription());
 
         projectEntity = this.projectRepository.save(projectEntity);
 
-        return this.projectMapper.projectEntityToProjecDto(projectEntity);
+        return this.projectMapper.entityToResponse(projectEntity);
     }
 
     @Override
@@ -112,11 +93,11 @@ public class ProjectServiceImp implements IProjectService {
     }
 
     @Override
-    public List<ProjectDto> findByUsersId(Long userId) {
+    public List<ProjectResponseDto> findByUsersId(Long userId) {
 
         return this.projectRepository.findByUsers_Id(userId)
                 .stream()
-                .map(projectMapper::projectEntityToProjecDto)
+                .map(projectMapper::entityToResponse)
                 .toList();
     }
 

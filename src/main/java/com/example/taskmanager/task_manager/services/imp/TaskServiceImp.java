@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.example.taskmanager.task_manager.dtos.UserDto;
 import org.springframework.stereotype.Service;
 
 import com.example.taskmanager.task_manager.dtos.TaskDto;
-import com.example.taskmanager.task_manager.dtos.UserSummaryDto;
 import com.example.taskmanager.task_manager.entities.ProjectEntity;
 import com.example.taskmanager.task_manager.entities.TaskEntity;
 import com.example.taskmanager.task_manager.entities.UserEntity;
@@ -56,15 +56,15 @@ public class TaskServiceImp implements ITaskService {
     @Override
     public TaskDto post(TaskDto taskDto) {
 
-        if (this.taskRepository.existsByNameAndProjectEntity_Id(taskDto.getName(), taskDto.getProjectSummaryDto().getId())) {
+        if (this.taskRepository.existsByNameAndProjectEntity_Id(taskDto.getName(), taskDto.getProjectResponseDto().getId())) {
             throw new ResourceAlreadyExistsException(taskDto.getName());
         }
 
-        ProjectEntity projectEntity =  this.projectRepository.findById(taskDto.getProjectSummaryDto().getId())
-            .orElseThrow(() -> new ResourceNotFoundException( taskDto.getProjectSummaryDto().getId()));
+        ProjectEntity projectEntity =  this.projectRepository.findById(taskDto.getProjectResponseDto().getId())
+            .orElseThrow(() -> new ResourceNotFoundException( taskDto.getProjectResponseDto().getId()));
             
-        Set<Long> userIds = taskDto.getUserSummaryDto().stream()
-            .map(UserSummaryDto::getId)   
+        Set<Long> userIds = taskDto.getUserDto().stream()
+            .map(UserDto::getId)
             .collect(Collectors.toSet());
 
         List<UserEntity> IsUserEntities = this.userRepository.findAllById(userIds);
@@ -75,7 +75,7 @@ public class TaskServiceImp implements ITaskService {
 
         TaskEntity taskEntity = this.taskMapper.tasktDtoToTaskEntity(taskDto);
 
-        Set<UserEntity> userEntities = taskDto.getUserSummaryDto().stream()
+        Set<UserEntity> userEntities = taskDto.getUserDto().stream()
             .map( userDto -> this.userRepository.findById(userDto.getId())
                 .orElseThrow(() -> new ResourceAlreadyExistsException(userDto.getId()))
             ).collect(Collectors.toSet());
@@ -97,11 +97,11 @@ public class TaskServiceImp implements ITaskService {
                 throw new ResourceAlreadyExistsException(taskDto.getName());
             });
         
-        ProjectEntity projectEntity = this.projectRepository.findById(taskDto.getProjectSummaryDto().getId())
-            .orElseThrow(() -> new ResourceNotFoundException( taskDto.getProjectSummaryDto().getId()));
+        ProjectEntity projectEntity = this.projectRepository.findById(taskDto.getProjectResponseDto().getId())
+            .orElseThrow(() -> new ResourceNotFoundException( taskDto.getProjectResponseDto().getId()));
         
-        Set<Long> userIds = taskDto.getUserSummaryDto().stream()
-            .map(UserSummaryDto::getId)   
+        Set<Long> userIds = taskDto.getUserDto().stream()
+            .map(UserDto::getId)
             .collect(Collectors.toSet());
 
         List<UserEntity> IsUserEntities = this.userRepository.findAllById(userIds);
@@ -116,7 +116,7 @@ public class TaskServiceImp implements ITaskService {
         taskEntity.setName(taskDto.getName());
         taskEntity.setDescription(taskDto.getDescription());
 
-        Set<UserEntity> userEntities = taskDto.getUserSummaryDto().stream()
+        Set<UserEntity> userEntities = taskDto.getUserDto().stream()
             .map(userDto -> this.userRepository.findById(userDto.getId())
                 .orElseThrow(() -> new ResourceNotFoundException(userDto.getId()))
             ).collect(Collectors.toSet());

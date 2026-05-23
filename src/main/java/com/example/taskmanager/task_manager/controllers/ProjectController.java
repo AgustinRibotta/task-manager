@@ -1,6 +1,7 @@
 package com.example.taskmanager.task_manager.controllers;
 
-import com.example.taskmanager.task_manager.dtos.ProjectDto;
+import com.example.taskmanager.task_manager.dtos.ProjectRequestDto;
+import com.example.taskmanager.task_manager.dtos.ProjectResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,7 +40,7 @@ public class ProjectController {
     )
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/all")
-    public ResponseEntity<List<ProjectDto>> getAll() {
+    public ResponseEntity<List<ProjectResponseDto>> getAll() {
         return ResponseEntity.ok(this.projectService.getAll());
     }
 
@@ -51,10 +52,10 @@ public class ProjectController {
     )
     @PreAuthorize("@securityConfigProject.isProject(#id) or hasRole('ADMIN')")
     @GetMapping("/project/{id}")
-    public ResponseEntity<ProjectDto> getById(@PathVariable Long id) {
-        ProjectDto projecDto = this.projectService.getById(id);
+    public ResponseEntity<ProjectResponseDto> getById(@PathVariable Long id) {
+        ProjectResponseDto projectDto = this.projectService.getById(id);
 
-        return ResponseEntity.ok(projecDto);
+        return ResponseEntity.ok(projectDto);
     }
 
     // POST - 201 Created - 400 Bad Request - 409 Conflict
@@ -65,15 +66,15 @@ public class ProjectController {
     )
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/project/new")
-    public ResponseEntity<ProjectDto> post(@Valid @RequestBody ProjectDto projecDto) {
-        
-        ProjectDto newProjecDto = this.projectService.post(projecDto);
+    public ResponseEntity<ProjectResponseDto> post(@Valid @RequestBody ProjectRequestDto projectDto) {
+
+        ProjectResponseDto newProjectDto = this.projectService.post(projectDto);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
             .path("/{id}")
-            .buildAndExpand(newProjecDto.getId())
+            .buildAndExpand(newProjectDto.getId())
             .toUri();
         
-        return ResponseEntity.created(location).body(newProjecDto);
+        return ResponseEntity.created(location).body(newProjectDto);
     }
 
     // PUT - 200 OK - 404 Not Found
@@ -84,11 +85,11 @@ public class ProjectController {
     )
     @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
     @PutMapping("project/{id}")
-    public ResponseEntity<ProjectDto> put(@PathVariable Long id, @RequestBody ProjectDto projecDto) {
-        
-        ProjectDto updateProjecDto = this.projectService.put(projecDto, id);
+    public ResponseEntity<ProjectResponseDto> put(@PathVariable Long id, @RequestBody ProjectRequestDto projectDto) {
 
-        return ResponseEntity.ok(updateProjecDto);
+        ProjectResponseDto updateProjectDto = this.projectService.put(projectDto, id);
+
+        return ResponseEntity.ok(updateProjectDto);
     }
 
     // DELETE - 204 No Content - 404 Not Found
@@ -106,7 +107,7 @@ public class ProjectController {
 
     @PreAuthorize("@securytiConfigUser.isUser(#id) or hasRole('ADMIN')")
     @GetMapping("/userId/{id}")
-    public ResponseEntity<List<ProjectDto>> projectByUserId (@PathVariable Long id) {
+    public ResponseEntity<List<ProjectResponseDto>> projectByUserId (@PathVariable Long id) {
         return ResponseEntity.ok(this.projectService.findByUsersId(id));
     }
 }

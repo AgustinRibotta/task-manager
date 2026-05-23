@@ -3,16 +3,7 @@ package com.example.taskmanager.task_manager.entities;
 import java.util.List;
 import java.util.Set;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -29,9 +20,14 @@ public class ProjectEntity {
     @Column(unique = true)
     private String name;
 
+    @Column(length = 2000)
     private String description;
 
-    @OneToMany(mappedBy = "projectEntity")
+    @OneToMany(
+            mappedBy = "projectEntity",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
     private List<TaskEntity> taskEntities;
 
     @ManyToMany
