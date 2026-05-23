@@ -87,7 +87,7 @@
                 "name": ""
             }
         ],
-        "projecDtos": [
+        "projectDtos": [
             {
                 "id": ,
                 "name": ""

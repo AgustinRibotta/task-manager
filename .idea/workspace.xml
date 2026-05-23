@@ -5,17 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ebc6aaab-f144-4903-9c50-57745ab66cc0" name="Changes" comment="Test for intlej">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/controllers/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/controllers/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/services/IUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/services/IUserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/services/JwtService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/services/JwtService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/services/imp/UserServiceImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/services/imp/UserServiceImp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/controllers/ProjectController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/controllers/ProjectController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/repositories/IProjectRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/repositories/IProjectRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/repositories/IUserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/repositories/IUserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/services/IProjectService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/services/IProjectService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/services/imp/ProjectServiceImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/services/imp/ProjectServiceImp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/controllers/AuthController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/controllers/AuthController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/openApi/OpenApiConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/openApi/OpenApiConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/services/IUserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/services/IUserService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/services/JwtService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/services/JwtService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/services/imp/UserServiceImp.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/services/imp/UserServiceImp.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/controllers/ProjectController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/controllers/ProjectController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/repositories/IProjectRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/repositories/IProjectRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/services/IProjectService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/services/IProjectService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/services/imp/ProjectServiceImp.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/services/imp/ProjectServiceImp.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/generated-sources/annotations/com/example/taskmanager/task_manager/mappers/IProjectForUserMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/annotations/com/example/taskmanager/task_manager/mappers/IProjectForUserMapperImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/generated-sources/annotations/com/example/taskmanager/task_manager/mappers/IProjectMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/annotations/com/example/taskmanager/task_manager/mappers/IProjectMapperImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/generated-sources/annotations/com/example/taskmanager/task_manager/mappers/IRoleMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/annotations/com/example/taskmanager/task_manager/mappers/IRoleMapperImpl.java" afterDir="false" />
@@ -94,7 +96,7 @@
       <workItem from="1779013020856" duration="147000" />
       <workItem from="1779013191033" duration="5576000" />
       <workItem from="1779298954839" duration="6571000" />
-      <workItem from="1779518508052" duration="323000" />
+      <workItem from="1779518508052" duration="3527000" />
     </task>
     <task id="LOCAL-00001" summary="Test for intlej">
       <option name="closed" value="true" />

@@ -69,7 +69,6 @@ public class AuthController {
         UserDto user = userService.findByUsername(request.getUsername())
                 .orElseThrow();
 
-        // 🔥 GENERAR TOKEN CON ENTITY
         String jwtToken = jwtService.generateToken(user);
 
         return ResponseEntity.ok(new AuthenticationResponse(jwtToken));

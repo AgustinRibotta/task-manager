@@ -103,4 +103,10 @@ public class ProjectController {
         this.projectService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PreAuthorize("@securytiConfigUser.isUser(#id) or hasRole('ADMIN')")
+    @GetMapping("/userId/{id}")
+    public ResponseEntity<List<ProjectDto>> projectByUserId (@PathVariable Long id) {
+        return ResponseEntity.ok(this.projectService.findByUsersId(id));
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.taskmanager.task_manager.repositories;
 
+import com.example.taskmanager.task_manager.entities.ProjectEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,5 +19,4 @@ public interface IUserRepository extends JpaRepository<UserEntity, Long> {
 
     @Query("SELECT u FROM UserEntity u JOIN FETCH u.taskEntities WHERE u.username = :username")
     Optional<UserEntity> findByUsernameWithTask(@Param("username") String username);
-
 }

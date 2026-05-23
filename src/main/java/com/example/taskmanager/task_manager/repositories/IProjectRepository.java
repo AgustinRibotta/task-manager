@@ -7,12 +7,16 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.taskmanager.task_manager.entities.ProjectEntity;
+
+import java.util.List;
 import java.util.Optional;
 
 
 public interface IProjectRepository extends JpaRepository<ProjectEntity, Long> {
 
     Optional<ProjectEntity> findByName(String name);
+
+    List<ProjectEntity> findByUsers_Id(Long userId);
 
     @Modifying
     @Transactional

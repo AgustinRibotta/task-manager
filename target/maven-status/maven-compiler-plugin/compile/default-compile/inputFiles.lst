@@ -1,3 +1,4 @@
+/home/agusitn/task-manager/src/main/java/com/example/taskmanager/task_manager/dtos/ProjectDto.java
 /home/agusitn/task-manager/src/main/java/com/example/taskmanager/task_manager/config/SecurytiConfigUser.java
 /home/agusitn/task-manager/src/main/java/com/example/taskmanager/task_manager/config/GlobalExceptionHandler.java
 /home/agusitn/task-manager/src/main/java/com/example/taskmanager/task_manager/controllers/AuthController.java
@@ -22,7 +23,6 @@
 /home/agusitn/task-manager/src/main/java/com/example/taskmanager/task_manager/services/imp/TaskServiceImp.java
 /home/agusitn/task-manager/src/main/java/com/example/taskmanager/task_manager/config/CorsConfig.java
 /home/agusitn/task-manager/src/main/java/com/example/taskmanager/task_manager/config/SecurityConfigProject.java
-/home/agusitn/task-manager/src/main/java/com/example/taskmanager/task_manager/dtos/ProjecDto.java
 /home/agusitn/task-manager/src/main/java/com/example/taskmanager/task_manager/enums/TaskStatus.java
 /home/agusitn/task-manager/src/main/java/com/example/taskmanager/task_manager/services/IRoleService.java
 /home/agusitn/task-manager/src/main/java/com/example/taskmanager/task_manager/mappers/ITaskMapper.java

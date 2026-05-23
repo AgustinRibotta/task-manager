@@ -111,4 +111,14 @@ public class ProjectServiceImp implements IProjectService {
         this.projectRepository.deleteUserFromProjects(userId);
     }
 
+    @Override
+    public List<ProjectDto> findByUsersId(Long userId) {
+
+        return this.projectRepository.findByUsers_Id(userId)
+                .stream()
+                .map(projectMapper::projectEntityToProjecDto)
+                .toList();
+    }
+
+
 }
