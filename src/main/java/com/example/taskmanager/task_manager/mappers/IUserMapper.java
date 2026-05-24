@@ -6,7 +6,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {IRoleMapper.class})
 public interface IUserMapper {
 
     @Mapping(source = "projectEntities", target = "projectResponseDto")

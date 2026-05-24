@@ -94,7 +94,7 @@ public class AuthController {
             description = "Requires authentication with JWT and ADMIN role or be the owner"
     )
     @PreAuthorize("@securytiConfigUser.isUser(#id) or hasRole('ADMIN')")
-    @GetMapping("/users/{id}")
+    @GetMapping("/user/{id}")
     public ResponseEntity<UserDto> getById(@PathVariable Long id) {
         UserDto userDto = this.userService.getById(id);
 

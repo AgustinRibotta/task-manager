@@ -7,7 +7,7 @@ import org.mapstruct.Mapping;
 
 import com.example.taskmanager.task_manager.entities.ProjectEntity;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {IProjectTaskMapper.class, IProjectUserMapper.class})
 public interface IProjectMapper {
 
     @Mapping(target = "id", ignore = true)

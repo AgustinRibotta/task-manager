@@ -23,7 +23,7 @@ public class ProjectResponseDto {
 
     private String description;
 
-    private List<TaskDto> tasksDto;
+    private List<ProjectTaskDto> tasksDto;
 
-    private Set<UserDto> usersDto;
+    private Set<ProjectUserDto> usersDto;
 }

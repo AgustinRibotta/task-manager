@@ -32,11 +32,15 @@
 /home/agusitn/task-manager/src/main/java/com/example/taskmanager/task_manager/dtos/TaskDto.java
 /home/agusitn/task-manager/src/main/java/com/example/taskmanager/task_manager/repositories/ITaskRepository.java
 /home/agusitn/task-manager/src/main/java/com/example/taskmanager/task_manager/dtos/ProjectResponseDto.java
+/home/agusitn/task-manager/src/main/java/com/example/taskmanager/task_manager/dtos/ProjectUserDto.java
 /home/agusitn/task-manager/src/main/java/com/example/taskmanager/task_manager/config/CorsConfig.java
 /home/agusitn/task-manager/src/main/java/com/example/taskmanager/task_manager/services/imp/UserDetailsServiceImpl.java
 /home/agusitn/task-manager/src/main/java/com/example/taskmanager/task_manager/config/SecurityConfigProject.java
+/home/agusitn/task-manager/src/main/java/com/example/taskmanager/task_manager/mappers/IProjectTaskMapper.java
 /home/agusitn/task-manager/src/main/java/com/example/taskmanager/task_manager/enums/TaskStatus.java
+/home/agusitn/task-manager/src/main/java/com/example/taskmanager/task_manager/dtos/ProjectTaskDto.java
 /home/agusitn/task-manager/src/main/java/com/example/taskmanager/task_manager/services/ITaskService.java
+/home/agusitn/task-manager/src/main/java/com/example/taskmanager/task_manager/mappers/IProjectUserMapper.java
 /home/agusitn/task-manager/src/main/java/com/example/taskmanager/task_manager/services/JwtService.java
 /home/agusitn/task-manager/src/main/java/com/example/taskmanager/task_manager/services/IRoleService.java
 /home/agusitn/task-manager/src/main/java/com/example/taskmanager/task_manager/openApi/OpenApiConfig.java

@@ -11,15 +11,19 @@ import com.example.taskmanager.task_manager.entities.UserEntity;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import javax.annotation.processing.Generated;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2026-05-23T22:08:19+0200",
+    date = "2026-05-24T23:06:43+0200",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.10 (Ubuntu)"
 )
 @Component
 public class IUserMapperImpl implements IUserMapper {
+
+    @Autowired
+    private IRoleMapper iRoleMapper;
 
     @Override
     public UserDto userToUserDto(UserEntity user) {
@@ -86,19 +90,6 @@ public class IUserMapperImpl implements IUserMapper {
         return set1;
     }
 
-    protected RoleDto roleEntityToRoleDto(RoleEntity roleEntity) {
-        if ( roleEntity == null ) {
-            return null;
-        }
-
-        RoleDto roleDto = new RoleDto();
-
-        roleDto.setId( roleEntity.getId() );
-        roleDto.setName( roleEntity.getName() );
-
-        return roleDto;
-    }
-
     protected Set<RoleDto> roleEntitySetToRoleDtoSet(Set<RoleEntity> set) {
         if ( set == null ) {
             return null;
@@ -106,7 +97,7 @@ public class IUserMapperImpl implements IUserMapper {
 
         Set<RoleDto> set1 = new LinkedHashSet<RoleDto>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
         for ( RoleEntity roleEntity : set ) {
-            set1.add( roleEntityToRoleDto( roleEntity ) );
+            set1.add( iRoleMapper.roleEntityToRoleDto( roleEntity ) );
         }
 
         return set1;
@@ -169,19 +160,6 @@ public class IUserMapperImpl implements IUserMapper {
         return set1;
     }
 
-    protected RoleEntity roleDtoToRoleEntity(RoleDto roleDto) {
-        if ( roleDto == null ) {
-            return null;
-        }
-
-        RoleEntity roleEntity = new RoleEntity();
-
-        roleEntity.setId( roleDto.getId() );
-        roleEntity.setName( roleDto.getName() );
-
-        return roleEntity;
-    }
-
     protected Set<RoleEntity> roleDtoSetToRoleEntitySet(Set<RoleDto> set) {
         if ( set == null ) {
             return null;
@@ -189,7 +167,7 @@ public class IUserMapperImpl implements IUserMapper {
 
         Set<RoleEntity> set1 = new LinkedHashSet<RoleEntity>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
         for ( RoleDto roleDto : set ) {
-            set1.add( roleDtoToRoleEntity( roleDto ) );
+            set1.add( iRoleMapper.roleDtoToRoleEntity( roleDto ) );
         }
 
         return set1;
