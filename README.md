@@ -1,231 +1,170 @@
-# Task Manager API Documentation
+# Task Manager API 🚀
 
-**Base URL:** `http://localhost:8080/api/v1`
-**Authentication:** JWT Bearer Token (HS256)
-
----
-
-## 1. Authentication
-
-### **Login User**
-
-* **POST** `/auth/login`
-* **Body (JSON):**
-
-```json
-{
-  "username": "",
-  "password": ""
-}
-```
-
-* **Response:**
-
-  * 200 OK: `{ "token": "" }`
-  * 401 Unauthorized: Invalid credentials
-* **Access:** Public
-
-### **Register User**
-
-* **POST** `/auth/users`
-* **Body (JSON):**
-
-```json
-{
-  "email": "",
-  "username": "",
-  "password": "",
-  "roleDtos": [{"id": }]
-}
-```
-
-* **Response:**
-
-  * 201 Created: User created
-  * 400 Bad Request: Invalid data
-  * 409 Conflict: User already exists
-* **Access:** ADMIN
+A RESTful API built with **Spring Boot 3** for managing tasks, projects, users, and roles.
+The application implements secure authentication and authorization using **JWT** and **Spring Security**, following a layered and scalable backend architecture.
 
 ---
 
-## 2. Users
+# 📖 Project Overview
 
-| Endpoint           | Method | Roles / Access                           | Description       |
-| ------------------ | ------ | ---------------------------------------- | ----------------- |
-| `/auth/users`      | GET    | ADMIN                                    | Get all users     |
-| `/auth/users/{id}` | GET    | ADMIN or the user itself (`isUser(#id)`) | Get user by ID    |
-| `/auth/users/{id}` | PUT    | ADMIN                                    | Update user by ID |
-| `/auth/users/{id}` | DELETE | ADMIN                                    | Delete user by ID |
+The goal of this project is to provide a complete backend system for task and project management in collaborative environments.
 
-**User JSON Example Request:**
+The API allows administrators and managers to:
 
-```json
+* Manage users and roles
+* Create and organize projects
+* Assign tasks to users
+* Control access permissions based on roles
+* Secure endpoints using JWT authentication
 
-{
-  "username": "",
-  "email": "",
-  "password": "",
-  "roleDtos": [{"id": }]
-}
+The project follows modern backend development practices using:
 
-```
-**User JSON Example Response:**
+* REST architecture
+* DTO pattern
+* Layered architecture
+* Database versioning
+* Secure authentication mechanisms
+* API documentation standards
 
-```json
-
-{
-    "id": ,
-    "username": "",
-    "email": "",
-    "roleDtos": [
-        {
-            "id": ,
-            "name": ""
-        },
-            {
-                "id": ,
-                "name": ""
-            }
-        ],
-        "projectDtos": [
-            {
-                "id": ,
-                "name": ""
-            }
-        ],
-        "taskDto": [
-            {
-                "id": ,
-                "name": ""
-            }
-        ]
-},
-
-```
 ---
 
-## 3. Roles
+# 🛠️ Technologies & Tools
 
-| Endpoint      | Method | Roles / Access | Description     |
-| ------------- | ------ | -------------- | --------------- |
-| `/roles`      | GET    | ADMIN         | Get all roles   |
-| `/roles/{id}` | GET    | ADMIN         | Get role by ID  |
-| `/roles`      | POST   | ADMIN          | Create new role |
-| `/roles/{id}` | PUT    | ADMIN          | Update role     |
-| `/roles/{id}` | DELETE | ADMIN          | Delete role     |
+| Technology            | Purpose                            |
+| --------------------- | ---------------------------------- |
+| **Java 17**           | Main programming language          |
+| **Spring Boot 3.5.3** | Backend framework                  |
+| **Spring Web**        | REST API development               |
+| **Spring Security**   | Authentication & authorization     |
+| **JWT (jjwt)**        | Token-based authentication         |
+| **Spring Data JPA**   | Database access layer              |
+| **PostgreSQL**        | Relational database                |
+| **Liquibase**         | Database migrations/versioning     |
+| **MapStruct**         | Entity ↔ DTO mapping               |
+| **Lombok**            | Boilerplate code reduction         |
+| **Bean Validation**   | Request validation                 |
+| **Swagger / OpenAPI** | API documentation                  |
+| **Maven**             | Dependency management & build tool |
 
-**Role JSON Example Request:**
-
-```json
-{
-  "name": ""
-}
-```
-**Role JSON Example Response:**
-
-```json
-{
-    "id":,
-    "name": ""
-}
-```
 ---
 
-## 4. Projects
+# 🔐 Security
 
-| Endpoint                 | Method | Roles / Access                               | Description          |
-| ------------------------ | ------ | -------------------------------------------- | -------------------- |
-| `/projects/all`          | GET    | ADMIN                                        | Get all projects     |
-| `/projects/project/{id}` | GET    | ADMIN or associated users (`isProject(#id)`) | Get project by ID    |
-| `/projects/project/new`  | POST   | ADMIN                                        | Create new project   |
-| `/projects/project/{id}` | PUT    | ADMIN, MANAGER                               | Update project by ID |
-| `/projects/project/{id}` | DELETE | ADMIN                                        | Delete project by ID |
+Authentication is implemented using **JWT Bearer Tokens**.
 
-**Project JSON Example Request:**
+After login, the API generates a signed token that must be included in protected requests.
 
-```json
-{
-  "name": "",
-  "description": "",
-  "status": "",
-  "projectDto":{ "id":  },
-  "userSummaryDto": [
-    { "id":  }
-  ]
-}
+Example:
+
+```http
+Authorization: Bearer <jwt-token>
 ```
-**Project JSON Example Response:**
 
-```json
-{
-    "id": ,
-    "name": "",
-    "description": "",
-    "tasksDtos": [
-        {
-            "id": ,
-            "name":""
-        },
-        {
-            "id": ,
-            "name": ""
-        }
-    ],
-    "usersDtos": [
-        {
-            "id": ,
-            "username": ""
-        },
-        {
-            "id": ,
-            "username": ""
-        }
-    ]
-}
-```
+The system supports **role-based authorization** with different access levels:
+
+* **ADMIN**
+* **MANAGER**
+* **USER**
+
+Spring Security is used to secure endpoints and validate permissions.
+
 ---
 
-## 5. Tasks
+# 🗄️ Database Management
 
-| Endpoint           | Method | Roles / Access                                     | Description       |
-| ------------------ | ------ | -------------------------------------------------- | ----------------- |
-| `/tasks/all`       | GET    | ADMIN                                              | Get all tasks     |
-| `/tasks/task/{id}` | GET    | ADMIN, MANAGER or associated users (`isTask(#id)`) | Get task by ID    |
-| `/tasks/task/new`  | POST   | ADMIN, MANAGER                                     | Create new task   |
-| `/tasks/task/{id}` | PUT    | ADMIN, MANAGER or associated users (`isTask(#id)`) | Update task by ID |
-| `/tasks/task/{id}` | DELETE | ADMIN, MANAGER                                     | Delete task by ID |
+The project uses **PostgreSQL** as the main database.
 
-**Task JSON Example Request:**
+Database schema changes are managed through **Liquibase**, allowing:
 
-```json
-{
-  "name": "",
-  "description": "",
-  "status": "",
-  "userSummaryDto": [
-    { "id":  }
-  ]
-}
-```
-**Task JSON Example Response:**
+* Version-controlled migrations
+* Safer database updates
+* Consistent environments across development and production
 
-```json
-{
-    "id": ,
-    "name": "",
-    "description": "",
-    "projectDto": {
-        "id": ,
-        "name": ""
-    },
-    "status": "",
-    "userSummaryDto": [
-        {
-            "id": ,
-            "username": ""
-        }
-    ]
-}
+---
+
+# 📚 API Documentation
+
+Swagger/OpenAPI integration provides interactive API documentation and endpoint testing.
+
+Once the application is running:
+
+```bash
+http://localhost:8080/swagger-ui/index.html
 ```
 
+---
 
+# 🧩 Main Features
+
+## Authentication
+
+* Login with JWT
+* Secure token validation
+
+## User Management
+
+* Create users
+* Update users
+* Assign roles
+
+## Role Management
+
+* Create and manage system roles
+* Authorization control
+
+## Project Management
+
+* Create projects
+* Assign users to projects
+* Manage project status
+
+## Task Management
+
+* Create tasks
+* Assign tasks to users
+* Track task status
+
+---
+
+# 🏗️ Architecture
+
+The project follows a layered architecture:
+
+```text
+Controller → Service → Repository → Database
+```
+
+### Main Layers
+
+| Layer      | Responsibility          |
+| ---------- | ----------------------- |
+| Controller | Handle HTTP requests    |
+| Service    | Business logic          |
+| Repository | Database operations     |
+| DTO        | Data transfer objects   |
+| Mapper     | Entity ↔ DTO conversion |
+
+This structure improves:
+
+* Maintainability
+* Scalability
+* Separation of concerns
+* Testability
+
+---
+
+# ⚙️ Development Features
+
+The project also includes:
+
+* Input validation with Bean Validation
+* Global exception handling
+* DTO mapping with MapStruct
+* Hot reload with Spring DevTools
+* Testing support with Spring Boot Test
+
+---
+
+# 📄 License
+
+This project is intended for educational and backend development purposes.

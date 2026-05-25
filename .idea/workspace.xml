@@ -5,25 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ebc6aaab-f144-4903-9c50-57745ab66cc0" name="Changes" comment="Test for intlej">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/dtos/ProjectTaskDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/dtos/ProjectUserDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/mappers/IProjectTaskMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/mappers/IProjectUserMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/controllers/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/controllers/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/dtos/ProjectResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/dtos/ProjectResponseDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/mappers/IProjectMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/mappers/IProjectMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/mappers/IUserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/mappers/IUserMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/controllers/AuthController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/controllers/AuthController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/dtos/ProjectResponseDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/dtos/ProjectResponseDto.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/mappers/IProjectMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/mappers/IProjectMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/mappers/IProjectMapperImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/mappers/IProjectMapperImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/mappers/IUserMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/mappers/IUserMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/mappers/IUserMapperImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/mappers/IUserMapperImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/generated-sources/annotations/com/example/taskmanager/task_manager/mappers/IProjectMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/annotations/com/example/taskmanager/task_manager/mappers/IProjectMapperImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/generated-sources/annotations/com/example/taskmanager/task_manager/mappers/IRoleMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/annotations/com/example/taskmanager/task_manager/mappers/IRoleMapperImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/generated-sources/annotations/com/example/taskmanager/task_manager/mappers/ITaskMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/annotations/com/example/taskmanager/task_manager/mappers/ITaskMapperImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/generated-sources/annotations/com/example/taskmanager/task_manager/mappers/IUserMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/annotations/com/example/taskmanager/task_manager/mappers/IUserMapperImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,7 +89,8 @@
       <workItem from="1779013191033" duration="5576000" />
       <workItem from="1779298954839" duration="6571000" />
       <workItem from="1779518508052" duration="18994000" />
-      <workItem from="1779610651675" duration="11619000" />
+      <workItem from="1779610651675" duration="11827000" />
+      <workItem from="1779724211799" duration="3168000" />
     </task>
     <task id="LOCAL-00001" summary="Test for intlej">
       <option name="closed" value="true" />
