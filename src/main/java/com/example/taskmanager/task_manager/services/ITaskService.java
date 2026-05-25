@@ -2,14 +2,15 @@ package com.example.taskmanager.task_manager.services;
 
 import java.util.List;
 
-import com.example.taskmanager.task_manager.dtos.TaskDto;
+import com.example.taskmanager.task_manager.dtos.task.TaskRequestDto;
+import com.example.taskmanager.task_manager.dtos.task.TaskResponseDto;
 
 public interface ITaskService {
 
-    List<TaskDto> getAll ();
-    TaskDto getById (Long taskId);
-    TaskDto post (TaskDto taskDto);
-    TaskDto put (TaskDto taskDto, Long taskId);
+    List<TaskResponseDto> getAll ();
+    TaskResponseDto getById (Long taskId);
+    TaskResponseDto post (TaskRequestDto task);
+    TaskResponseDto put (TaskRequestDto task, Long taskId);
     void delete (Long taskId);
     void deleteUserFromTask(Long userId);
 

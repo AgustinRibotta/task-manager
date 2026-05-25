@@ -2,8 +2,8 @@ package com.example.taskmanager.task_manager.services;
 
 import java.util.List;
 
-import com.example.taskmanager.task_manager.dtos.ProjectRequestDto;
-import com.example.taskmanager.task_manager.dtos.ProjectResponseDto;
+import com.example.taskmanager.task_manager.dtos.project.ProjectRequestDto;
+import com.example.taskmanager.task_manager.dtos.project.ProjectResponseDto;
 
 public interface IProjectService {
 

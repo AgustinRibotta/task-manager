@@ -2,6 +2,8 @@ package com.example.taskmanager.task_manager.dtos;
 
 import java.util.Set;
 
+import com.example.taskmanager.task_manager.dtos.project.ProjectResponseDto;
+import com.example.taskmanager.task_manager.dtos.task.TaskResponseDto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -33,10 +35,10 @@ public class UserDto {
     @Email(message = "Invalid email format")
     private String email;
 
-    private Set<RoleDto> roleDto;
+    private Set<RoleDto> roles;
 
-    private Set<ProjectResponseDto> projectResponseDto;
+    private Set<ProjectResponseDto> projects;
 
     @ManyToMany(mappedBy = "users")
-    private Set<TaskDto> taskDto;
+    private Set<TaskResponseDto> tasks;
 }

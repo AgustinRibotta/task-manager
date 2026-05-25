@@ -1,19 +1,22 @@
 package com.example.taskmanager.task_manager.services.imp;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.example.taskmanager.task_manager.dtos.UserDto;
+import com.example.taskmanager.task_manager.dtos.project.ProjectResponseDto;
+import com.example.taskmanager.task_manager.dtos.task.TaskRequestDto;
+import com.example.taskmanager.task_manager.dtos.task.TaskResponseDto;
 import org.springframework.stereotype.Service;
 
-import com.example.taskmanager.task_manager.dtos.TaskDto;
 import com.example.taskmanager.task_manager.entities.ProjectEntity;
 import com.example.taskmanager.task_manager.entities.TaskEntity;
 import com.example.taskmanager.task_manager.entities.UserEntity;
 import com.example.taskmanager.task_manager.exceptions.ResourceAlreadyExistsException;
 import com.example.taskmanager.task_manager.exceptions.ResourceNotFoundException;
-import com.example.taskmanager.task_manager.mappers.ITaskMapper;
+import com.example.taskmanager.task_manager.mappers.task.ITaskMapper;
 import com.example.taskmanager.task_manager.repositories.IProjectRepository;
 import com.example.taskmanager.task_manager.repositories.ITaskRepository;
 import com.example.taskmanager.task_manager.repositories.IUserRepository;
@@ -31,103 +34,71 @@ public class TaskServiceImp implements ITaskService {
     private final IProjectRepository projectRepository;
 
     @Override
-    public List<TaskDto> getAll() {
+    public List<TaskResponseDto> getAll() {
         
-        List<TaskDto>  listTaskDtos = this.taskRepository.findAll().stream()
+        List<TaskResponseDto> listTaskResponseDtos = this.taskRepository.findAll().stream()
             .map(task -> {
-                TaskDto dto = this.taskMapper.tasktEntityTopTaskDto(task);
+                TaskResponseDto dto = this.taskMapper.taskEntityTopTaskDto(task);
                 return dto;
             })
             .collect(Collectors.toList());
 
-        return listTaskDtos;
+        return listTaskResponseDtos;
     }
 
     @Override
-    public TaskDto getById(Long taskId) {
+    public TaskResponseDto getById(Long taskId) {
         
         TaskEntity taskEntity = this.taskRepository.findById(taskId)
             .orElseThrow(() -> new ResourceNotFoundException(taskId)
             );
 
-        return this.taskMapper.tasktEntityTopTaskDto(taskEntity);
+        return this.taskMapper.taskEntityTopTaskDto(taskEntity);
     }
 
     @Override
-    public TaskDto post(TaskDto taskDto) {
+    public TaskResponseDto post(TaskRequestDto request) {
 
-        if (this.taskRepository.existsByNameAndProjectEntity_Id(taskDto.getName(), taskDto.getProjectResponseDto().getId())) {
-            throw new ResourceAlreadyExistsException(taskDto.getName());
+        if (request.getProjectId() != null) {
+
+            boolean exists = taskRepository.existsByNameAndProjectEntity_Id(
+                    request.getName(),
+                    request.getProjectId()
+            );
+
+            if (exists) {
+                throw new ResourceAlreadyExistsException(
+                        "Task with name already exists in this project"
+                );
+            }
         }
 
-        ProjectEntity projectEntity =  this.projectRepository.findById(taskDto.getProjectResponseDto().getId())
-            .orElseThrow(() -> new ResourceNotFoundException( taskDto.getProjectResponseDto().getId()));
-            
-        Set<Long> userIds = taskDto.getUserDto().stream()
-            .map(UserDto::getId)
-            .collect(Collectors.toSet());
+        TaskEntity task = taskMapper.tasktDtoToTaskEntity(request);
 
-        List<UserEntity> IsUserEntities = this.userRepository.findAllById(userIds);
+        Set<UserEntity> users = new HashSet<>(this.userRepository.findAllById(request.getUserId()));
 
-        if (IsUserEntities.size() != userIds.size()) {
-            throw new ResourceNotFoundException("Some users not found: " + userIds);
+        if (users.size() != request.getUserId().size()) {
+            throw new ResourceNotFoundException("Some users not found");
         }
 
-        TaskEntity taskEntity = this.taskMapper.tasktDtoToTaskEntity(taskDto);
+        task.setUsers(users);
 
-        Set<UserEntity> userEntities = taskDto.getUserDto().stream()
-            .map( userDto -> this.userRepository.findById(userDto.getId())
-                .orElseThrow(() -> new ResourceAlreadyExistsException(userDto.getId()))
-            ).collect(Collectors.toSet());
-        
-        taskEntity.setUsers(userEntities);
-        taskEntity.setProjectEntity(projectEntity);
+        if (request.getProjectId() != null) {
+            ProjectEntity project = this.projectRepository.findById(request.getProjectId())
+                    .orElseThrow(() -> new ResourceNotFoundException(request.getProjectId()));
 
-        taskEntity = this.taskRepository.save(taskEntity);
-        
-        return this.taskMapper.tasktEntityTopTaskDto(taskEntity);
+            task.setProject(project);
+        }
+
+        TaskEntity saved = taskRepository.save(task);
+
+        return taskMapper.taskEntityTopTaskDto(saved);
     }
     
     @Override
-    public TaskDto put(TaskDto taskDto, Long taskId) {
-
-        this.taskRepository.findByName(taskDto.getName())
-            .filter(existing -> existing.getId() != taskId)
-            .ifPresent(existing -> {
-                throw new ResourceAlreadyExistsException(taskDto.getName());
-            });
-        
-        ProjectEntity projectEntity = this.projectRepository.findById(taskDto.getProjectResponseDto().getId())
-            .orElseThrow(() -> new ResourceNotFoundException( taskDto.getProjectResponseDto().getId()));
-        
-        Set<Long> userIds = taskDto.getUserDto().stream()
-            .map(UserDto::getId)
-            .collect(Collectors.toSet());
-
-        List<UserEntity> IsUserEntities = this.userRepository.findAllById(userIds);
-
-        if (IsUserEntities.size() != userIds.size()) {
-            throw new ResourceNotFoundException("Some users not found: " + userIds);
-        }
-
-        TaskEntity taskEntity = this.taskRepository.findById(taskId)
-            .orElseThrow(() -> new ResourceNotFoundException(taskId));
-
-        taskEntity.setName(taskDto.getName());
-        taskEntity.setDescription(taskDto.getDescription());
-
-        Set<UserEntity> userEntities = taskDto.getUserDto().stream()
-            .map(userDto -> this.userRepository.findById(userDto.getId())
-                .orElseThrow(() -> new ResourceNotFoundException(userDto.getId()))
-            ).collect(Collectors.toSet());
+    public TaskResponseDto put(TaskRequestDto taskResponseDto, Long taskId) {
 
 
-        taskEntity.setUsers(userEntities);
-        taskEntity.setProjectEntity(projectEntity);
-        
-        taskEntity = this.taskRepository.save(taskEntity);
-
-        return this.taskMapper.tasktEntityTopTaskDto(taskEntity);
     }
     
     @Override

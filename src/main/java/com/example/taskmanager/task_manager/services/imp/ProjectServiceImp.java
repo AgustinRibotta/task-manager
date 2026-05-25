@@ -3,15 +3,15 @@ package com.example.taskmanager.task_manager.services.imp;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.example.taskmanager.task_manager.dtos.ProjectRequestDto;
-import com.example.taskmanager.task_manager.dtos.ProjectResponseDto;
+import com.example.taskmanager.task_manager.dtos.project.ProjectRequestDto;
+import com.example.taskmanager.task_manager.dtos.project.ProjectResponseDto;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.example.taskmanager.task_manager.entities.ProjectEntity;
 import com.example.taskmanager.task_manager.exceptions.ResourceAlreadyExistsException;
 import com.example.taskmanager.task_manager.exceptions.ResourceNotFoundException;
-import com.example.taskmanager.task_manager.mappers.IProjectMapper;
+import com.example.taskmanager.task_manager.mappers.project.IProjectMapper;
 import com.example.taskmanager.task_manager.repositories.IProjectRepository;
 import com.example.taskmanager.task_manager.repositories.IUserRepository;
 import com.example.taskmanager.task_manager.services.IProjectService;
@@ -24,7 +24,6 @@ public class ProjectServiceImp implements IProjectService {
 
     private final IProjectRepository projectRepository;
     private final IProjectMapper projectMapper;
-    private final IUserRepository userRepository;
 
     @Override
     public List<ProjectResponseDto> getAll() {
@@ -45,14 +44,14 @@ public class ProjectServiceImp implements IProjectService {
     }
 
     @Override
-    public ProjectResponseDto post(ProjectRequestDto projectDto) {
+    public ProjectResponseDto post(ProjectRequestDto request) {
 
 
-        if (this.projectRepository.findByName(projectDto.getName()).isPresent()) {
-            throw new ResourceAlreadyExistsException(projectDto.getName());
+        if (this.projectRepository.findByName(request.getName()).isPresent()) {
+            throw new ResourceAlreadyExistsException(request.getName());
         }
 
-        ProjectEntity projectEntity = this.projectMapper.requestToEntity(projectDto);
+        ProjectEntity projectEntity = this.projectMapper.requestToEntity(request);
 
         projectEntity = this.projectRepository.save(projectEntity);
 
@@ -60,19 +59,19 @@ public class ProjectServiceImp implements IProjectService {
     }
 
     @Override
-    public ProjectResponseDto put(ProjectRequestDto projectDto, Long id) {
+    public ProjectResponseDto put(ProjectRequestDto request, Long id) {
 
-        this.projectRepository.findByName(projectDto.getName())
+        this.projectRepository.findByName(request.getName())
             .filter(existing -> existing.getId() != id)
             .ifPresent(existing -> {
-                throw new ResourceAlreadyExistsException(projectDto.getName());
+                throw new ResourceAlreadyExistsException(request.getName());
             });
 
         ProjectEntity projectEntity = this.projectRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException(id));
 
-        projectEntity.setName(projectDto.getName());
-        projectEntity.setDescription(projectDto.getDescription());
+        projectEntity.setName(request.getName());
+        projectEntity.setDescription(request.getDescription());
 
         projectEntity = this.projectRepository.save(projectEntity);
 

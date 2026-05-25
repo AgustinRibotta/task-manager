@@ -28,7 +28,7 @@ public class ProjectEntity {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<TaskEntity> taskEntities;
+    private List<TaskEntity> tasks;
 
     @ManyToMany
     @JoinTable(

@@ -16,7 +16,7 @@ import com.example.taskmanager.task_manager.exceptions.ResourceNotFoundException
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    // Handles invalid JSON fromat errors during deserialization
+    // Handles invalid JSON format errors during deserialization
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<Map<String, String>> handleInvalidJson (HttpMessageNotReadableException ex) {
         Map<String, String> error = new HashMap<>();

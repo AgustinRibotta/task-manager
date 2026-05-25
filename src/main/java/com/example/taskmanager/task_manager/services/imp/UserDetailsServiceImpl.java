@@ -27,7 +27,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         UserEntity user = this.userRepository.findByUsername(username)
             .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-        List<SimpleGrantedAuthority> authorities = user.getRoleEntities().stream()
+        List<SimpleGrantedAuthority> authorities = user.getRoles().stream()
             .map(role -> {
                 String roleName = role.getName();
                 return roleName.startsWith("ROLE_") ? roleName : "ROLE_" + roleName;

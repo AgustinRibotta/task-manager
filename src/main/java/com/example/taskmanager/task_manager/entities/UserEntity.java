@@ -32,15 +32,15 @@ public class UserEntity {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "user_roles",
+            name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<RoleEntity> roleEntities;
+    private Set<RoleEntity> roles;
 
     @ManyToMany(mappedBy = "users")
-    private Set<ProjectEntity> projectEntities;
+    private Set<ProjectEntity> projects;
 
     @ManyToMany(mappedBy = "users")
-    private Set<TaskEntity> taskEntities;
+    private Set<TaskEntity> tasks;
 
 }

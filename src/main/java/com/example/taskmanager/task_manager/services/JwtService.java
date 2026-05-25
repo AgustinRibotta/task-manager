@@ -24,7 +24,7 @@ public class JwtService {
     public String generateToken(UserDto userDetails) {
         Claims claims = Jwts.claims().setSubject(userDetails.getUsername());
         claims.put("userId", userDetails.getId());
-        claims.put("roles", userDetails.getRoleDto().stream()
+        claims.put("roles", userDetails.getRoles().stream()
                                     .map(RoleDto::getName)
                                     .collect(Collectors.toList()));
 

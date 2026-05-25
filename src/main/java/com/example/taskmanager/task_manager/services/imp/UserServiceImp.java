@@ -60,12 +60,12 @@ public class UserServiceImp implements IUserService {
 
         user.setPassword(this.passwordEncoder.encode(user.getPassword()));
 
-        Set<RoleEntity> roles = userDto.getRoleDto().stream()
+        Set<RoleEntity> roles = userDto.getRoles().stream()
             .map( roleDto -> this.roleRepository.findById(roleDto.getId())
                 .orElseThrow(() -> new ResourceNotFoundException(roleDto.getId())))
             .collect(Collectors.toSet());
 
-        user.setRoleEntities(roles);
+        user.setRoles(roles);
 
         user = this.userRepository.save(user);
 
@@ -82,12 +82,12 @@ public class UserServiceImp implements IUserService {
         user.setEmail(userDto.getEmail());
         user.setPassword(passwordEncoder.encode((userDto.getPassword())));
         
-        Set<RoleEntity> roles = userDto.getRoleDto().stream()
+        Set<RoleEntity> roles = userDto.getRoles().stream()
             .map( roleDto -> this.roleRepository.findById(roleDto.getId())
                 .orElseThrow(() -> new ResourceNotFoundException(roleDto.getId())))
             .collect(Collectors.toSet());
         
-        user.setRoleEntities(roles);
+        user.setRoles(roles);
 
         user = this.userRepository.save(user);
 

@@ -27,7 +27,7 @@ public class SecurityConfigTask {
         String username = authentication.getName();
 
         return userRepository.findByUsernameWithTask(username)
-            .map(user -> user.getTaskEntities().stream()
+            .map(user -> user.getTasks().stream()
                 .anyMatch(task -> task.getId() == taskId))
             .orElse(false);
     }

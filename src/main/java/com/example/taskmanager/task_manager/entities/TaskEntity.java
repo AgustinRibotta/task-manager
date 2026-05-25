@@ -34,13 +34,13 @@ public class TaskEntity {
 
     private String description;
 
-    @ManyToOne
-    @JoinColumn(name = "project_id")
-    private ProjectEntity projectEntity;
-
-    @Enumerated(EnumType.STRING) 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private TaskStatus status;
+
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "project_id")
+    private ProjectEntity project;
 
     @ManyToMany
     @JoinTable(

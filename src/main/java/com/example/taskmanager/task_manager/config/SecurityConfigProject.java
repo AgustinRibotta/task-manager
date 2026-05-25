@@ -26,7 +26,7 @@ public class SecurityConfigProject {
         String username = authentication.getName();
 
         return userRepository.findByUsernameWithProjects(username)
-            .map(user -> user.getProjectEntities().stream()
+            .map(user -> user.getProjects().stream()
                     .anyMatch(project -> project.getId() == projectId))
             .orElse(false);
     }

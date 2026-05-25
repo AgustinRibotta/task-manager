@@ -18,6 +18,7 @@ public interface IProjectRepository extends JpaRepository<ProjectEntity, Long> {
 
     List<ProjectEntity> findByUsers_Id(Long userId);
 
+
     @Modifying
     @Transactional
     @Query(value = "DELETE FROM project_user WHERE user_id = :userId", nativeQuery = true)

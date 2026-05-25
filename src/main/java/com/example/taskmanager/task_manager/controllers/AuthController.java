@@ -96,9 +96,9 @@ public class AuthController {
     @PreAuthorize("@securytiConfigUser.isUser(#id) or hasRole('ADMIN')")
     @GetMapping("/user/{id}")
     public ResponseEntity<UserDto> getById(@PathVariable Long id) {
-        UserDto userDto = this.userService.getById(id);
+        UserDto response = this.userService.getById(id);
 
-        return ResponseEntity.ok(userDto);
+        return ResponseEntity.ok(response);
     }
 
     // POST - 201 Creatrd - 400 Bad Request - 409 Conflict
@@ -109,14 +109,14 @@ public class AuthController {
     )
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/users")
-    public ResponseEntity<UserDto> post(@Valid @RequestBody UserDto userDto) {
-        UserDto createdUser = this.userService.post(userDto);
+    public ResponseEntity<UserDto> post(@Valid @RequestBody UserDto request) {
+        UserDto response = this.userService.post(request);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
             .path("/{id}")
-            .buildAndExpand(createdUser.getId())
+            .buildAndExpand(response.getId())
             .toUri();
         
-            return ResponseEntity.created(location).body(createdUser);
+            return ResponseEntity.created(location).body(response);
     }
  
     // PUT - 200 OK - 404 Not Found
@@ -127,9 +127,9 @@ public class AuthController {
     )
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/users/{id}")
-    public ResponseEntity<UserDto> put(@PathVariable Long id, @RequestBody UserDto userDto) {
-        UserDto updatedUser = this.userService.put(id, userDto);
-        return ResponseEntity.ok(updatedUser);
+    public ResponseEntity<UserDto> put(@PathVariable Long id, @RequestBody UserDto request) {
+        UserDto response = this.userService.put(id, request);
+        return ResponseEntity.ok(response);
     }
 
     // DELETE - 204 No Content - 404 Not Found

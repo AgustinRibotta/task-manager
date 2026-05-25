@@ -1,12 +1,13 @@
 package com.example.taskmanager.task_manager.controllers;
 
+import com.example.taskmanager.task_manager.dtos.task.TaskRequestDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.example.taskmanager.task_manager.dtos.TaskDto;
+import com.example.taskmanager.task_manager.dtos.task.TaskResponseDto;
 import com.example.taskmanager.task_manager.services.ITaskService;
 
 import jakarta.validation.Valid;
@@ -39,11 +40,11 @@ public class TaskController {
     )
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/all")
-    public ResponseEntity<List<TaskDto>> getAll () {
+    public ResponseEntity<List<TaskResponseDto>> getAll () {
         return ResponseEntity.ok(this.taskService.getAll());
     }
 
-    // GET - 200 OK - [] - 401 Unauthorized
+    // GET BY ID - 200 OK - [] - 401 Unauthorized
     @Tag(name = "Task Controller", description = "Task management")
     @Operation(
             summary = "Get task by ID",
@@ -51,7 +52,7 @@ public class TaskController {
     )
     @PreAuthorize("@securityConfigTask.isTask(#id) or hasAnyRole('ADMIN','MANAGER')")
     @GetMapping("/task/{id}")
-    public ResponseEntity<TaskDto> getById(@PathVariable Long id) {
+    public ResponseEntity<TaskResponseDto> getById(@PathVariable Long id) {
         return ResponseEntity.ok(this.taskService.getById(id));
     }
     
@@ -63,15 +64,15 @@ public class TaskController {
     )
     @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
     @PostMapping("/task/new")
-    public ResponseEntity<TaskDto> post (@Valid @RequestBody TaskDto taskDto) {
+    public ResponseEntity<TaskResponseDto> post (@Valid @RequestBody TaskRequestDto request) {
         
-        TaskDto newTask = this.taskService.post(taskDto);
+        TaskResponseDto response = this.taskService.post(request);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
             .path("/{id}")
-            .buildAndExpand(newTask.getId())
+            .buildAndExpand(response.getId())
             .toUri();
 
-        return ResponseEntity.created(location).body(newTask);
+        return ResponseEntity.created(location).body(response);
     }
 
     // PUT - 200 OK - 404 Not Found
@@ -82,8 +83,8 @@ public class TaskController {
     )
     @PreAuthorize("@securityConfigTask.isTask(#id) or hasAnyRole('ADMIN','MANAGER')")
     @PutMapping("/task/{id}")
-    public ResponseEntity<TaskDto> put(@PathVariable Long id,@Valid @RequestBody TaskDto taskDto) {        
-        return ResponseEntity.ok(this.taskService.put(taskDto, id));
+    public ResponseEntity<TaskResponseDto> put(@PathVariable Long id, @Valid @RequestBody TaskRequestDto request) {
+        return ResponseEntity.ok(this.taskService.put(request, id));
     }
 
     // DELETE - 204 No Content - 404 Not Found

@@ -7,36 +7,36 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2026-05-24T23:06:43+0200",
+    date = "2026-05-25T22:26:31+0200",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.10 (Ubuntu)"
 )
 @Component
 public class IRoleMapperImpl implements IRoleMapper {
 
     @Override
-    public RoleDto roleEntityToRoleDto(RoleEntity roleEntity) {
-        if ( roleEntity == null ) {
+    public RoleDto roleEntityToRoleDto(RoleEntity entity) {
+        if ( entity == null ) {
             return null;
         }
 
         RoleDto roleDto = new RoleDto();
 
-        roleDto.setId( roleEntity.getId() );
-        roleDto.setName( roleEntity.getName() );
+        roleDto.setId( entity.getId() );
+        roleDto.setName( entity.getName() );
 
         return roleDto;
     }
 
     @Override
-    public RoleEntity roleDtoToRoleEntity(RoleDto roleDto) {
-        if ( roleDto == null ) {
+    public RoleEntity roleDtoToRoleEntity(RoleDto dto) {
+        if ( dto == null ) {
             return null;
         }
 
         RoleEntity roleEntity = new RoleEntity();
 
-        roleEntity.setId( roleDto.getId() );
-        roleEntity.setName( roleDto.getName() );
+        roleEntity.setId( dto.getId() );
+        roleEntity.setName( dto.getName() );
 
         return roleEntity;
     }
