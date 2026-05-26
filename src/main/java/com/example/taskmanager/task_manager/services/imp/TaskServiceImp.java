@@ -35,23 +35,21 @@ public class TaskServiceImp implements ITaskService {
 
     @Override
     public List<TaskResponseDto> getAll() {
-        
-        List<TaskResponseDto> listTaskResponseDtos = this.taskRepository.findAll().stream()
-            .map(task -> {
-                TaskResponseDto dto = this.taskMapper.taskEntityTopTaskDto(task);
-                return dto;
-            })
-            .collect(Collectors.toList());
 
-        return listTaskResponseDtos;
+        return this.taskRepository.findAll().stream()
+                .map(task -> {
+                    TaskResponseDto dto = this.taskMapper.taskEntityTopTaskDto(task);
+                    return dto;
+                })
+                .collect(Collectors.toList());
     }
 
     @Override
     public TaskResponseDto getById(Long taskId) {
-        
+
         TaskEntity taskEntity = this.taskRepository.findById(taskId)
-            .orElseThrow(() -> new ResourceNotFoundException(taskId)
-            );
+                .orElseThrow(() -> new ResourceNotFoundException(taskId)
+                );
 
         return this.taskMapper.taskEntityTopTaskDto(taskEntity);
     }
@@ -61,7 +59,7 @@ public class TaskServiceImp implements ITaskService {
 
         if (request.getProjectId() != null) {
 
-            boolean exists = taskRepository.existsByNameAndProjectEntity_Id(
+            boolean exists = taskRepository.existsByNameAndProject_Id(
                     request.getName(),
                     request.getProjectId()
             );
@@ -78,7 +76,9 @@ public class TaskServiceImp implements ITaskService {
         Set<UserEntity> users = new HashSet<>(this.userRepository.findAllById(request.getUserId()));
 
         if (users.size() != request.getUserId().size()) {
-            throw new ResourceNotFoundException("Some users not found");
+            throw new ResourceNotFoundException(
+                    "Some users not found"
+            );
         }
 
         task.setUsers(users);
@@ -94,27 +94,79 @@ public class TaskServiceImp implements ITaskService {
 
         return taskMapper.taskEntityTopTaskDto(saved);
     }
-    
+
     @Override
-    public TaskResponseDto put(TaskRequestDto taskResponseDto, Long taskId) {
+    public TaskResponseDto put(TaskRequestDto request, Long id) {
 
+        TaskEntity task = taskRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(id));
 
+        if (request.getProjectId() != null) {
+
+            boolean exists = taskRepository.existsByNameAndProject_Id(
+                    request.getName(),
+                    request.getProjectId()
+            );
+
+            if (exists && !task.getName().equals(request.getName())) {
+                throw new ResourceAlreadyExistsException(
+                        "Task with name already exists in this project"
+                );
+            }
+        }
+
+        task.setName(request.getName());
+        task.setDescription(request.getDescription());
+
+        Set<UserEntity> users = new HashSet<>(
+                userRepository.findAllById(request.getUserId())
+        );
+
+        if (users.size() != request.getUserId().size()) {
+            throw new ResourceNotFoundException(
+                    "Some users not found"
+            );
+        }
+
+        task.setUsers(users);
+
+        if (request.getProjectId() != null) {
+
+            ProjectEntity project = projectRepository.findById(request.getProjectId())
+                    .orElseThrow(() -> new ResourceNotFoundException(
+                            request.getProjectId()
+                    ));
+
+            task.setProject(project);
+        }
+
+        TaskEntity saved = taskRepository.save(task);
+
+        return taskMapper.taskEntityTopTaskDto(saved);
     }
-    
+
     @Override
     public void delete(Long taskId) {
-        
+
         TaskEntity taskEntity = this.taskRepository.findById(taskId)
-            .orElseThrow(() -> new ResourceNotFoundException(taskId)
-            );
-        
-            this.taskRepository.delete(taskEntity);
+                .orElseThrow(() -> new ResourceNotFoundException(taskId)
+                );
+
+        this.taskRepository.delete(taskEntity);
     }
 
-	@Override
-	public void deleteUserFromTask(Long userId) {
-	
-       this.taskRepository.deleteUserFromTask(userId); 
+    @Override
+    public void deleteUserFromTask(Long userId) {
+
+        this.taskRepository.deleteUserFromTask(userId);
+    }
+
+    @Override
+    public List<TaskResponseDto> findByUsersId(Long id) {
+        return this.taskRepository.findByUsers_Id(id)
+                .stream()
+                .map(taskMapper::taskEntityTopTaskDto)
+                .toList();
     }
 
 

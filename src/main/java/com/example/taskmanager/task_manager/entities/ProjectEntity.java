@@ -24,7 +24,7 @@ public class ProjectEntity {
     private String description;
 
     @OneToMany(
-            mappedBy = "projectEntity",
+            mappedBy = "project",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )

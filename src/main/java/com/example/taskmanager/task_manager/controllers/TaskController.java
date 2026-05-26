@@ -1,5 +1,6 @@
 package com.example.taskmanager.task_manager.controllers;
 
+import com.example.taskmanager.task_manager.dtos.project.ProjectResponseDto;
 import com.example.taskmanager.task_manager.dtos.task.TaskRequestDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -99,5 +100,9 @@ public class TaskController {
         this.taskService.delete(id);
         return ResponseEntity.noContent().build();
     }
-    
+    @PreAuthorize("@securytiConfigUser.isUser(#id) or hasRole('ADMIN')")
+    @GetMapping("/userId/{id}")
+    public ResponseEntity<List<TaskResponseDto>> projectByUserId (@PathVariable Long id) {
+        return ResponseEntity.ok(this.taskService.findByUsersId(id));
+    }
 }

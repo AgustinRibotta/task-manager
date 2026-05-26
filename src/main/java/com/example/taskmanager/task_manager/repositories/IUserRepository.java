@@ -14,9 +14,9 @@ public interface IUserRepository extends JpaRepository<UserEntity, Long> {
 
     Optional<UserEntity> findByUsername(String username);
 
-    @Query("SELECT DISTINCT u FROM UserEntity u JOIN FETCH u.projectEntities WHERE u.username = :username")
+    @Query("SELECT DISTINCT u FROM UserEntity u JOIN FETCH u.projects WHERE u.username = :username")
     Optional<UserEntity> findByUsernameWithProjects(@Param("username") String username);
 
-    @Query("SELECT u FROM UserEntity u JOIN FETCH u.taskEntities WHERE u.username = :username")
+    @Query("SELECT u FROM UserEntity u JOIN FETCH u.tasks WHERE u.username = :username")
     Optional<UserEntity> findByUsernameWithTask(@Param("username") String username);
 }

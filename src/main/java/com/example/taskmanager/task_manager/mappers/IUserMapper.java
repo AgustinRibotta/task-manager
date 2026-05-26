@@ -9,13 +9,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring", uses = {IRoleMapper.class})
 public interface IUserMapper {
 
-    @Mapping(source = "projects", target = "projects")
-    @Mapping(source = "roles", target = "roles")
-    @Mapping(source = "tasks", target = "tasks")
     UserDto userToUserDto(UserEntity user);
 
-    @Mapping(source = "projects", target = "projects")
-    @Mapping(source = "roles", target = "roles")
-    @Mapping(source = "tasks", target = "tasks")
     UserEntity userDtoToUser(UserDto userDto);
 }
