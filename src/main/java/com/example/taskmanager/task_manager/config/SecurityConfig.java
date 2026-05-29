@@ -48,7 +48,8 @@ public class SecurityConfig {
                 // Public endpoints accessible without authentication
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .requestMatchers("/auth/**").permitAll()
-                .requestMatchers("/roles/**").hasRole("ADMIN")
+                    .requestMatchers("/roles/**").hasRole("ADMIN")
+                    .requestMatchers("/permissions/**").hasRole("ADMIN")
                 .requestMatchers("/projects/**", "/tasks/**").authenticated()
                 .anyRequest().authenticated()
             )
@@ -71,21 +72,21 @@ public class SecurityConfig {
         ).build();
     }
 
-    // Converts JWT claims (especially "roles") into Spring Security GrantedAuthority objects
+    // Converts JWT claims (especially "permissions") into Spring Security GrantedAuthority objects
     @Bean
     public JwtAuthenticationConverter jwtAuthenticationConverter() {
         JwtAuthenticationConverter converter = new JwtAuthenticationConverter();
 
         converter.setJwtGrantedAuthoritiesConverter(jwt -> {
-            var roles = jwt.getClaimAsStringList("roles");
-            if (roles == null) {
-                roles = Collections.emptyList();
+            var permissions = jwt.getClaimAsStringList("permissions");
+
+            if (permissions == null) {
+                permissions = Collections.emptyList();
             }
 
-            return roles.stream()
-                .map(role -> role.startsWith("ROLE_") ? role : "ROLE_" + role) 
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
+            return permissions.stream()
+                    .map(SimpleGrantedAuthority::new)
+                    .collect(Collectors.toList());
         });
 
         return converter;

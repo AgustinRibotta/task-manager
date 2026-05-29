@@ -1,14 +1,11 @@
 
 package com.example.taskmanager.task_manager.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.Set;
 
 @Entity
 @Table(name = "role_data")
@@ -22,6 +19,14 @@ public class RoleEntity {
 
     @Column(unique = true)
     private String name;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "role_permission",
+            joinColumns = @JoinColumn(name = "role_id"),
+            inverseJoinColumns = @JoinColumn(name = "permission_id")
+    )
+    private Set<PermissionEntity> permissions;
 
 
 }

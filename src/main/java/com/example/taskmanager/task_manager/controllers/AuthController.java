@@ -52,11 +52,6 @@ public class AuthController {
     private final TaskServiceImp taskService;
 
     // POST - 200 OK - 401 Unauthorized
-    @Tag(name = "Login User", description = "Login and token generation")
-    @Operation(
-            summary = "User login",
-            description = "Authenticate user and return a JWT token"
-    )
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> createToken(@RequestBody AuthenticationRequest request) {
         try {
@@ -68,32 +63,20 @@ public class AuthController {
         }
         UserDto user = userService.findByUsername(request.getUsername())
                 .orElseThrow();
-
         String jwtToken = jwtService.generateToken(user);
-
         return ResponseEntity.ok(new AuthenticationResponse(jwtToken));
     }
 
     // GET - 200 OK - []
-    @Tag(name = "User Controller", description = "User management")
-    @Operation(
-            summary = "Get all users",
-            description = "Requires authentication with JWT and ADMIN role"
-    )
-    @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/users")
+    @PreAuthorize("hasAuthority('users:read:all')")
+    @GetMapping()
     public ResponseEntity<List<UserDto>> getAll() {
         return ResponseEntity.ok(this.userService.getAll());
         
     }
 
     // GET - 200 OK - 404 Not Found
-    @Tag(name = "User Controller", description = "User management")
-    @Operation(
-            summary = "Get user by ID",
-            description = "Requires authentication with JWT and ADMIN role or be the owner"
-    )
-    @PreAuthorize("@securytiConfigUser.isUser(#id) or hasRole('ADMIN')")
+    @PreAuthorize("@securytiConfigUser.isUser(#id) or hasAuthority('users:read')")
     @GetMapping("/user/{id}")
     public ResponseEntity<UserDto> getById(@PathVariable Long id) {
         UserDto response = this.userService.getById(id);
@@ -101,13 +84,8 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 
-    // POST - 201 Creatrd - 400 Bad Request - 409 Conflict
-    @Tag(name = "User Controller", description = "User management")
-    @Operation(
-            summary = "Create new user",
-            description = "Requires authentication with JWT and ADMIN role"
-    )
-    @PreAuthorize("hasRole('ADMIN')")
+    // POST - 201 Create - 400 Bad Request - 409 Conflict
+    @PreAuthorize("hasAuthority('users:create')")
     @PostMapping("/users")
     public ResponseEntity<UserDto> post(@Valid @RequestBody UserDto request) {
         UserDto response = this.userService.post(request);
@@ -120,12 +98,8 @@ public class AuthController {
     }
  
     // PUT - 200 OK - 404 Not Found
-    @Tag(name = "User Controller", description = "User management")
-    @Operation(
-            summary = "Update user by ID",
-            description = "Requires authentication with JWT and ADMIN role"
-    )
-    @PreAuthorize("hasRole('ADMIN')")
+
+    @PreAuthorize("hasAuthority('users:update')")
     @PutMapping("/users/{id}")
     public ResponseEntity<UserDto> put(@PathVariable Long id, @RequestBody UserDto request) {
         UserDto response = this.userService.put(id, request);
@@ -133,12 +107,7 @@ public class AuthController {
     }
 
     // DELETE - 204 No Content - 404 Not Found
-    @Tag(name = "User Controller", description = "User management")
-    @Operation(
-            summary = "Delete user",
-            description = "Requires authentication with JWT and ADMIN role"
-    )
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('users:delete')")
     @DeleteMapping("/users/{id}")
     public ResponseEntity<?> delete (@PathVariable Long id){
         this.projectService.deleteUserFromProjects(id);

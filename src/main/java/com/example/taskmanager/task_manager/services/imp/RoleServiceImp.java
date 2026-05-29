@@ -26,14 +26,14 @@ public class RoleServiceImp implements IRoleService {
 
     public List<RoleDto> getAll() {
 
-       List<RoleDto> roleDtos = this.roleRepository.findAll(Sort.by("id")).stream()
+       List<RoleDto> dtos = this.roleRepository.findAll(Sort.by("id")).stream()
             .map(role -> {
                 RoleDto dto = this.roleMapper.roleEntityToRoleDto(role);
                 return dto;
             })
             .collect(Collectors.toList());
 
-        return roleDtos;
+        return dtos;
     }
 
     @Override

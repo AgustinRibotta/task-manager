@@ -34,37 +34,29 @@ public class TaskController {
     private final ITaskService taskService;
 
     // GET - 200 OK - [] - 401 Unauthorized
-    @Tag(name = "Task Controller", description = "Task management")
-    @Operation(
-            summary = "Get all task",
-            description = "Requires authentication with JWT and ADMIN role"
-    )
-    @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/all")
+    @PreAuthorize("hasAuthority('tasks:read:all')")
+    @GetMapping()
     public ResponseEntity<List<TaskResponseDto>> getAll () {
         return ResponseEntity.ok(this.taskService.getAll());
     }
 
     // GET BY ID - 200 OK - [] - 401 Unauthorized
-    @Tag(name = "Task Controller", description = "Task management")
-    @Operation(
-            summary = "Get task by ID",
-            description = "Requires authentication with JWT and ADMIN role  or be the owner"
-    )
-    @PreAuthorize("@securityConfigTask.isTask(#id) or hasAnyRole('ADMIN','MANAGER')")
-    @GetMapping("/task/{id}")
+    @PreAuthorize("@securityConfigTask.isTask(#id) or hasAuthority('tasks:read')")
+    @GetMapping("/{id}")
     public ResponseEntity<TaskResponseDto> getById(@PathVariable Long id) {
         return ResponseEntity.ok(this.taskService.getById(id));
     }
+
+    // GET BY ID - 200 OK - [] - 401 Unauthorized
+    @PreAuthorize("@securytiConfigUser.isUser(#id)")
+    @GetMapping("/users/{id}/tasks")
+    public ResponseEntity<List<TaskResponseDto>> byUserId (@PathVariable Long id) {
+        return ResponseEntity.ok(this.taskService.findByUsersId(id));
+    }
     
     // POST - 201 Created - 400 Bad Request - 409 Conflict
-    @Tag(name = "Task Controller", description = "Task management")
-    @Operation(
-            summary = "Create task",
-            description = "Requires authentication with JWT and ADMIN or MANAGER role"
-    )
-    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
-    @PostMapping("/task/new")
+    @PreAuthorize("hasAuthority('tasks:create')")
+    @PostMapping()
     public ResponseEntity<TaskResponseDto> post (@Valid @RequestBody TaskRequestDto request) {
         
         TaskResponseDto response = this.taskService.post(request);
@@ -77,32 +69,17 @@ public class TaskController {
     }
 
     // PUT - 200 OK - 404 Not Found
-    @Tag(name = "Task Controller", description = "Task management")
-    @Operation(
-            summary = "Update task by ID",
-            description = "Requires authentication with JWT and ADMIN role or MANAGER role or be the owner"
-    )
-    @PreAuthorize("@securityConfigTask.isTask(#id) or hasAnyRole('ADMIN','MANAGER')")
-    @PutMapping("/task/{id}")
+    @PreAuthorize("@securityConfigTask.isTask(#id) or hasAuthority('tasks:update')")
+    @PutMapping("/{id}")
     public ResponseEntity<TaskResponseDto> put(@PathVariable Long id, @Valid @RequestBody TaskRequestDto request) {
         return ResponseEntity.ok(this.taskService.put(request, id));
     }
 
     // DELETE - 204 No Content - 404 Not Found
-    @Tag(name = "Task Controller", description = "Task management")
-    @Operation(
-            summary = "Delete task by ID",
-            description = "Requires authentication with JWT and ADMIN or MANAGER role "
-    )
-    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
-    @DeleteMapping("/task/{id}")
+    @PreAuthorize("hasAuthority('tasks:delete')")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> delete (@PathVariable Long id) {
         this.taskService.delete(id);
         return ResponseEntity.noContent().build();
-    }
-    @PreAuthorize("@securytiConfigUser.isUser(#id) or hasRole('ADMIN')")
-    @GetMapping("/userId/{id}")
-    public ResponseEntity<List<TaskResponseDto>> projectByUserId (@PathVariable Long id) {
-        return ResponseEntity.ok(this.taskService.findByUsersId(id));
     }
 }

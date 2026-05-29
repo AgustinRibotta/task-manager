@@ -18,6 +18,9 @@ public class ProjectEntity {
     private long id;
 
     @Column(unique = true)
+    private UserEntity user;
+
+    @Column(unique = true)
     private String name;
 
     @Column(length = 2000)

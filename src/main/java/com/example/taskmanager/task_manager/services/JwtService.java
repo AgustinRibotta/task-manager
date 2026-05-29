@@ -2,6 +2,7 @@ package com.example.taskmanager.task_manager.services;
 
 import com.example.taskmanager.task_manager.dtos.RoleDto;
 import com.example.taskmanager.task_manager.dtos.UserDto;
+import com.example.taskmanager.task_manager.dtos.project.PermissionDto;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -27,6 +28,12 @@ public class JwtService {
         claims.put("roles", userDetails.getRoles().stream()
                                     .map(RoleDto::getName)
                                     .collect(Collectors.toList()));
+        claims.put("permissions", userDetails.getRoles().stream()
+                .flatMap(role -> role.getPermissions().stream()
+                        .map(PermissionDto::getName))
+                        .distinct()
+                        .collect(Collectors.toList())
+        );
 
         return Jwts.builder()
                 .setClaims(claims)

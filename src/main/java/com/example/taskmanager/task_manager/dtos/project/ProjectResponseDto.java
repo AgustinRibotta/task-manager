@@ -21,6 +21,8 @@ public class ProjectResponseDto {
     @NotBlank(message = "Name is required")
     private String name;
 
+    private ProjectUserDto user;
+
     private String description;
 
     private List<ProjectTaskDto> tasks;
