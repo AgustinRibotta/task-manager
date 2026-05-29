@@ -17,6 +17,7 @@
 /home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/controllers/AuthController.java
 /home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/dtos/project/ProjectUserDto.java
 /home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/controllers/ProjectController.java
+/home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/mappers/IPermissionDto.java
 /home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/entities/UserEntity.java
 /home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/dtos/task/TaskUserDto.java
 /home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/config/SecurityConfig.java
@@ -33,6 +34,7 @@
 /home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/services/imp/UserServiceImp.java
 /home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/dtos/AuthenticationRequest.java
 /home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/dtos/project/ProjectRequestDto.java
+/home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/entities/PermissionEntity.java
 /home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/dtos/project/ProjectResponseDto.java
 /home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/mappers/task/ITaskProjectDto.java
 /home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/controllers/TaskController.java
@@ -47,7 +49,8 @@
 /home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/dtos/task/TaskResponseDto.java
 /home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/entities/ProjectEntity.java
 /home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/mappers/IUserMapper.java
-/home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/exceptions/ResourceAlreadyExistsException.java
 /home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/services/imp/TaskServiceImp.java
+/home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/exceptions/ResourceAlreadyExistsException.java
 /home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/controllers/RoleController.java
 /home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/services/imp/UserDetailsServiceImpl.java
+/home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/dtos/project/PermissionDto.java

@@ -1,5 +1,5 @@
-com/example/taskmanager/task_manager/mappers/task/ITaskUserDto.class
 com/example/taskmanager/task_manager/repositories/ITaskRepository.class
+com/example/taskmanager/task_manager/mappers/task/ITaskUserDto.class
 com/example/taskmanager/task_manager/services/IProjectService.class
 com/example/taskmanager/task_manager/repositories/IUserRepository.class
 com/example/taskmanager/task_manager/mappers/task/ITaskMapperImpl.class
@@ -16,8 +16,8 @@ com/example/taskmanager/task_manager/exceptions/ResourceNotFoundException.class
 com/example/taskmanager/task_manager/services/imp/ProjectServiceImp.class
 com/example/taskmanager/task_manager/exceptions/ResourceAlreadyExistsException.class
 com/example/taskmanager/task_manager/mappers/project/IProjectTaskMapper.class
-com/example/taskmanager/task_manager/dtos/UserDto.class
 com/example/taskmanager/task_manager/services/imp/RoleServiceImp.class
+com/example/taskmanager/task_manager/dtos/UserDto.class
 com/example/taskmanager/task_manager/mappers/project/IProjectMapper.class
 com/example/taskmanager/task_manager/mappers/task/ITaskProjectDtoImpl.class
 com/example/taskmanager/task_manager/config/SecurityConfig.class

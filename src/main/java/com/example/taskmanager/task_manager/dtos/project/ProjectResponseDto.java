@@ -21,7 +21,7 @@ public class ProjectResponseDto {
     @NotBlank(message = "Name is required")
     private String name;
 
-    private ProjectUserDto user;
+    private ProjectUserDto owner;
 
     private String description;
 

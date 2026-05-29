@@ -44,9 +44,9 @@ public class TaskEntity {
 
     @ManyToMany
     @JoinTable(
-        name = "task_user",
-        joinColumns = @JoinColumn(name = "task_id"),
-        inverseJoinColumns = @JoinColumn(name = "user_id")
+            name = "task_user",
+            joinColumns = @JoinColumn(name = "task_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
     )
     private Set<UserEntity> users;
 

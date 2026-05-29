@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2026-05-28T21:16:03+0200",
+    date = "2026-05-29T21:32:12+0200",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.11 (Arch Linux)"
 )
 @Component
@@ -52,6 +52,7 @@ public class IProjectMapperImpl implements IProjectMapper {
 
         projectResponseDto.setTasks( taskEntityListToProjectTaskDtoList( entity.getTasks() ) );
         projectResponseDto.setUsers( userEntitySetToProjectUserDtoSet( entity.getUsers() ) );
+        projectResponseDto.setOwner( iProjectUserMapper.toProjectTaskDto( entity.getOwner() ) );
         projectResponseDto.setId( entity.getId() );
         projectResponseDto.setName( entity.getName() );
         projectResponseDto.setDescription( entity.getDescription() );

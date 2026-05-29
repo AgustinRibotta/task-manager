@@ -1,51 +1,97 @@
--- ===================================
--- ROLES
--- ===================================
-INSERT INTO role_data (id, name)
-VALUES (1, 'ADMIN'),
-       (2, 'USER'),
-       (3, 'MANAGER'),
-       (4, 'DEVELOPER');
+-- PERMISSIONS
+INSERT INTO permission (id, name)
+VALUES
+(1, 'users:read:all'),
+(2, 'users:read'),
+(3, 'users:create'),
+(4, 'users:update'),
+(5, 'users:delete'),
 
--- ===================================
+(6, 'roles:read:all'),
+(7, 'roles:read'),
+(8, 'roles:create'),
+(9, 'roles:update'),
+(10, 'roles:delete'),
+
+(11, 'tasks:read:all'),
+(12, 'tasks:read'),
+(13, 'tasks:create'),
+(14, 'tasks:update'),
+(15, 'tasks:delete'),
+
+(16, 'projects:read:all'),
+(17, 'projects:read'),
+(18, 'projects:create'),
+(19, 'projects:update'),
+(20, 'projects:delete');
+
+-- ROLES
+INSERT INTO role_data (id, name)
+VALUES
+(1, 'ADMIN'),
+(2, 'MANAGER'),
+(3, 'USER'),
+(4, 'CLIENT');
+
+-- ADMIN
+INSERT INTO role_permission (role_id, permission_id)
+SELECT 1, id FROM permission;
+
+-- MANAGER
+INSERT INTO role_permission (role_id, permission_id)
+VALUES (2, 2),   -- users:read (self via logic)
+(2, 12),  -- tasks:read
+(2, 13),  -- tasks:create
+(2, 14),  -- tasks:update (ONLY OWN)
+(2, 15),  -- tasks:delete (ONLY OWN)
+(2, 17),  -- projects:read
+(2, 18);  -- projects:create (optional)
+
+-- USER
+INSERT INTO role_permission (role_id, permission_id)
+VALUES
+(3, 2),   -- users:read (self via logic)
+(3, 12),  -- tasks:read
+(3, 17);  -- projects:read
+
+-- CLIENT
+INSERT INTO role_permission (role_id, permission_id)
+VALUES
+(4, 12),  -- tasks:read
+(4, 17);  -- projects:read
+
 -- USERS
--- ===================================
 INSERT INTO user_data (id, username, password, email)
 VALUES (1, 'Agustin', '$2a$10$iLCE.3nsDFIHMXVN5MhC3.ltbmxIm2Ji.WLqcYid5lpLhYHfE4Y4.', 'admin@example.com'),
        (2, 'johndoe', '$2a$10$iLCE.3nsDFIHMXVN5MhC3.ltbmxIm2Ji.WLqcYid5lpLhYHfE4Y4.', 'johndoe@example.com'),
-       (3, 'janedoe', '$2a$10$iLCE.3nsDFIHMXVN5MhC3.ltbmxIm2Ji.WLqcYid5lpLhYHfE4Y4.', 'janedoe@example.com');
+       (3, 'janedoe', '$2a$10$iLCE.3nsDFIHMXVN5MhC3.ltbmxIm2Ji.WLqcYid5lpLhYHfE4Y4.', 'janedoe@example.com'),
+       (4, 'cliente', '$2a$10$iLCE.3nsDFIHMXVN5MhC3.ltbmxIm2Ji.WLqcYid5lpLhYHfE4Y4.', 'janedoe@example.com');
 
--- ===================================
 -- USER ROLES
--- ===================================
 INSERT INTO user_roles (user_id, role_id)
 VALUES (1, 1),
-       (1, 2),
        (2, 2),
-       (3, 2);
+       (3, 3),
+       (4, 4);
 
--- ===================================
 -- PROJECTS
--- ===================================
-INSERT INTO project (id, name, description)
-VALUES (1, 'E-Commerce Platform', 'Plataforma de comercio electrónico completa...'),
-       (2, 'Task Manager SaaS', 'Herramienta colaborativa para la gestión de tareas...'),
-       (3, 'HR Management System', 'Sistema de gestión de recursos humanos...'),
-       (4, 'Real-Time Chat App', 'Aplicación de mensajería en tiempo real...');
+INSERT INTO project (id, owner_id, name, description)
+VALUES (1, 1, 'E-Commerce Platform', 'Plataforma de comercio electrónico completa...'),
+       (2, 2, 'Task Manager SaaS', 'Herramienta colaborativa para la gestión de tareas...'),
+       (3, 2, 'HR Management System', 'Sistema de gestión de recursos humanos...');
 
--- ===================================
--- PROJECT USERS (relación usuarios-proyectos)
--- ===================================
+-- PROJECT USERS
 INSERT INTO project_user (project_id, user_id)
 VALUES (1, 1),
        (1, 2),
-       (2, 3),
-       (3, 2),
-       (4, 3);
+       (1, 3),
+       (1, 4),
+       (2, 1),
+       (2, 2),
+       (3, 1),
+       (3, 2);
 
--- ===================================
 -- TASKS
--- ===================================
 INSERT INTO task (id, name, description, project_id, status)
 VALUES (1, 'Diseñar modelo de productos', 'Definir estructura de base de datos...', 1, 'DONE'),
        (2, 'Implementar catálogo de productos', 'Crear endpoints para listar productos...', 1, 'IN_PROGRESS'),
@@ -62,9 +108,7 @@ VALUES (1, 'Diseñar modelo de productos', 'Definir estructura de base de datos.
 INSERT INTO task (id, name, description, status)
 VALUES (11, 'Mis Tareas', 'Administrar departamentos...', 'DONE');
 
--- ===================================
--- TASK USERS (asignaciones)
--- ===================================
+-- TASK USERS
 INSERT INTO task_user (task_id, user_id)
 VALUES (1, 1),
        (1, 2),
@@ -79,4 +123,4 @@ VALUES (1, 1),
        (8, 3),
        (9, 2),
        (10, 1),
-        (11, 1);
+       (11, 1);

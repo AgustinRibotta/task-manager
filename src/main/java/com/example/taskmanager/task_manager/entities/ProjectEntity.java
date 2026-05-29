@@ -17,8 +17,9 @@ public class ProjectEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(unique = true)
-    private UserEntity user;
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
+    private UserEntity owner;
 
     @Column(unique = true)
     private String name;
@@ -35,10 +36,9 @@ public class ProjectEntity {
 
     @ManyToMany
     @JoinTable(
-        name = "project_user",
-        joinColumns = @JoinColumn(name = "project_id"),
-        inverseJoinColumns = @JoinColumn(name = "user_id")
+            name = "project_user",
+            joinColumns = @JoinColumn(name = "project_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
     )
     private Set<UserEntity> users;
-    
 }

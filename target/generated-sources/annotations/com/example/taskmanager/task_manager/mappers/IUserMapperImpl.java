@@ -22,7 +22,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2026-05-28T21:16:02+0200",
+    date = "2026-05-29T21:32:12+0200",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.11 (Arch Linux)"
 )
 @Component
@@ -82,6 +82,21 @@ public class IUserMapperImpl implements IUserMapper {
         return set1;
     }
 
+    protected ProjectUserDto userEntityToProjectUserDto(UserEntity userEntity) {
+        if ( userEntity == null ) {
+            return null;
+        }
+
+        ProjectUserDto projectUserDto = new ProjectUserDto();
+
+        projectUserDto.setId( userEntity.getId() );
+        projectUserDto.setUsername( userEntity.getUsername() );
+        projectUserDto.setEmail( userEntity.getEmail() );
+        projectUserDto.setRoles( roleEntitySetToRoleDtoSet( userEntity.getRoles() ) );
+
+        return projectUserDto;
+    }
+
     protected ProjectTaskDto taskEntityToProjectTaskDto(TaskEntity taskEntity) {
         if ( taskEntity == null ) {
             return null;
@@ -110,21 +125,6 @@ public class IUserMapperImpl implements IUserMapper {
         return list1;
     }
 
-    protected ProjectUserDto userEntityToProjectUserDto(UserEntity userEntity) {
-        if ( userEntity == null ) {
-            return null;
-        }
-
-        ProjectUserDto projectUserDto = new ProjectUserDto();
-
-        projectUserDto.setId( userEntity.getId() );
-        projectUserDto.setUsername( userEntity.getUsername() );
-        projectUserDto.setEmail( userEntity.getEmail() );
-        projectUserDto.setRoles( roleEntitySetToRoleDtoSet( userEntity.getRoles() ) );
-
-        return projectUserDto;
-    }
-
     protected Set<ProjectUserDto> userEntitySetToProjectUserDtoSet(Set<UserEntity> set) {
         if ( set == null ) {
             return null;
@@ -147,6 +147,7 @@ public class IUserMapperImpl implements IUserMapper {
 
         projectResponseDto.setId( projectEntity.getId() );
         projectResponseDto.setName( projectEntity.getName() );
+        projectResponseDto.setOwner( userEntityToProjectUserDto( projectEntity.getOwner() ) );
         projectResponseDto.setDescription( projectEntity.getDescription() );
         projectResponseDto.setTasks( taskEntityListToProjectTaskDtoList( projectEntity.getTasks() ) );
         projectResponseDto.setUsers( userEntitySetToProjectUserDtoSet( projectEntity.getUsers() ) );
@@ -251,6 +252,21 @@ public class IUserMapperImpl implements IUserMapper {
         return set1;
     }
 
+    protected UserEntity projectUserDtoToUserEntity(ProjectUserDto projectUserDto) {
+        if ( projectUserDto == null ) {
+            return null;
+        }
+
+        UserEntity userEntity = new UserEntity();
+
+        userEntity.setId( projectUserDto.getId() );
+        userEntity.setUsername( projectUserDto.getUsername() );
+        userEntity.setEmail( projectUserDto.getEmail() );
+        userEntity.setRoles( roleDtoSetToRoleEntitySet( projectUserDto.getRoles() ) );
+
+        return userEntity;
+    }
+
     protected TaskEntity projectTaskDtoToTaskEntity(ProjectTaskDto projectTaskDto) {
         if ( projectTaskDto == null ) {
             return null;
@@ -281,21 +297,6 @@ public class IUserMapperImpl implements IUserMapper {
         return list1;
     }
 
-    protected UserEntity projectUserDtoToUserEntity(ProjectUserDto projectUserDto) {
-        if ( projectUserDto == null ) {
-            return null;
-        }
-
-        UserEntity userEntity = new UserEntity();
-
-        userEntity.setId( projectUserDto.getId() );
-        userEntity.setUsername( projectUserDto.getUsername() );
-        userEntity.setEmail( projectUserDto.getEmail() );
-        userEntity.setRoles( roleDtoSetToRoleEntitySet( projectUserDto.getRoles() ) );
-
-        return userEntity;
-    }
-
     protected Set<UserEntity> projectUserDtoSetToUserEntitySet(Set<ProjectUserDto> set) {
         if ( set == null ) {
             return null;
@@ -319,6 +320,7 @@ public class IUserMapperImpl implements IUserMapper {
         if ( projectResponseDto.getId() != null ) {
             projectEntity.setId( projectResponseDto.getId() );
         }
+        projectEntity.setOwner( projectUserDtoToUserEntity( projectResponseDto.getOwner() ) );
         projectEntity.setName( projectResponseDto.getName() );
         projectEntity.setDescription( projectResponseDto.getDescription() );
         projectEntity.setTasks( projectTaskDtoListToTaskEntityList( projectResponseDto.getTasks() ) );

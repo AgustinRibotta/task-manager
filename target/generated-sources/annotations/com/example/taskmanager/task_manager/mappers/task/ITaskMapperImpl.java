@@ -1,10 +1,12 @@
 package com.example.taskmanager.task_manager.mappers.task;
 
 import com.example.taskmanager.task_manager.dtos.RoleDto;
+import com.example.taskmanager.task_manager.dtos.project.PermissionDto;
 import com.example.taskmanager.task_manager.dtos.task.TaskProjectDto;
 import com.example.taskmanager.task_manager.dtos.task.TaskRequestDto;
 import com.example.taskmanager.task_manager.dtos.task.TaskResponseDto;
 import com.example.taskmanager.task_manager.dtos.task.TaskUserDto;
+import com.example.taskmanager.task_manager.entities.PermissionEntity;
 import com.example.taskmanager.task_manager.entities.ProjectEntity;
 import com.example.taskmanager.task_manager.entities.RoleEntity;
 import com.example.taskmanager.task_manager.entities.TaskEntity;
@@ -16,7 +18,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2026-05-28T21:16:02+0200",
+    date = "2026-05-29T21:32:12+0200",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.11 (Arch Linux)"
 )
 @Component
@@ -68,6 +70,32 @@ public class ITaskMapperImpl implements ITaskMapper {
         return taskProjectDto;
     }
 
+    protected PermissionDto permissionEntityToPermissionDto(PermissionEntity permissionEntity) {
+        if ( permissionEntity == null ) {
+            return null;
+        }
+
+        PermissionDto permissionDto = new PermissionDto();
+
+        permissionDto.setId( permissionEntity.getId() );
+        permissionDto.setName( permissionEntity.getName() );
+
+        return permissionDto;
+    }
+
+    protected Set<PermissionDto> permissionEntitySetToPermissionDtoSet(Set<PermissionEntity> set) {
+        if ( set == null ) {
+            return null;
+        }
+
+        Set<PermissionDto> set1 = new LinkedHashSet<PermissionDto>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
+        for ( PermissionEntity permissionEntity : set ) {
+            set1.add( permissionEntityToPermissionDto( permissionEntity ) );
+        }
+
+        return set1;
+    }
+
     protected RoleDto roleEntityToRoleDto(RoleEntity roleEntity) {
         if ( roleEntity == null ) {
             return null;
@@ -77,6 +105,7 @@ public class ITaskMapperImpl implements ITaskMapper {
 
         roleDto.setId( roleEntity.getId() );
         roleDto.setName( roleEntity.getName() );
+        roleDto.setPermissions( permissionEntitySetToPermissionDtoSet( roleEntity.getPermissions() ) );
 
         return roleDto;
     }
