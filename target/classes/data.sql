@@ -44,8 +44,7 @@ VALUES (2, 2),   -- users:read (self via logic)
 (2, 13),  -- tasks:create
 (2, 14),  -- tasks:update (ONLY OWN)
 (2, 15),  -- tasks:delete (ONLY OWN)
-(2, 17),  -- projects:read
-(2, 18);  -- projects:create (optional)
+(2, 17);  -- projects:read
 
 -- USER
 INSERT INTO role_permission (role_id, permission_id)

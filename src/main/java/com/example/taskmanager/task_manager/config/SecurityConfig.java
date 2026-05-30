@@ -47,7 +47,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 // Public endpoints accessible without authentication
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .requestMatchers("/auth/**").permitAll()
+                .requestMatchers("/login").permitAll()
                     .requestMatchers("/roles/**").hasRole("ADMIN")
                     .requestMatchers("/permissions/**").hasRole("ADMIN")
                 .requestMatchers("/projects/**", "/tasks/**").authenticated()

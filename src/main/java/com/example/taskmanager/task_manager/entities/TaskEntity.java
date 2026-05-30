@@ -38,8 +38,8 @@ public class TaskEntity {
     @Column(nullable = false)
     private TaskStatus status;
 
-    @ManyToOne(optional = true)
-    @JoinColumn(name = "project_id")
+    @ManyToOne
+    @JoinColumn(name = "project_id", nullable = true)
     private ProjectEntity project;
 
     @ManyToMany

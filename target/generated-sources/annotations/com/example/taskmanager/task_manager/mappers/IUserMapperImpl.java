@@ -3,6 +3,7 @@ package com.example.taskmanager.task_manager.mappers;
 import com.example.taskmanager.task_manager.dtos.RoleDto;
 import com.example.taskmanager.task_manager.dtos.UserDto;
 import com.example.taskmanager.task_manager.dtos.project.ProjectResponseDto;
+import com.example.taskmanager.task_manager.dtos.project.ProjectRoleDto;
 import com.example.taskmanager.task_manager.dtos.project.ProjectTaskDto;
 import com.example.taskmanager.task_manager.dtos.project.ProjectUserDto;
 import com.example.taskmanager.task_manager.dtos.task.TaskProjectDto;
@@ -22,7 +23,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2026-05-29T21:32:12+0200",
+    date = "2026-05-30T15:25:23+0200",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.11 (Arch Linux)"
 )
 @Component
@@ -82,6 +83,32 @@ public class IUserMapperImpl implements IUserMapper {
         return set1;
     }
 
+    protected ProjectRoleDto roleEntityToProjectRoleDto(RoleEntity roleEntity) {
+        if ( roleEntity == null ) {
+            return null;
+        }
+
+        ProjectRoleDto projectRoleDto = new ProjectRoleDto();
+
+        projectRoleDto.setId( roleEntity.getId() );
+        projectRoleDto.setName( roleEntity.getName() );
+
+        return projectRoleDto;
+    }
+
+    protected Set<ProjectRoleDto> roleEntitySetToProjectRoleDtoSet(Set<RoleEntity> set) {
+        if ( set == null ) {
+            return null;
+        }
+
+        Set<ProjectRoleDto> set1 = new LinkedHashSet<ProjectRoleDto>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
+        for ( RoleEntity roleEntity : set ) {
+            set1.add( roleEntityToProjectRoleDto( roleEntity ) );
+        }
+
+        return set1;
+    }
+
     protected ProjectUserDto userEntityToProjectUserDto(UserEntity userEntity) {
         if ( userEntity == null ) {
             return null;
@@ -92,7 +119,7 @@ public class IUserMapperImpl implements IUserMapper {
         projectUserDto.setId( userEntity.getId() );
         projectUserDto.setUsername( userEntity.getUsername() );
         projectUserDto.setEmail( userEntity.getEmail() );
-        projectUserDto.setRoles( roleEntitySetToRoleDtoSet( userEntity.getRoles() ) );
+        projectUserDto.setRoles( roleEntitySetToProjectRoleDtoSet( userEntity.getRoles() ) );
 
         return projectUserDto;
     }
@@ -252,6 +279,32 @@ public class IUserMapperImpl implements IUserMapper {
         return set1;
     }
 
+    protected RoleEntity projectRoleDtoToRoleEntity(ProjectRoleDto projectRoleDto) {
+        if ( projectRoleDto == null ) {
+            return null;
+        }
+
+        RoleEntity roleEntity = new RoleEntity();
+
+        roleEntity.setId( projectRoleDto.getId() );
+        roleEntity.setName( projectRoleDto.getName() );
+
+        return roleEntity;
+    }
+
+    protected Set<RoleEntity> projectRoleDtoSetToRoleEntitySet(Set<ProjectRoleDto> set) {
+        if ( set == null ) {
+            return null;
+        }
+
+        Set<RoleEntity> set1 = new LinkedHashSet<RoleEntity>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
+        for ( ProjectRoleDto projectRoleDto : set ) {
+            set1.add( projectRoleDtoToRoleEntity( projectRoleDto ) );
+        }
+
+        return set1;
+    }
+
     protected UserEntity projectUserDtoToUserEntity(ProjectUserDto projectUserDto) {
         if ( projectUserDto == null ) {
             return null;
@@ -262,7 +315,7 @@ public class IUserMapperImpl implements IUserMapper {
         userEntity.setId( projectUserDto.getId() );
         userEntity.setUsername( projectUserDto.getUsername() );
         userEntity.setEmail( projectUserDto.getEmail() );
-        userEntity.setRoles( roleDtoSetToRoleEntitySet( projectUserDto.getRoles() ) );
+        userEntity.setRoles( projectRoleDtoSetToRoleEntitySet( projectUserDto.getRoles() ) );
 
         return userEntity;
     }

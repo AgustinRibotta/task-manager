@@ -2,6 +2,7 @@
 /home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/repositories/ITaskRepository.java
 /home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/dtos/RoleDto.java
 /home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/enums/TaskStatus.java
+/home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/controllers/UserController.java
 /home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/dtos/project/ProjectTaskDto.java
 /home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/services/ITaskService.java
 /home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/config/SecurityConfigTask.java
@@ -23,6 +24,7 @@
 /home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/config/SecurityConfig.java
 /home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/mappers/task/ITaskUserDto.java
 /home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/services/IProjectService.java
+/home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/dtos/project/ProjectRoleDto.java
 /home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/services/imp/ProjectServiceImp.java
 /home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/mappers/project/IProjectMapper.java
 /home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/mappers/task/ITaskMapper.java
@@ -31,6 +33,7 @@
 /home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/config/CorsConfig.java
 /home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/services/JwtService.java
 /home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/mappers/project/IProjectUserMapper.java
+/home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/mappers/project/IProjectRoleMapper.java
 /home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/services/imp/UserServiceImp.java
 /home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/dtos/AuthenticationRequest.java
 /home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/dtos/project/ProjectRequestDto.java

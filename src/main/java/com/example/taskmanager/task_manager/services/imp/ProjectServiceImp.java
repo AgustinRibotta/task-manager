@@ -69,12 +69,26 @@ public class ProjectServiceImp implements IProjectService {
         ProjectEntity projectEntity = this.projectRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException(id));
 
-        UserEntity userEntity = this.userRepository.findById(request.getOwner())
-                .orElseThrow(() -> new ResourceNotFoundException(request.getOwner()));
+        ProjectEntity finalProjectEntity = projectEntity;
+        UserEntity userEntity = this.userRepository.findById(projectEntity.getOwner().getId())
+                .orElseThrow(() -> new ResourceNotFoundException(finalProjectEntity.getOwner().getId()));
 
         projectEntity.setOwner(userEntity);
         projectEntity.setName(request.getName());
         projectEntity.setDescription(request.getDescription());
+        projectEntity = this.projectRepository.save(projectEntity);
+
+        return this.projectMapper.entityToResponse(projectEntity);
+    }
+
+    @Override
+    public ProjectResponseDto putOwnerProject(Long projectId, Long ownerId) {
+        ProjectEntity projectEntity = this.projectRepository.findById(projectId)
+                .orElseThrow(() -> new ResourceNotFoundException(projectId));
+        UserEntity userEntity = this.userRepository.findById(ownerId)
+                .orElseThrow(() -> new ResourceNotFoundException(ownerId));
+
+        projectEntity.setOwner(userEntity);
         projectEntity = this.projectRepository.save(projectEntity);
 
         return this.projectMapper.entityToResponse(projectEntity);

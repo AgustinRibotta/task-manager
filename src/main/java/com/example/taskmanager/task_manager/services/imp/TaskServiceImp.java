@@ -57,40 +57,18 @@ public class TaskServiceImp implements ITaskService {
     @Override
     public TaskResponseDto post(TaskRequestDto request) {
 
-        if (request.getProjectId() != null) {
+        TaskEntity saved = createTask(request, null);
 
-            boolean exists = taskRepository.existsByNameAndProject_Id(
-                    request.getName(),
-                    request.getProjectId()
-            );
+        return taskMapper.taskEntityTopTaskDto(saved);
+    }
 
-            if (exists) {
-                throw new ResourceAlreadyExistsException(
-                        "Task with name already exists in this project"
-                );
-            }
-        }
+    @Override
+    public TaskResponseDto postTaskProject(TaskRequestDto request, Long projectId) {
 
-        TaskEntity task = taskMapper.tasktDtoToTaskEntity(request);
+        ProjectEntity project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new ResourceNotFoundException(projectId));
 
-        Set<UserEntity> users = new HashSet<>(this.userRepository.findAllById(request.getUserId()));
-
-        if (users.size() != request.getUserId().size()) {
-            throw new ResourceNotFoundException(
-                    "Some users not found"
-            );
-        }
-
-        task.setUsers(users);
-
-        if (request.getProjectId() != null) {
-            ProjectEntity project = this.projectRepository.findById(request.getProjectId())
-                    .orElseThrow(() -> new ResourceNotFoundException(request.getProjectId()));
-
-            task.setProject(project);
-        }
-
-        TaskEntity saved = taskRepository.save(task);
+        TaskEntity saved = createTask(request, project);
 
         return taskMapper.taskEntityTopTaskDto(saved);
     }
@@ -169,5 +147,31 @@ public class TaskServiceImp implements ITaskService {
                 .toList();
     }
 
+    private TaskEntity createTask(TaskRequestDto request, ProjectEntity project) {
+        if (project != null) {
+            boolean exists = taskRepository.existsByNameAndProject_Id(
+                    request.getName(),
+                    project.getId()
+            );
 
+            if (exists) {
+                throw new ResourceAlreadyExistsException("Task already exists in project");
+            }
+        }
+
+        TaskEntity task = taskMapper.tasktDtoToTaskEntity(request);
+
+        Set<UserEntity> users = new HashSet<>(
+                userRepository.findAllById(request.getUserId())
+        );
+
+        if (users.size() != request.getUserId().size()) {
+            throw new ResourceNotFoundException("Some users not found");
+        }
+
+        task.setUsers(users);
+        task.setProject(project);
+
+        return taskRepository.save(task);
+    }
 }

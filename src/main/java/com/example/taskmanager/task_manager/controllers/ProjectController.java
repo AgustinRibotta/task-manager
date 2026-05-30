@@ -49,7 +49,7 @@ public class ProjectController {
 
     // GET - 200 OK - [] - 401 Unauthorized
     @PreAuthorize("@securytiConfigUser.isUser(#id)")
-    @GetMapping("/userd/{id}/projects")
+    @GetMapping("/user/{id}/projects")
     public ResponseEntity<List<ProjectResponseDto>> projectByUserId (@PathVariable Long id) {
         return ResponseEntity.ok(this.projectService.findByUsersId(id));
     }
@@ -71,6 +71,13 @@ public class ProjectController {
     @PutMapping("{id}")
     public ResponseEntity<ProjectResponseDto> put(@PathVariable Long id, @RequestBody ProjectRequestDto request) {
         ProjectResponseDto response = this.projectService.put(request, id);
+        return ResponseEntity.ok(response);
+    }
+
+    @PreAuthorize("hasAuthority('projects:update')")
+    @PutMapping("{projectId}/owner/{ownerId}")
+    public ResponseEntity<ProjectResponseDto> putProjectOwner(@PathVariable Long projectId,@PathVariable Long ownerId) {
+        ProjectResponseDto response = this.projectService.putOwnerProject(projectId, ownerId);
         return ResponseEntity.ok(response);
     }
 

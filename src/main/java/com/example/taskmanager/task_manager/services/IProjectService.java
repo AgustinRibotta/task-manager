@@ -14,4 +14,5 @@ public interface IProjectService {
     void delete (Long id);
     void deleteUserFromProjects(Long userId);
     List<ProjectResponseDto> findByUsersId (Long userId);
+    ProjectResponseDto putOwnerProject (Long projectId, Long ownerId);
 }
