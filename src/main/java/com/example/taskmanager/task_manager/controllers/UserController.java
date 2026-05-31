@@ -3,23 +3,16 @@ package com.example.taskmanager.task_manager.controllers;
 import java.net.URI;
 import java.util.List;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import  com.example.taskmanager.task_manager.dtos.AuthenticationRequest;
-import  com.example.taskmanager.task_manager.dtos.AuthenticationResponse;
-import com.example.taskmanager.task_manager.dtos.UserDto;
+import com.example.taskmanager.task_manager.dtos.user.UserDto;
 import com.example.taskmanager.task_manager.services.IUserService;
-import  com.example.taskmanager.task_manager.services.JwtService;
 import com.example.taskmanager.task_manager.services.imp.ProjectServiceImp;
 import com.example.taskmanager.task_manager.services.imp.TaskServiceImp;
 import jakarta.validation.Valid;

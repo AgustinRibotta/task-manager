@@ -68,8 +68,8 @@ public class TaskController {
         return ResponseEntity.created(location).body(response);
     }
 
-    @PreAuthorize("hasAuthority('tasks:create')")
-    @PostMapping("/projects/{id}/tasks")
+    @PreAuthorize("hasAuthority('projects:tasks')")
+    @PostMapping("/projects/{projectId}/tasks")
     public ResponseEntity<TaskResponseDto> postTaskProject (@PathVariable Long projectId, @Valid @RequestBody TaskRequestDto request ) {
 
         TaskResponseDto response = this.taskService.postTaskProject(request, projectId);

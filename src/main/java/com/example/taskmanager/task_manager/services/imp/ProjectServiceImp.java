@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import com.example.taskmanager.task_manager.dtos.project.ProjectRequestDto;
 import com.example.taskmanager.task_manager.dtos.project.ProjectResponseDto;
+import com.example.taskmanager.task_manager.dtos.user.AssignUsersRequest;
 import com.example.taskmanager.task_manager.entities.UserEntity;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -82,16 +83,25 @@ public class ProjectServiceImp implements IProjectService {
     }
 
     @Override
-    public ProjectResponseDto putOwnerProject(Long projectId, Long ownerId) {
+    public void putOwnerProject(Long projectId, Long ownerId) {
         ProjectEntity projectEntity = this.projectRepository.findById(projectId)
                 .orElseThrow(() -> new ResourceNotFoundException(projectId));
         UserEntity userEntity = this.userRepository.findById(ownerId)
                 .orElseThrow(() -> new ResourceNotFoundException(ownerId));
 
         projectEntity.setOwner(userEntity);
-        projectEntity = this.projectRepository.save(projectEntity);
+        this.projectRepository.save(projectEntity);
+    }
 
-        return this.projectMapper.entityToResponse(projectEntity);
+    @Override
+    public void assignUsersToProject(Long projectId, AssignUsersRequest request) {
+        ProjectEntity project = this.projectRepository.findById(projectId)
+                .orElseThrow();
+
+        List<UserEntity> users = userRepository.findAllById(request.getUserIds());
+
+        project.getUsers().addAll(users);
+        projectRepository.save(project);
     }
 
     @Override

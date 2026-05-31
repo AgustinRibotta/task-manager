@@ -1,7 +1,6 @@
 package com.example.taskmanager.task_manager.mappers;
 
 import com.example.taskmanager.task_manager.dtos.RoleDto;
-import com.example.taskmanager.task_manager.dtos.UserDto;
 import com.example.taskmanager.task_manager.dtos.project.ProjectResponseDto;
 import com.example.taskmanager.task_manager.dtos.project.ProjectRoleDto;
 import com.example.taskmanager.task_manager.dtos.project.ProjectTaskDto;
@@ -9,6 +8,7 @@ import com.example.taskmanager.task_manager.dtos.project.ProjectUserDto;
 import com.example.taskmanager.task_manager.dtos.task.TaskProjectDto;
 import com.example.taskmanager.task_manager.dtos.task.TaskResponseDto;
 import com.example.taskmanager.task_manager.dtos.task.TaskUserDto;
+import com.example.taskmanager.task_manager.dtos.user.UserDto;
 import com.example.taskmanager.task_manager.entities.ProjectEntity;
 import com.example.taskmanager.task_manager.entities.RoleEntity;
 import com.example.taskmanager.task_manager.entities.TaskEntity;
@@ -23,7 +23,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2026-05-30T15:25:23+0200",
+    date = "2026-05-31T12:22:59+0200",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.11 (Arch Linux)"
 )
 @Component

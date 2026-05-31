@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.example.taskmanager.task_manager.dtos.UserDto;
-import com.example.taskmanager.task_manager.dtos.project.ProjectResponseDto;
 import com.example.taskmanager.task_manager.dtos.task.TaskRequestDto;
 import com.example.taskmanager.task_manager.dtos.task.TaskResponseDto;
 import org.springframework.stereotype.Service;

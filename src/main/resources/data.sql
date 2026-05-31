@@ -23,7 +23,11 @@ VALUES
 (17, 'projects:read'),
 (18, 'projects:create'),
 (19, 'projects:update'),
-(20, 'projects:delete');
+(20, 'projects:delete'),
+
+(22, 'projects:users'),
+(23, 'projects:tasks'),
+(24, 'projects:manager');
 
 -- ROLES
 INSERT INTO role_data (id, name)
@@ -40,11 +44,15 @@ SELECT 1, id FROM permission;
 -- MANAGER
 INSERT INTO role_permission (role_id, permission_id)
 VALUES (2, 2),   -- users:read (self via logic)
+(2, 1),   -- users:read:all
+(2, 22),  -- projects:users
+(2, 23),  -- projects:tasks
 (2, 12),  -- tasks:read
 (2, 13),  -- tasks:create
 (2, 14),  -- tasks:update (ONLY OWN)
 (2, 15),  -- tasks:delete (ONLY OWN)
-(2, 17);  -- projects:read
+(2, 17),  -- projects:read
+(2, 19);  -- projects:update
 
 -- USER
 INSERT INTO role_permission (role_id, permission_id)
@@ -61,10 +69,10 @@ VALUES
 
 -- USERS
 INSERT INTO user_data (id, username, password, email)
-VALUES (1, 'Agustin', '$2a$10$iLCE.3nsDFIHMXVN5MhC3.ltbmxIm2Ji.WLqcYid5lpLhYHfE4Y4.', 'admin@example.com'),
-       (2, 'johndoe', '$2a$10$iLCE.3nsDFIHMXVN5MhC3.ltbmxIm2Ji.WLqcYid5lpLhYHfE4Y4.', 'johndoe@example.com'),
-       (3, 'janedoe', '$2a$10$iLCE.3nsDFIHMXVN5MhC3.ltbmxIm2Ji.WLqcYid5lpLhYHfE4Y4.', 'janedoe@example.com'),
-       (4, 'cliente', '$2a$10$iLCE.3nsDFIHMXVN5MhC3.ltbmxIm2Ji.WLqcYid5lpLhYHfE4Y4.', 'janedoe@example.com');
+VALUES (1, 'admin', '$2a$10$iLCE.3nsDFIHMXVN5MhC3.ltbmxIm2Ji.WLqcYid5lpLhYHfE4Y4.', 'admin@example.com'),
+       (2, 'manager', '$2a$10$iLCE.3nsDFIHMXVN5MhC3.ltbmxIm2Ji.WLqcYid5lpLhYHfE4Y4.', 'johndoe@example.com'),
+       (3, 'user', '$2a$10$iLCE.3nsDFIHMXVN5MhC3.ltbmxIm2Ji.WLqcYid5lpLhYHfE4Y4.', 'janedoe@example.com'),
+       (4, 'client', '$2a$10$iLCE.3nsDFIHMXVN5MhC3.ltbmxIm2Ji.WLqcYid5lpLhYHfE4Y4.', 'janedoe@example.com');
 
 -- USER ROLES
 INSERT INTO user_roles (user_id, role_id)

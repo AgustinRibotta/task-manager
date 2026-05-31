@@ -1,7 +1,5 @@
 package com.example.taskmanager.task_manager.dtos.task;
 
-import com.example.taskmanager.task_manager.dtos.UserDto;
-import com.example.taskmanager.task_manager.dtos.project.ProjectResponseDto;
 import com.example.taskmanager.task_manager.enums.TaskStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;

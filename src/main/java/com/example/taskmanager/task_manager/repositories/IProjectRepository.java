@@ -1,5 +1,6 @@
 package com.example.taskmanager.task_manager.repositories;
 
+import com.example.taskmanager.task_manager.entities.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -17,7 +18,6 @@ public interface IProjectRepository extends JpaRepository<ProjectEntity, Long> {
     Optional<ProjectEntity> findByName(String name);
 
     List<ProjectEntity> findByUsers_Id(Long userId);
-
 
     @Modifying
     @Transactional

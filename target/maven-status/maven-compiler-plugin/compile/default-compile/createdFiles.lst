@@ -1,6 +1,7 @@
 com/example/taskmanager/task_manager/mappers/task/ITaskUserDto.class
 com/example/taskmanager/task_manager/repositories/ITaskRepository.class
 com/example/taskmanager/task_manager/services/IProjectService.class
+com/example/taskmanager/task_manager/dtos/user/UserDto.class
 com/example/taskmanager/task_manager/dtos/project/ProjectRoleDto.class
 com/example/taskmanager/task_manager/repositories/IUserRepository.class
 com/example/taskmanager/task_manager/mappers/task/ITaskMapperImpl.class
@@ -19,7 +20,6 @@ com/example/taskmanager/task_manager/services/imp/ProjectServiceImp.class
 com/example/taskmanager/task_manager/exceptions/ResourceAlreadyExistsException.class
 com/example/taskmanager/task_manager/mappers/project/IProjectTaskMapper.class
 com/example/taskmanager/task_manager/services/imp/RoleServiceImp.class
-com/example/taskmanager/task_manager/dtos/UserDto.class
 com/example/taskmanager/task_manager/mappers/project/IProjectMapper.class
 com/example/taskmanager/task_manager/mappers/task/ITaskProjectDtoImpl.class
 com/example/taskmanager/task_manager/config/SecurityConfig.class
@@ -27,6 +27,7 @@ com/example/taskmanager/task_manager/mappers/task/ITaskProjectDto.class
 com/example/taskmanager/task_manager/dtos/project/ProjectRequestDto.class
 com/example/taskmanager/task_manager/config/GlobalExceptionHandler.class
 com/example/taskmanager/task_manager/openApi/OpenApiConfig.class
+com/example/taskmanager/task_manager/dtos/user/AssignUsersRequest.class
 com/example/taskmanager/task_manager/services/imp/UserServiceImp.class
 com/example/taskmanager/task_manager/services/imp/UserDetailsServiceImpl.class
 com/example/taskmanager/task_manager/services/imp/TaskServiceImp.class

@@ -1,9 +1,8 @@
 package com.example.taskmanager.task_manager.mappers;
 
-import com.example.taskmanager.task_manager.dtos.UserDto;
+import com.example.taskmanager.task_manager.dtos.user.UserDto;
 import com.example.taskmanager.task_manager.entities.UserEntity;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 
 @Mapper(componentModel = "spring", uses = {IRoleMapper.class})

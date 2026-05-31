@@ -1,7 +1,7 @@
 package com.example.taskmanager.task_manager.services;
 
 import com.example.taskmanager.task_manager.dtos.RoleDto;
-import com.example.taskmanager.task_manager.dtos.UserDto;
+import com.example.taskmanager.task_manager.dtos.user.UserDto;
 import com.example.taskmanager.task_manager.dtos.project.PermissionDto;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

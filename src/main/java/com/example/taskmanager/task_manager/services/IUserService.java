@@ -3,8 +3,7 @@ package com.example.taskmanager.task_manager.services;
 import java.util.List;
 import java.util.Optional;
 
-import com.example.taskmanager.task_manager.dtos.UserDto;
-import com.example.taskmanager.task_manager.entities.UserEntity;
+import com.example.taskmanager.task_manager.dtos.user.UserDto;
 
 public interface IUserService {
 

@@ -2,6 +2,7 @@ package com.example.taskmanager.task_manager.controllers;
 
 import com.example.taskmanager.task_manager.dtos.project.ProjectRequestDto;
 import com.example.taskmanager.task_manager.dtos.project.ProjectResponseDto;
+import com.example.taskmanager.task_manager.dtos.user.AssignUsersRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -74,11 +75,18 @@ public class ProjectController {
         return ResponseEntity.ok(response);
     }
 
-    @PreAuthorize("hasAuthority('projects:update')")
+    @PreAuthorize("hasAuthority('projects:manager')")
     @PutMapping("{projectId}/owner/{ownerId}")
-    public ResponseEntity<ProjectResponseDto> putProjectOwner(@PathVariable Long projectId,@PathVariable Long ownerId) {
-        ProjectResponseDto response = this.projectService.putOwnerProject(projectId, ownerId);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<?> putProjectOwner(@PathVariable Long projectId, @PathVariable Long ownerId) {
+        this.projectService.putOwnerProject(projectId, ownerId);
+        return ResponseEntity.ok().build();
+    }
+
+    @PreAuthorize("hasAuthority('projects:users')")
+    @PutMapping("{projectId}/users")
+    public ResponseEntity<?> putProjectUsers (@PathVariable Long projectId,@RequestBody AssignUsersRequest request) {
+        this.projectService.assignUsersToProject(projectId, request);
+        return ResponseEntity.ok().build();
     }
 
     // DELETE - 204 No Content - 404 Not Found

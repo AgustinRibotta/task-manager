@@ -1,7 +1,8 @@
-package com.example.taskmanager.task_manager.dtos;
+package com.example.taskmanager.task_manager.dtos.user;
 
 import java.util.Set;
 
+import com.example.taskmanager.task_manager.dtos.RoleDto;
 import com.example.taskmanager.task_manager.dtos.project.ProjectResponseDto;
 import com.example.taskmanager.task_manager.dtos.task.TaskResponseDto;
 import com.fasterxml.jackson.annotation.JsonProperty;

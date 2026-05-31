@@ -2,7 +2,7 @@ package com.example.taskmanager.task_manager.controllers;
 
 import com.example.taskmanager.task_manager.dtos.AuthenticationRequest;
 import com.example.taskmanager.task_manager.dtos.AuthenticationResponse;
-import com.example.taskmanager.task_manager.dtos.UserDto;
+import com.example.taskmanager.task_manager.dtos.user.UserDto;
 import com.example.taskmanager.task_manager.services.IUserService;
 import com.example.taskmanager.task_manager.services.JwtService;
 import lombok.RequiredArgsConstructor;
