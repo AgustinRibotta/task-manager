@@ -32,7 +32,7 @@ public class TaskServiceImp implements ITaskService {
     private final IProjectRepository projectRepository;
 
     @Override
-    public List<TaskResponseDto> getAll() {
+    public List<TaskResponseDto> findAll() {
 
         return this.taskRepository.findAll().stream()
                 .map(task -> {
@@ -43,7 +43,7 @@ public class TaskServiceImp implements ITaskService {
     }
 
     @Override
-    public TaskResponseDto getById(Long taskId) {
+    public TaskResponseDto findById(Long taskId) {
 
         TaskEntity taskEntity = this.taskRepository.findById(taskId)
                 .orElseThrow(() -> new ResourceNotFoundException(taskId)
@@ -53,7 +53,7 @@ public class TaskServiceImp implements ITaskService {
     }
 
     @Override
-    public TaskResponseDto post(TaskRequestDto request) {
+    public TaskResponseDto create(TaskRequestDto request) {
 
         TaskEntity saved = createTask(request, null);
 
@@ -72,18 +72,16 @@ public class TaskServiceImp implements ITaskService {
     }
 
     @Override
-    public TaskResponseDto put(TaskRequestDto request, Long id) {
+    public TaskResponseDto update(TaskRequestDto request, Long id) {
 
         TaskEntity task = taskRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id));
 
         if (request.getProjectId() != null) {
-
             boolean exists = taskRepository.existsByNameAndProject_Id(
                     request.getName(),
                     request.getProjectId()
             );
-
             if (exists && !task.getName().equals(request.getName())) {
                 throw new ResourceAlreadyExistsException(
                         "Task with name already exists in this project"
@@ -97,7 +95,6 @@ public class TaskServiceImp implements ITaskService {
         Set<UserEntity> users = new HashSet<>(
                 userRepository.findAllById(request.getUserId())
         );
-
         if (users.size() != request.getUserId().size()) {
             throw new ResourceNotFoundException(
                     "Some users not found"
@@ -107,17 +104,14 @@ public class TaskServiceImp implements ITaskService {
         task.setUsers(users);
 
         if (request.getProjectId() != null) {
-
             ProjectEntity project = projectRepository.findById(request.getProjectId())
                     .orElseThrow(() -> new ResourceNotFoundException(
                             request.getProjectId()
                     ));
-
             task.setProject(project);
         }
 
         TaskEntity saved = taskRepository.save(task);
-
         return taskMapper.taskEntityTopTaskDto(saved);
     }
 

@@ -29,7 +29,7 @@ public class ProjectServiceImp implements IProjectService {
     private final IUserRepository userRepository;
 
     @Override
-    public List<ProjectResponseDto> getAll() {
+    public List<ProjectResponseDto> findAll() {
 
         return this.projectRepository.findAll(Sort.by("id")).stream()
         .map(this.projectMapper::entityToResponse)
@@ -37,7 +37,7 @@ public class ProjectServiceImp implements IProjectService {
     }
 
     @Override
-    public ProjectResponseDto getById(Long id) {
+    public ProjectResponseDto findById(Long id) {
         ProjectEntity projectEntity = this.projectRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException(id)
             );
@@ -45,7 +45,7 @@ public class ProjectServiceImp implements IProjectService {
     }
 
     @Override
-    public ProjectResponseDto post(ProjectRequestDto request) {
+    public ProjectResponseDto create(ProjectRequestDto request) {
         if (this.projectRepository.findByName(request.getName()).isPresent()) {
             throw new ResourceAlreadyExistsException(request.getName());
         }
@@ -60,7 +60,7 @@ public class ProjectServiceImp implements IProjectService {
     }
 
     @Override
-    public ProjectResponseDto put(ProjectRequestDto request, Long id) {
+    public ProjectResponseDto update(ProjectRequestDto request, Long id) {
         this.projectRepository.findByName(request.getName())
             .filter(existing -> existing.getId() != id)
             .ifPresent(existing -> {
@@ -83,7 +83,7 @@ public class ProjectServiceImp implements IProjectService {
     }
 
     @Override
-    public void putOwnerProject(Long projectId, Long ownerId) {
+    public void changeOwner(Long projectId, Long ownerId) {
         ProjectEntity projectEntity = this.projectRepository.findById(projectId)
                 .orElseThrow(() -> new ResourceNotFoundException(projectId));
         UserEntity userEntity = this.userRepository.findById(ownerId)
@@ -105,7 +105,7 @@ public class ProjectServiceImp implements IProjectService {
     }
 
     @Override
-    public void removeUserFromProject(Long projectId, Long userId) {
+    public void removeUserFromAllProject(Long projectId, Long userId) {
 
         ProjectEntity project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new ResourceNotFoundException(projectId));
@@ -123,7 +123,7 @@ public class ProjectServiceImp implements IProjectService {
     }
 
 	@Override
-	public void deleteUserFromProjects(Long userId) {
+	public void removeUserFromAllProject(Long userId) {
         this.projectRepository.deleteUserFromProjects(userId);
     }
 

@@ -6,8 +6,6 @@ import com.example.taskmanager.task_manager.dtos.task.TaskRequestDto;
 import com.example.taskmanager.task_manager.dtos.task.TaskResponseDto;
 import com.example.taskmanager.task_manager.dtos.user.AssignUsersRequest;
 import com.example.taskmanager.task_manager.services.ITaskService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -37,33 +35,29 @@ public class ProjectController {
     private final IProjectService projectService;
     private final ITaskService taskService;
 
-    // GET - 200 OK - [] - 401 Unauthorized
     @PreAuthorize("hasAuthority('projects:read:all')")
     @GetMapping("")
     public ResponseEntity<List<ProjectResponseDto>> getAll() {
-        return ResponseEntity.ok(this.projectService.getAll());
+        return ResponseEntity.ok(this.projectService.findAll());
     }
 
-    // GET - 200 OK - [] - 401 Unauthorized
     @PreAuthorize("@securityConfigProject.isProject(#id) or hasAuthority('projects:read')")
     @GetMapping("/{id}")
     public ResponseEntity<ProjectResponseDto> getById(@PathVariable Long id) {
-        ProjectResponseDto response = this.projectService.getById(id);
+        ProjectResponseDto response = this.projectService.findById(id);
         return ResponseEntity.ok(response);
     }
 
-    // GET - 200 OK - [] - 401 Unauthorized
     @PreAuthorize("@securytiConfigUser.isUser(#id)")
     @GetMapping("/user/{id}/projects")
-    public ResponseEntity<List<ProjectResponseDto>> projectByUserId (@PathVariable Long id) {
+    public ResponseEntity<List<ProjectResponseDto>> getByUserId(@PathVariable Long id) {
         return ResponseEntity.ok(this.projectService.findByUsersId(id));
     }
 
-    // POST - 201 Created - 400 Bad Request - 409 Conflict
     @PreAuthorize("hasAuthority('projects:create')")
     @PostMapping()
-    public ResponseEntity<ProjectResponseDto> post(@Valid @RequestBody ProjectRequestDto request) {
-        ProjectResponseDto response = this.projectService.post(request);
+    public ResponseEntity<ProjectResponseDto> create(@Valid @RequestBody ProjectRequestDto request) {
+        ProjectResponseDto response = this.projectService.create(request);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
             .path("/{id}")
             .buildAndExpand(response.getId())
@@ -71,10 +65,9 @@ public class ProjectController {
         return ResponseEntity.created(location).body(response);
     }
 
-
     @PreAuthorize("hasAuthority('projects:tasks')")
     @PostMapping("/{projectId}/tasks")
-    public ResponseEntity<TaskResponseDto> postTaskProject (@PathVariable Long projectId, @Valid @RequestBody TaskRequestDto request ) {
+    public ResponseEntity<TaskResponseDto> createTaskProject(@PathVariable Long projectId, @Valid @RequestBody TaskRequestDto request ) {
 
         TaskResponseDto response = this.taskService.postTaskProject(request, projectId);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -85,36 +78,34 @@ public class ProjectController {
         return ResponseEntity.created(location).body(response);
     }
 
-    // PUT - 200 OK - 404 Not Found
     @PreAuthorize("hasAuthority('projects:update')")
     @PutMapping("{id}")
-    public ResponseEntity<ProjectResponseDto> put(@PathVariable Long id, @RequestBody ProjectRequestDto request) {
-        ProjectResponseDto response = this.projectService.put(request, id);
+    public ResponseEntity<ProjectResponseDto> update(@PathVariable Long id, @RequestBody ProjectRequestDto request) {
+        ProjectResponseDto response = this.projectService.update(request, id);
         return ResponseEntity.ok(response);
     }
 
     @PreAuthorize("hasAuthority('projects:manager')")
-    @PutMapping("{projectId}/owner/{ownerId}")
-    public ResponseEntity<?> putProjectOwner(@PathVariable Long projectId, @PathVariable Long ownerId) {
-        this.projectService.putOwnerProject(projectId, ownerId);
+    @PostMapping("{projectId}/owner/{ownerId}")
+    public ResponseEntity<?> changeOwner(@PathVariable Long projectId, @PathVariable Long ownerId) {
+        this.projectService.changeOwner(projectId, ownerId);
         return ResponseEntity.ok().build();
     }
 
     @PreAuthorize("hasAuthority('projects:users')")
-    @PutMapping("{projectId}/users")
-    public ResponseEntity<?> putProjectUsers (@PathVariable Long projectId,@RequestBody AssignUsersRequest request) {
+    @PostMapping("{projectId}/users")
+    public ResponseEntity<?> assignUsers(@PathVariable Long projectId, @RequestBody AssignUsersRequest request) {
         this.projectService.assignUsersToProject(projectId, request);
         return ResponseEntity.ok().build();
     }
 
     @PreAuthorize("hasAuthority('projects:users')")
-    @PutMapping("{projectId}/users/remove")
-    public ResponseEntity<?> removeUserFromProject (@PathVariable Long projectId,@RequestBody Long userId) {
-        this.projectService.removeUserFromProject(projectId, userId);
-        return ResponseEntity.ok().build();
+    @DeleteMapping("{projectId}/users/{userId}")
+    public ResponseEntity<?> removeUserProject(@PathVariable Long projectId, @PathVariable Long userId) {
+        this.projectService.removeUserFromAllProject(projectId, userId);
+        return ResponseEntity.noContent().build();
     }
 
-    // DELETE - 204 No Content - 404 Not Found
     @PreAuthorize("hasAuthority('projects:delete')")
     @DeleteMapping("{id}")
     public ResponseEntity<?> delete (@PathVariable Long id) {

@@ -38,7 +38,7 @@ public class UserController {
     @PreAuthorize("hasAuthority('users:read:all')")
     @GetMapping()
     public ResponseEntity<List<UserDto>> getAll() {
-        return ResponseEntity.ok(this.userService.getAll());
+        return ResponseEntity.ok(this.userService.findAll());
         
     }
 
@@ -46,7 +46,7 @@ public class UserController {
     @PreAuthorize("@securytiConfigUser.isUser(#id) or hasAuthority('users:read')")
     @GetMapping("{id}")
     public ResponseEntity<UserDto> getById(@PathVariable Long id) {
-        UserDto response = this.userService.getById(id);
+        UserDto response = this.userService.findById(id);
 
         return ResponseEntity.ok(response);
     }
@@ -54,8 +54,8 @@ public class UserController {
     // POST - 201 Create - 400 Bad Request - 409 Conflict
     @PreAuthorize("hasAuthority('users:create')")
     @PostMapping()
-    public ResponseEntity<UserDto> post(@Valid @RequestBody UserDto request) {
-        UserDto response = this.userService.post(request);
+    public ResponseEntity<UserDto> create(@Valid @RequestBody UserDto request) {
+        UserDto response = this.userService.create(request);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
             .path("/{id}")
             .buildAndExpand(response.getId())
@@ -64,11 +64,9 @@ public class UserController {
             return ResponseEntity.created(location).body(response);
     }
  
-    // PUT - 200 OK - 404 Not Found
-
     @PreAuthorize("hasAuthority('users:update')")
     @PutMapping("{id}")
-    public ResponseEntity<UserDto> put(@PathVariable Long id, @RequestBody UserDto request) {
+    public ResponseEntity<UserDto> update(@PathVariable Long id, @RequestBody UserDto request) {
         UserDto response = this.userService.put(id, request);
         return ResponseEntity.ok(response);
     }
@@ -77,7 +75,7 @@ public class UserController {
     @PreAuthorize("hasAuthority('users:delete')")
     @DeleteMapping("{id}")
     public ResponseEntity<?> delete (@PathVariable Long id){
-        this.projectService.deleteUserFromProjects(id);
+        this.projectService.removeUserFromAllProject(id);
         this.taskService.deleteUserFromTask(id);
         this.userService.delete(id);
         return ResponseEntity.noContent().build();

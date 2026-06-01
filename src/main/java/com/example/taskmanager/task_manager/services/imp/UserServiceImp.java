@@ -31,7 +31,7 @@ public class UserServiceImp implements IUserService {
     private final IRoleRepository roleRepository;
 
     @Override
-    public List<UserDto> getAll() {
+    public List<UserDto> findAll() {
         return this.userRepository.findAll(Sort.by("id")).stream()
         .map(user -> {
             UserDto dto = this.userMapper.userToUserDto(user);
@@ -43,7 +43,7 @@ public class UserServiceImp implements IUserService {
     }
 
     @Override
-    public UserDto getById(Long id) {
+    public UserDto findById(Long id) {
         
         UserEntity user = this.userRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException(id));
@@ -51,7 +51,7 @@ public class UserServiceImp implements IUserService {
     }
 
     @Override
-    public UserDto post(UserDto userDto) {
+    public UserDto create(UserDto userDto) {
         if (this.userRepository.findByUsername(userDto.getUsername()).isPresent()) {
             throw new ResourceAlreadyExistsException(userDto.getUsername());
         }
