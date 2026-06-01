@@ -17,4 +17,5 @@ public interface IProjectService {
     List<ProjectResponseDto> findByUsersId (Long userId);
     void putOwnerProject (Long projectId, Long ownerId);
     void assignUsersToProject(Long projectId, AssignUsersRequest userIds);
+    void removeUserFromProject(Long projectId, Long userId);
 }

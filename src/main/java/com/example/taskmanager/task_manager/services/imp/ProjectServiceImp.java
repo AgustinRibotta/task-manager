@@ -105,6 +105,16 @@ public class ProjectServiceImp implements IProjectService {
     }
 
     @Override
+    public void removeUserFromProject(Long projectId, Long userId) {
+
+        ProjectEntity project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new ResourceNotFoundException(projectId));
+        project.getUsers().removeIf(u -> u.getId().equals(userId));
+
+        projectRepository.save(project);
+    }
+
+    @Override
     public void delete(Long id) {
         this.projectRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException(id));

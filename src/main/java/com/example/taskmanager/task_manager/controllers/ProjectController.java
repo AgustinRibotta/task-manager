@@ -2,7 +2,10 @@ package com.example.taskmanager.task_manager.controllers;
 
 import com.example.taskmanager.task_manager.dtos.project.ProjectRequestDto;
 import com.example.taskmanager.task_manager.dtos.project.ProjectResponseDto;
+import com.example.taskmanager.task_manager.dtos.task.TaskRequestDto;
+import com.example.taskmanager.task_manager.dtos.task.TaskResponseDto;
 import com.example.taskmanager.task_manager.dtos.user.AssignUsersRequest;
+import com.example.taskmanager.task_manager.services.ITaskService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +35,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 public class ProjectController {
 
     private final IProjectService projectService;
+    private final ITaskService taskService;
 
     // GET - 200 OK - [] - 401 Unauthorized
     @PreAuthorize("hasAuthority('projects:read:all')")
@@ -67,6 +71,20 @@ public class ProjectController {
         return ResponseEntity.created(location).body(response);
     }
 
+
+    @PreAuthorize("hasAuthority('projects:tasks')")
+    @PostMapping("/{projectId}/tasks")
+    public ResponseEntity<TaskResponseDto> postTaskProject (@PathVariable Long projectId, @Valid @RequestBody TaskRequestDto request ) {
+
+        TaskResponseDto response = this.taskService.postTaskProject(request, projectId);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(response.getId())
+                .toUri();
+
+        return ResponseEntity.created(location).body(response);
+    }
+
     // PUT - 200 OK - 404 Not Found
     @PreAuthorize("hasAuthority('projects:update')")
     @PutMapping("{id}")
@@ -86,6 +104,13 @@ public class ProjectController {
     @PutMapping("{projectId}/users")
     public ResponseEntity<?> putProjectUsers (@PathVariable Long projectId,@RequestBody AssignUsersRequest request) {
         this.projectService.assignUsersToProject(projectId, request);
+        return ResponseEntity.ok().build();
+    }
+
+    @PreAuthorize("hasAuthority('projects:users')")
+    @PutMapping("{projectId}/users/remove")
+    public ResponseEntity<?> removeUserFromProject (@PathVariable Long projectId,@RequestBody Long userId) {
+        this.projectService.removeUserFromProject(projectId, userId);
         return ResponseEntity.ok().build();
     }
 

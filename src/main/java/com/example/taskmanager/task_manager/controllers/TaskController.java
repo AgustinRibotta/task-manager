@@ -68,19 +68,6 @@ public class TaskController {
         return ResponseEntity.created(location).body(response);
     }
 
-    @PreAuthorize("hasAuthority('projects:tasks')")
-    @PostMapping("/projects/{projectId}/tasks")
-    public ResponseEntity<TaskResponseDto> postTaskProject (@PathVariable Long projectId, @Valid @RequestBody TaskRequestDto request ) {
-
-        TaskResponseDto response = this.taskService.postTaskProject(request, projectId);
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(response.getId())
-                .toUri();
-
-        return ResponseEntity.created(location).body(response);
-    }
-
     // PUT - 200 OK - 404 Not Found
     @PreAuthorize("@securityConfigTask.isTask(#id) or hasAuthority('tasks:update')")
     @PutMapping("/{id}")

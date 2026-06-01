@@ -18,16 +18,18 @@ VALUES
 (13, 'tasks:create'),
 (14, 'tasks:update'),
 (15, 'tasks:delete'),
+(16, 'tasks:users'),
 
-(16, 'projects:read:all'),
-(17, 'projects:read'),
-(18, 'projects:create'),
-(19, 'projects:update'),
-(20, 'projects:delete'),
-
-(22, 'projects:users'),
+(17, 'projects:read:all'),
+(18, 'projects:read'),
+(19, 'projects:create'),
+(20, 'projects:update'),
+(21, 'projects:delete'),
+(22, 'projects:manager'),
 (23, 'projects:tasks'),
-(24, 'projects:manager');
+(24, 'projects:users');
+
+
 
 -- ROLES
 INSERT INTO role_data (id, name)
@@ -43,23 +45,25 @@ SELECT 1, id FROM permission;
 
 -- MANAGER
 INSERT INTO role_permission (role_id, permission_id)
-VALUES (2, 2),   -- users:read (self via logic)
-(2, 1),   -- users:read:all
-(2, 22),  -- projects:users
-(2, 23),  -- projects:tasks
-(2, 12),  -- tasks:read
-(2, 13),  -- tasks:create
-(2, 14),  -- tasks:update (ONLY OWN)
-(2, 15),  -- tasks:delete (ONLY OWN)
-(2, 17),  -- projects:read
-(2, 19);  -- projects:update
+VALUES (2, 2),
+(2, 12),
+(2, 13),
+(2, 14),
+(2, 15),
+(2, 16),
+(2, 18),
+(2, 20),
+(2, 23),
+(2, 24);
 
 -- USER
 INSERT INTO role_permission (role_id, permission_id)
-VALUES
-(3, 2),   -- users:read (self via logic)
-(3, 12),  -- tasks:read
-(3, 17);  -- projects:read
+VALUES(3, 2),
+(3, 13),
+(3, 14),
+(3, 15),
+(3, 18),
+(3, 23);
 
 -- CLIENT
 INSERT INTO role_permission (role_id, permission_id)
