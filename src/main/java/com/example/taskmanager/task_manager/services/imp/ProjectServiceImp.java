@@ -86,6 +86,7 @@ public class ProjectServiceImp implements IProjectService {
     public void changeOwner(Long projectId, Long ownerId) {
         ProjectEntity projectEntity = this.projectRepository.findById(projectId)
                 .orElseThrow(() -> new ResourceNotFoundException(projectId));
+
         UserEntity userEntity = this.userRepository.findById(ownerId)
                 .orElseThrow(() -> new ResourceNotFoundException(ownerId));
 
@@ -98,20 +99,20 @@ public class ProjectServiceImp implements IProjectService {
         ProjectEntity project = this.projectRepository.findById(projectId)
                 .orElseThrow();
 
-        List<UserEntity> users = userRepository.findAllById(request.getUserIds());
+        List<UserEntity> users = this.userRepository.findAllById(request.getUserIds());
 
         project.getUsers().addAll(users);
-        projectRepository.save(project);
+        this.projectRepository.save(project);
     }
 
     @Override
     public void removeUserFromAllProject(Long projectId, Long userId) {
-
-        ProjectEntity project = projectRepository.findById(projectId)
+        ProjectEntity project = this.projectRepository.findById(projectId)
                 .orElseThrow(() -> new ResourceNotFoundException(projectId));
+
         project.getUsers().removeIf(u -> u.getId().equals(userId));
 
-        projectRepository.save(project);
+        this.projectRepository.save(project);
     }
 
     @Override

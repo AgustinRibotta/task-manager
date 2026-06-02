@@ -1,14 +1,9 @@
 package com.example.taskmanager.task_manager.services.imp;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import com.example.taskmanager.task_manager.dtos.task.TaskRequestDto;
 import com.example.taskmanager.task_manager.dtos.task.TaskResponseDto;
-import org.springframework.stereotype.Service;
-
+import com.example.taskmanager.task_manager.dtos.task.TaskUpdateRequest;
+import com.example.taskmanager.task_manager.dtos.user.AssignUsersRequest;
 import com.example.taskmanager.task_manager.entities.ProjectEntity;
 import com.example.taskmanager.task_manager.entities.TaskEntity;
 import com.example.taskmanager.task_manager.entities.UserEntity;
@@ -19,8 +14,13 @@ import com.example.taskmanager.task_manager.repositories.IProjectRepository;
 import com.example.taskmanager.task_manager.repositories.ITaskRepository;
 import com.example.taskmanager.task_manager.repositories.IUserRepository;
 import com.example.taskmanager.task_manager.services.ITaskService;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -67,52 +67,19 @@ public class TaskServiceImp implements ITaskService {
                 .orElseThrow(() -> new ResourceNotFoundException(projectId));
 
         TaskEntity saved = createTask(request, project);
-
         return taskMapper.taskEntityTopTaskDto(saved);
     }
 
     @Override
-    public TaskResponseDto update(TaskRequestDto request, Long id) {
+    public TaskResponseDto update(TaskUpdateRequest request, Long id) {
 
-        TaskEntity task = taskRepository.findById(id)
+        TaskEntity entity = this.taskRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id));
 
-        if (request.getProjectId() != null) {
-            boolean exists = taskRepository.existsByNameAndProject_Id(
-                    request.getName(),
-                    request.getProjectId()
-            );
-            if (exists && !task.getName().equals(request.getName())) {
-                throw new ResourceAlreadyExistsException(
-                        "Task with name already exists in this project"
-                );
-            }
-        }
-
-        task.setName(request.getName());
-        task.setDescription(request.getDescription());
-
-        Set<UserEntity> users = new HashSet<>(
-                userRepository.findAllById(request.getUserId())
-        );
-        if (users.size() != request.getUserId().size()) {
-            throw new ResourceNotFoundException(
-                    "Some users not found"
-            );
-        }
-
-        task.setUsers(users);
-
-        if (request.getProjectId() != null) {
-            ProjectEntity project = projectRepository.findById(request.getProjectId())
-                    .orElseThrow(() -> new ResourceNotFoundException(
-                            request.getProjectId()
-                    ));
-            task.setProject(project);
-        }
-
-        TaskEntity saved = taskRepository.save(task);
-        return taskMapper.taskEntityTopTaskDto(saved);
+        entity.setName(request.getName());
+        entity.setDescription(request.getDescription());
+        this.taskRepository.save(entity);
+        return this.taskMapper.taskEntityTopTaskDto(entity);
     }
 
     @Override
@@ -165,5 +132,27 @@ public class TaskServiceImp implements ITaskService {
         task.setProject(project);
 
         return taskRepository.save(task);
+    }
+
+    @Override
+    public void assignUsersToProject(Long taskId, AssignUsersRequest request) {
+        TaskEntity task = this.taskRepository.findById(taskId)
+                .orElseThrow(() -> new ResourceNotFoundException(taskId));
+
+        List<UserEntity> users = this.userRepository.findAllById(request.getUserIds());
+
+        task.getUsers().addAll(users);
+        this.taskRepository.save(task);
+    }
+
+    @Override
+    public void removeUsersFromProject(Long taskId, Long userId) {
+        TaskEntity task = this.taskRepository.findById(taskId)
+                .orElseThrow(() -> new ResourceNotFoundException(taskId));
+        this.userRepository.existsById(userId);
+
+        task.getUsers().removeIf(user -> user.getId().equals(userId));
+
+        this.taskRepository.save(task);
     }
 }

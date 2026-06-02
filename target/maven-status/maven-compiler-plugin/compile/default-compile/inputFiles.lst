@@ -24,8 +24,10 @@
 /home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/dtos/task/TaskUserDto.java
 /home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/config/SecurityConfig.java
 /home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/mappers/task/ITaskUserDto.java
+/home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/mappers/task/ITaskUpdateMapper.java
 /home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/services/IProjectService.java
 /home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/dtos/project/ProjectRoleDto.java
+/home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/dtos/task/TaskUpdateRequest.java
 /home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/services/imp/ProjectServiceImp.java
 /home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/mappers/project/IProjectMapper.java
 /home/agustin/Project/task-manager/src/main/java/com/example/taskmanager/task_manager/mappers/task/ITaskMapper.java

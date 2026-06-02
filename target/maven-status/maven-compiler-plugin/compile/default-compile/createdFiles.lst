@@ -5,6 +5,7 @@ com/example/taskmanager/task_manager/dtos/user/UserDto.class
 com/example/taskmanager/task_manager/dtos/project/ProjectRoleDto.class
 com/example/taskmanager/task_manager/repositories/IUserRepository.class
 com/example/taskmanager/task_manager/mappers/task/ITaskMapperImpl.class
+com/example/taskmanager/task_manager/mappers/task/ITaskUpdateMapper.class
 com/example/taskmanager/task_manager/mappers/IRoleMapper.class
 com/example/taskmanager/task_manager/mappers/project/IProjectUserMapperImpl.class
 com/example/taskmanager/task_manager/controllers/AuthController.class
@@ -40,11 +41,13 @@ com/example/taskmanager/task_manager/controllers/ProjectController.class
 com/example/taskmanager/task_manager/mappers/IUserMapperImpl.class
 com/example/taskmanager/task_manager/services/ITaskService.class
 com/example/taskmanager/task_manager/controllers/UserController.class
+com/example/taskmanager/task_manager/dtos/task/TaskUpdateRequest.class
 com/example/taskmanager/task_manager/config/SecurityConfigTask.class
 com/example/taskmanager/task_manager/mappers/project/IProjectRoleMapper.class
 com/example/taskmanager/task_manager/config/SecurytiConfigUser.class
 com/example/taskmanager/task_manager/services/JwtService.class
 com/example/taskmanager/task_manager/dtos/AuthenticationRequest.class
 com/example/taskmanager/task_manager/services/IRoleService.class
+com/example/taskmanager/task_manager/mappers/task/ITaskUpdateMapperImpl.class
 com/example/taskmanager/task_manager/mappers/project/IProjectMapperImpl.class
 com/example/taskmanager/task_manager/mappers/project/IProjectUserMapper.class
