@@ -19,7 +19,7 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.web.SecurityFilterChain;
 
-import com.example.taskmanager.task_manager.services.imp.UserDetailsServiceImpl;
+//import com.example.taskmanager.task_manager.services.imp.UserDetailsServiceImpl;
 
 import javax.crypto.spec.SecretKeySpec;
 import java.util.Collections;
@@ -29,12 +29,12 @@ import java.util.stream.Collectors;
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
-    @Autowired
-    private UserDetailsServiceImpl userDetailsServiceImpl;
-
-    public SecurityConfig(UserDetailsServiceImpl userDetailsServiceImpl) {
-        this.userDetailsServiceImpl = userDetailsServiceImpl;
-    }
+//    @Autowired
+//    private UserDetailsServiceImpl userDetailsServiceImpl;
+//
+//    public SecurityConfig(UserDetailsServiceImpl userDetailsServiceImpl) {
+//        this.userDetailsServiceImpl = userDetailsServiceImpl;
+//    }
 
     @Value("${jwt.secret}")
     private String secretKey;

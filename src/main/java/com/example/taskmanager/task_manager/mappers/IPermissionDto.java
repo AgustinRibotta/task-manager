@@ -1,6 +1,6 @@
 package com.example.taskmanager.task_manager.mappers;
 
-import com.example.taskmanager.task_manager.dtos.project.PermissionDto;
+import com.example.taskmanager.task_manager.dtos.permission.PermissionDto;
 import com.example.taskmanager.task_manager.entities.PermissionEntity;
 import org.mapstruct.Mapper;
 

@@ -4,7 +4,7 @@ import com.example.taskmanager.task_manager.dtos.project.ProjectRequestDto;
 import com.example.taskmanager.task_manager.dtos.project.ProjectResponseDto;
 import com.example.taskmanager.task_manager.dtos.task.TaskRequestDto;
 import com.example.taskmanager.task_manager.dtos.task.TaskResponseDto;
-import com.example.taskmanager.task_manager.dtos.user.AssignUsersRequest;
+import com.example.taskmanager.task_manager.dtos.user.UsersAssignRequestDto;
 import com.example.taskmanager.task_manager.services.ITaskService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -94,7 +94,7 @@ public class ProjectController {
 
     @PreAuthorize("hasAuthority('projects:users')")
     @PostMapping("{projectId}/users")
-    public ResponseEntity<?> assignUsers(@PathVariable Long projectId, @RequestBody AssignUsersRequest request) {
+    public ResponseEntity<?> assignUsers(@PathVariable Long projectId, @RequestBody UsersAssignRequestDto request) {
         this.projectService.assignUsersToProject(projectId, request);
         return ResponseEntity.ok().build();
     }

@@ -1,5 +1,7 @@
 package com.example.taskmanager.task_manager.dtos.project;
 
+import com.example.taskmanager.task_manager.dtos.task.TaskSummaryDto;
+import com.example.taskmanager.task_manager.dtos.user.UserSummaryDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -21,11 +23,11 @@ public class ProjectResponseDto {
     @NotBlank(message = "Name is required")
     private String name;
 
-    private ProjectUserDto owner;
+    private UserSummaryDto owner;
 
     private String description;
 
-    private List<ProjectTaskDto> tasks;
+    private List<TaskSummaryDto> tasks;
 
-    private Set<ProjectUserDto> users;
+    private Set<UserSummaryDto> users;
 }

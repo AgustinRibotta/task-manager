@@ -5,16 +5,17 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.example.taskmanager.task_manager.dtos.user.UserRequestDto;
+import com.example.taskmanager.task_manager.dtos.user.UserResponseDto;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.taskmanager.task_manager.dtos.user.UserDto;
 import com.example.taskmanager.task_manager.entities.RoleEntity;
 import com.example.taskmanager.task_manager.entities.UserEntity;
 import com.example.taskmanager.task_manager.exceptions.ResourceAlreadyExistsException;
 import com.example.taskmanager.task_manager.exceptions.ResourceNotFoundException;
-import com.example.taskmanager.task_manager.mappers.IUserMapper;
+import com.example.taskmanager.task_manager.mappers.user.IUserMapper;
 import com.example.taskmanager.task_manager.repositories.IRoleRepository;
 import com.example.taskmanager.task_manager.repositories.IUserRepository;
 import com.example.taskmanager.task_manager.services.IUserService;
@@ -31,10 +32,10 @@ public class UserServiceImp implements IUserService {
     private final IRoleRepository roleRepository;
 
     @Override
-    public List<UserDto> findAll() {
+    public List<UserResponseDto> findAll() {
         return this.userRepository.findAll(Sort.by("id")).stream()
         .map(user -> {
-            UserDto dto = this.userMapper.userToUserDto(user);
+            UserResponseDto dto = this.userMapper.toDto(user);
             dto.setPassword(null);
             return dto;
         })
@@ -43,46 +44,38 @@ public class UserServiceImp implements IUserService {
     }
 
     @Override
-    public UserDto findById(Long id) {
+    public UserResponseDto findById(Long id) {
         
         UserEntity user = this.userRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException(id));
-        return this.userMapper.userToUserDto(user);
+        return this.userMapper.toDto(user);
     }
 
     @Override
-    public UserDto create(UserDto userDto) {
-        if (this.userRepository.findByUsername(userDto.getUsername()).isPresent()) {
-            throw new ResourceAlreadyExistsException(userDto.getUsername());
+    public UserResponseDto create(UserRequestDto request) {
+        if (this.userRepository.findByUsername(request.getUsername()).isPresent()) {
+            throw new ResourceAlreadyExistsException(request.getUsername());
         }
-
-        UserEntity user = this.userMapper.userDtoToUser(userDto);
+        UserEntity user = this.userMapper.toEntity(request);
 
         user.setPassword(this.passwordEncoder.encode(user.getPassword()));
 
-        Set<RoleEntity> roles = userDto.getRoles().stream()
-            .map( roleDto -> this.roleRepository.findById(roleDto.getId())
-                .orElseThrow(() -> new ResourceNotFoundException(roleDto.getId())))
-            .collect(Collectors.toSet());
-
-        user.setRoles(roles);
-
         user = this.userRepository.save(user);
 
-        return this.userMapper.userToUserDto(user);
+        return this.userMapper.toDto(user);
     }
 
     @Override
-    public UserDto put(Long id, UserDto userDto) {
+    public UserResponseDto put(Long id, UserResponseDto userResponseDto) {
 
         UserEntity user = this.userRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException(id));
         
-        user.setUsername(userDto.getUsername());
-        user.setEmail(userDto.getEmail());
-        user.setPassword(passwordEncoder.encode((userDto.getPassword())));
+        user.setUsername(userResponseDto.getUsername());
+        user.setEmail(userResponseDto.getEmail());
+        user.setPassword(passwordEncoder.encode((userResponseDto.getPassword())));
         
-        Set<RoleEntity> roles = userDto.getRoles().stream()
+        Set<RoleEntity> roles = userResponseDto.getRoles().stream()
             .map( roleDto -> this.roleRepository.findById(roleDto.getId())
                 .orElseThrow(() -> new ResourceNotFoundException(roleDto.getId())))
             .collect(Collectors.toSet());
@@ -100,7 +93,7 @@ public class UserServiceImp implements IUserService {
     }
 
     @Override
-    public Optional<UserDto> findByUsername(String username) {
+    public Optional<UserResponseDto> findByUsername(String username) {
         return userRepository.findByUsername(username)
                 .map(userMapper::userToUserDto);
     }

@@ -1,12 +1,10 @@
 package com.example.taskmanager.task_manager.controllers;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import com.example.taskmanager.task_manager.dtos.role.RoleRequestDto;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.example.taskmanager.task_manager.dtos.RoleDto;
 import com.example.taskmanager.task_manager.services.IRoleService;
 
 import lombok.RequiredArgsConstructor;
@@ -35,25 +33,25 @@ public class RoleController {
      // GET - 200 OK - []
     @PreAuthorize("hasAuthority('roles:read:all')")
     @GetMapping()
-    public ResponseEntity<List<RoleDto>> getAll() {
-        List<RoleDto> response = this.roleService.getAll();
+    public ResponseEntity<List<RoleRequestDto>> getAll() {
+        List<RoleRequestDto> response = this.roleService.getAll();
         return ResponseEntity.ok().body(response);
     }
 
     // GET - 200 OK - 404 Not Found
     @PreAuthorize("hasAuthority('roles:read')")
     @GetMapping("/{id}")
-    public ResponseEntity<RoleDto> getById (@PathVariable Long id) {
-        RoleDto response = this.roleService.getById(id);
+    public ResponseEntity<RoleRequestDto> getById (@PathVariable Long id) {
+        RoleRequestDto response = this.roleService.getById(id);
         return ResponseEntity.ok().body(response);
     }
 
     // POST - 201 Created - 400 Bad Request - 409 Conflict
     @PostMapping()
     @PreAuthorize("hasAuthority('roles:create')")
-    public ResponseEntity<RoleDto> post(@RequestBody RoleDto request) {
+    public ResponseEntity<RoleRequestDto> post(@RequestBody RoleRequestDto request) {
 
-        RoleDto response = this.roleService.post(request);
+        RoleRequestDto response = this.roleService.post(request);
         URI location = ServletUriComponentsBuilder
             .fromCurrentRequest()
             .path("/{id}")
@@ -66,9 +64,9 @@ public class RoleController {
     // PUT - 200 OK - 404 Not Found
     @PreAuthorize("hasAuthority('roles:update')")
     @PutMapping("/{id}")
-    public ResponseEntity<RoleDto> put(@PathVariable Long id, @RequestBody RoleDto rquest) {
+    public ResponseEntity<RoleRequestDto> put(@PathVariable Long id, @RequestBody RoleRequestDto rquest) {
     
-        RoleDto response = this.roleService.put(id, rquest);
+        RoleRequestDto response = this.roleService.put(id, rquest);
     
         return ResponseEntity.ok().body(response);
     }

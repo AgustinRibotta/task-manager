@@ -12,8 +12,8 @@ public interface ITaskMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "project", ignore = true)
-    TaskEntity tasktDtoToTaskEntity (TaskRequestDto dto);
+    TaskEntity toEntity (TaskRequestDto dto);
 
-    TaskResponseDto taskEntityTopTaskDto(TaskEntity entity);
+    TaskResponseDto toDto(TaskEntity entity);
 
 }

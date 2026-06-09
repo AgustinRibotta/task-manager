@@ -2,7 +2,7 @@ package com.example.taskmanager.task_manager.services;
 
 import com.example.taskmanager.task_manager.dtos.project.ProjectRequestDto;
 import com.example.taskmanager.task_manager.dtos.project.ProjectResponseDto;
-import com.example.taskmanager.task_manager.dtos.user.AssignUsersRequest;
+import com.example.taskmanager.task_manager.dtos.user.UsersAssignRequestDto;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ public interface IProjectService {
 
     void changeOwner(Long projectId, Long ownerId);
 
-    void assignUsersToProject(Long projectId, AssignUsersRequest userIds);
+    void assignUsersToProject(Long projectId, UsersAssignRequestDto userIds);
 
     void removeUserFromAllProject(Long projectId, Long userId);
 }

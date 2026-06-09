@@ -1,12 +1,10 @@
 package com.example.taskmanager.task_manager.mappers.task;
 
-import com.example.taskmanager.task_manager.dtos.RoleDto;
-import com.example.taskmanager.task_manager.dtos.project.PermissionDto;
-import com.example.taskmanager.task_manager.dtos.task.TaskProjectDto;
+import com.example.taskmanager.task_manager.dtos.role.RoleRequestDto;
 import com.example.taskmanager.task_manager.dtos.task.TaskRequestDto;
 import com.example.taskmanager.task_manager.dtos.task.TaskResponseDto;
-import com.example.taskmanager.task_manager.dtos.task.TaskUserDto;
-import com.example.taskmanager.task_manager.entities.PermissionEntity;
+import com.example.taskmanager.task_manager.dtos.task.TaskSummaryDto;
+import com.example.taskmanager.task_manager.dtos.user.UserSummaryDto;
 import com.example.taskmanager.task_manager.entities.ProjectEntity;
 import com.example.taskmanager.task_manager.entities.RoleEntity;
 import com.example.taskmanager.task_manager.entities.TaskEntity;
@@ -18,14 +16,14 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2026-06-02T10:39:43+0200",
+    date = "2026-06-09T22:20:16+0200",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.11 (Arch Linux)"
 )
 @Component
 public class ITaskMapperImpl implements ITaskMapper {
 
     @Override
-    public TaskEntity tasktDtoToTaskEntity(TaskRequestDto dto) {
+    public TaskEntity toEntity(TaskRequestDto dto) {
         if ( dto == null ) {
             return null;
         }
@@ -40,7 +38,7 @@ public class ITaskMapperImpl implements ITaskMapper {
     }
 
     @Override
-    public TaskResponseDto taskEntityTopTaskDto(TaskEntity entity) {
+    public TaskResponseDto toDto(TaskEntity entity) {
         if ( entity == null ) {
             return null;
         }
@@ -50,102 +48,75 @@ public class ITaskMapperImpl implements ITaskMapper {
         taskResponseDto.setId( entity.getId() );
         taskResponseDto.setName( entity.getName() );
         taskResponseDto.setDescription( entity.getDescription() );
-        taskResponseDto.setProject( projectEntityToTaskProjectDto( entity.getProject() ) );
+        taskResponseDto.setProject( projectEntityToTaskSummaryDto( entity.getProject() ) );
         taskResponseDto.setStatus( entity.getStatus() );
-        taskResponseDto.setUsers( userEntitySetToTaskUserDtoSet( entity.getUsers() ) );
+        taskResponseDto.setUsers( userEntitySetToUserSummaryDtoSet( entity.getUsers() ) );
 
         return taskResponseDto;
     }
 
-    protected TaskProjectDto projectEntityToTaskProjectDto(ProjectEntity projectEntity) {
+    protected TaskSummaryDto projectEntityToTaskSummaryDto(ProjectEntity projectEntity) {
         if ( projectEntity == null ) {
             return null;
         }
 
-        TaskProjectDto taskProjectDto = new TaskProjectDto();
+        TaskSummaryDto taskSummaryDto = new TaskSummaryDto();
 
-        taskProjectDto.setId( projectEntity.getId() );
-        taskProjectDto.setName( projectEntity.getName() );
+        taskSummaryDto.setId( projectEntity.getId() );
+        taskSummaryDto.setName( projectEntity.getName() );
 
-        return taskProjectDto;
+        return taskSummaryDto;
     }
 
-    protected PermissionDto permissionEntityToPermissionDto(PermissionEntity permissionEntity) {
-        if ( permissionEntity == null ) {
-            return null;
-        }
-
-        PermissionDto permissionDto = new PermissionDto();
-
-        permissionDto.setId( permissionEntity.getId() );
-        permissionDto.setName( permissionEntity.getName() );
-
-        return permissionDto;
-    }
-
-    protected Set<PermissionDto> permissionEntitySetToPermissionDtoSet(Set<PermissionEntity> set) {
-        if ( set == null ) {
-            return null;
-        }
-
-        Set<PermissionDto> set1 = new LinkedHashSet<PermissionDto>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
-        for ( PermissionEntity permissionEntity : set ) {
-            set1.add( permissionEntityToPermissionDto( permissionEntity ) );
-        }
-
-        return set1;
-    }
-
-    protected RoleDto roleEntityToRoleDto(RoleEntity roleEntity) {
+    protected RoleRequestDto roleEntityToRoleRequestDto(RoleEntity roleEntity) {
         if ( roleEntity == null ) {
             return null;
         }
 
-        RoleDto roleDto = new RoleDto();
+        RoleRequestDto roleRequestDto = new RoleRequestDto();
 
-        roleDto.setId( roleEntity.getId() );
-        roleDto.setName( roleEntity.getName() );
-        roleDto.setPermissions( permissionEntitySetToPermissionDtoSet( roleEntity.getPermissions() ) );
+        roleRequestDto.setId( roleEntity.getId() );
+        roleRequestDto.setName( roleEntity.getName() );
 
-        return roleDto;
+        return roleRequestDto;
     }
 
-    protected Set<RoleDto> roleEntitySetToRoleDtoSet(Set<RoleEntity> set) {
+    protected Set<RoleRequestDto> roleEntitySetToRoleRequestDtoSet(Set<RoleEntity> set) {
         if ( set == null ) {
             return null;
         }
 
-        Set<RoleDto> set1 = new LinkedHashSet<RoleDto>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
+        Set<RoleRequestDto> set1 = new LinkedHashSet<RoleRequestDto>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
         for ( RoleEntity roleEntity : set ) {
-            set1.add( roleEntityToRoleDto( roleEntity ) );
+            set1.add( roleEntityToRoleRequestDto( roleEntity ) );
         }
 
         return set1;
     }
 
-    protected TaskUserDto userEntityToTaskUserDto(UserEntity userEntity) {
+    protected UserSummaryDto userEntityToUserSummaryDto(UserEntity userEntity) {
         if ( userEntity == null ) {
             return null;
         }
 
-        TaskUserDto taskUserDto = new TaskUserDto();
+        UserSummaryDto userSummaryDto = new UserSummaryDto();
 
-        taskUserDto.setId( userEntity.getId() );
-        taskUserDto.setUsername( userEntity.getUsername() );
-        taskUserDto.setEmail( userEntity.getEmail() );
-        taskUserDto.setRoles( roleEntitySetToRoleDtoSet( userEntity.getRoles() ) );
+        userSummaryDto.setId( userEntity.getId() );
+        userSummaryDto.setUsername( userEntity.getUsername() );
+        userSummaryDto.setEmail( userEntity.getEmail() );
+        userSummaryDto.setRoles( roleEntitySetToRoleRequestDtoSet( userEntity.getRoles() ) );
 
-        return taskUserDto;
+        return userSummaryDto;
     }
 
-    protected Set<TaskUserDto> userEntitySetToTaskUserDtoSet(Set<UserEntity> set) {
+    protected Set<UserSummaryDto> userEntitySetToUserSummaryDtoSet(Set<UserEntity> set) {
         if ( set == null ) {
             return null;
         }
 
-        Set<TaskUserDto> set1 = new LinkedHashSet<TaskUserDto>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
+        Set<UserSummaryDto> set1 = new LinkedHashSet<UserSummaryDto>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
         for ( UserEntity userEntity : set ) {
-            set1.add( userEntityToTaskUserDto( userEntity ) );
+            set1.add( userEntityToUserSummaryDto( userEntity ) );
         }
 
         return set1;

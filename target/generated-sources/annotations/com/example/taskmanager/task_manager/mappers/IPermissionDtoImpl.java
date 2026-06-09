@@ -1,13 +1,13 @@
 package com.example.taskmanager.task_manager.mappers;
 
-import com.example.taskmanager.task_manager.dtos.project.PermissionDto;
+import com.example.taskmanager.task_manager.dtos.permission.PermissionDto;
 import com.example.taskmanager.task_manager.entities.PermissionEntity;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2026-06-02T10:39:43+0200",
+    date = "2026-06-09T22:20:16+0200",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.11 (Arch Linux)"
 )
 @Component

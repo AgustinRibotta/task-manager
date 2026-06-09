@@ -3,7 +3,7 @@ package com.example.taskmanager.task_manager.services.imp;
 import com.example.taskmanager.task_manager.dtos.task.TaskRequestDto;
 import com.example.taskmanager.task_manager.dtos.task.TaskResponseDto;
 import com.example.taskmanager.task_manager.dtos.task.TaskUpdateRequest;
-import com.example.taskmanager.task_manager.dtos.user.AssignUsersRequest;
+import com.example.taskmanager.task_manager.dtos.user.UsersAssignRequestDto;
 import com.example.taskmanager.task_manager.entities.ProjectEntity;
 import com.example.taskmanager.task_manager.entities.TaskEntity;
 import com.example.taskmanager.task_manager.entities.UserEntity;
@@ -36,7 +36,7 @@ public class TaskServiceImp implements ITaskService {
 
         return this.taskRepository.findAll().stream()
                 .map(task -> {
-                    TaskResponseDto dto = this.taskMapper.taskEntityTopTaskDto(task);
+                    TaskResponseDto dto = this.taskMapper.toDto(task);
                     return dto;
                 })
                 .collect(Collectors.toList());
@@ -49,7 +49,7 @@ public class TaskServiceImp implements ITaskService {
                 .orElseThrow(() -> new ResourceNotFoundException(taskId)
                 );
 
-        return this.taskMapper.taskEntityTopTaskDto(taskEntity);
+        return this.taskMapper.toDto(taskEntity);
     }
 
     @Override
@@ -57,7 +57,7 @@ public class TaskServiceImp implements ITaskService {
 
         TaskEntity saved = createTask(request, null);
 
-        return taskMapper.taskEntityTopTaskDto(saved);
+        return taskMapper.toDto(saved);
     }
 
     @Override
@@ -67,7 +67,7 @@ public class TaskServiceImp implements ITaskService {
                 .orElseThrow(() -> new ResourceNotFoundException(projectId));
 
         TaskEntity saved = createTask(request, project);
-        return taskMapper.taskEntityTopTaskDto(saved);
+        return taskMapper.toDto(saved);
     }
 
     @Override
@@ -79,7 +79,7 @@ public class TaskServiceImp implements ITaskService {
         entity.setName(request.getName());
         entity.setDescription(request.getDescription());
         this.taskRepository.save(entity);
-        return this.taskMapper.taskEntityTopTaskDto(entity);
+        return this.taskMapper.toDto(entity);
     }
 
     @Override
@@ -102,7 +102,7 @@ public class TaskServiceImp implements ITaskService {
     public List<TaskResponseDto> findByUsersId(Long id) {
         return this.taskRepository.findByUsers_Id(id)
                 .stream()
-                .map(taskMapper::taskEntityTopTaskDto)
+                .map(taskMapper::toDto)
                 .toList();
     }
 
@@ -118,7 +118,7 @@ public class TaskServiceImp implements ITaskService {
             }
         }
 
-        TaskEntity task = taskMapper.tasktDtoToTaskEntity(request);
+        TaskEntity task = taskMapper.toEntity(request);
 
         Set<UserEntity> users = new HashSet<>(
                 userRepository.findAllById(request.getUserId())
@@ -135,7 +135,7 @@ public class TaskServiceImp implements ITaskService {
     }
 
     @Override
-    public void assignUsersToProject(Long taskId, AssignUsersRequest request) {
+    public void assignUsersToProject(Long taskId, UsersAssignRequestDto request) {
         TaskEntity task = this.taskRepository.findById(taskId)
                 .orElseThrow(() -> new ResourceNotFoundException(taskId));
 

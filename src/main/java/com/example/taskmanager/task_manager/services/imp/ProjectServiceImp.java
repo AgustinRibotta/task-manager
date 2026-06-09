@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 import com.example.taskmanager.task_manager.dtos.project.ProjectRequestDto;
 import com.example.taskmanager.task_manager.dtos.project.ProjectResponseDto;
-import com.example.taskmanager.task_manager.dtos.user.AssignUsersRequest;
+import com.example.taskmanager.task_manager.dtos.user.UsersAssignRequestDto;
 import com.example.taskmanager.task_manager.entities.UserEntity;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -95,7 +95,7 @@ public class ProjectServiceImp implements IProjectService {
     }
 
     @Override
-    public void assignUsersToProject(Long projectId, AssignUsersRequest request) {
+    public void assignUsersToProject(Long projectId, UsersAssignRequestDto request) {
         ProjectEntity project = this.projectRepository.findById(projectId)
                 .orElseThrow();
 

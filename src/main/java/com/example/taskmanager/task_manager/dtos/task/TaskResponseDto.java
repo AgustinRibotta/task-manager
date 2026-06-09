@@ -2,6 +2,7 @@ package com.example.taskmanager.task_manager.dtos.task;
 
 import java.util.Set;
 
+import com.example.taskmanager.task_manager.dtos.user.UserSummaryDto;
 import com.example.taskmanager.task_manager.enums.TaskStatus;
 
 import lombok.AllArgsConstructor;
@@ -21,9 +22,9 @@ public class TaskResponseDto {
 
     private String description;
 
-    private TaskProjectDto project;
+    private TaskSummaryDto project;
 
     private TaskStatus status;
 
-    private Set<TaskUserDto> users;
+    private Set<UserSummaryDto> users;
 }

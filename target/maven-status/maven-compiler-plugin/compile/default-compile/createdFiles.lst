@@ -1,7 +1,7 @@
 com/example/taskmanager/task_manager/mappers/task/ITaskUserDto.class
 com/example/taskmanager/task_manager/repositories/ITaskRepository.class
-com/example/taskmanager/task_manager/services/IProjectService.class
 com/example/taskmanager/task_manager/dtos/user/UserDto.class
+com/example/taskmanager/task_manager/services/IProjectService.class
 com/example/taskmanager/task_manager/dtos/project/ProjectRoleDto.class
 com/example/taskmanager/task_manager/repositories/IUserRepository.class
 com/example/taskmanager/task_manager/mappers/task/ITaskMapperImpl.class

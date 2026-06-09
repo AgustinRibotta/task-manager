@@ -1,8 +1,10 @@
 package com.example.taskmanager.task_manager.services;
 
-import com.example.taskmanager.task_manager.dtos.RoleDto;
-import com.example.taskmanager.task_manager.dtos.user.UserDto;
-import com.example.taskmanager.task_manager.dtos.project.PermissionDto;
+import com.example.taskmanager.task_manager.dtos.role.RoleRequestDto;
+import com.example.taskmanager.task_manager.dtos.role.RoleResponseDto;
+import com.example.taskmanager.task_manager.dtos.role.RoleSummaryDto;
+import com.example.taskmanager.task_manager.dtos.user.UserResponseDto;
+import com.example.taskmanager.task_manager.dtos.permission.PermissionDto;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -22,11 +24,11 @@ public class JwtService {
     @Value("${jwt.expiration}")
     private long expirationTimeInMillis;
 
-    public String generateToken(UserDto userDetails) {
+    public String generateToken(UserResponseDto userDetails) {
         Claims claims = Jwts.claims().setSubject(userDetails.getUsername());
         claims.put("userId", userDetails.getId());
         claims.put("roles", userDetails.getRoles().stream()
-                                    .map(RoleDto::getName)
+                                    .map(RoleSummaryDto::getName)
                                     .collect(Collectors.toList()));
         claims.put("permissions", userDetails.getRoles().stream()
                 .flatMap(role -> role.getPermissions().stream()

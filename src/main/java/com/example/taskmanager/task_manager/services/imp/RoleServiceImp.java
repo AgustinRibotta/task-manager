@@ -3,14 +3,14 @@ package com.example.taskmanager.task_manager.services.imp;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.example.taskmanager.task_manager.dtos.role.RoleRequestDto;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.example.taskmanager.task_manager.dtos.RoleDto;
 import com.example.taskmanager.task_manager.entities.RoleEntity;
 import com.example.taskmanager.task_manager.exceptions.ResourceAlreadyExistsException;
 import com.example.taskmanager.task_manager.exceptions.ResourceNotFoundException;
-import com.example.taskmanager.task_manager.mappers.IRoleMapper;
+import com.example.taskmanager.task_manager.mappers.role.IRoleMapper;
 import com.example.taskmanager.task_manager.repositories.IRoleRepository;
 import com.example.taskmanager.task_manager.services.IRoleService;
 
@@ -24,11 +24,11 @@ public class RoleServiceImp implements IRoleService {
     private final IRoleMapper roleMapper;
     @Override
 
-    public List<RoleDto> getAll() {
+    public List<RoleRequestDto> getAll() {
 
-       List<RoleDto> dtos = this.roleRepository.findAll(Sort.by("id")).stream()
+       List<RoleRequestDto> dtos = this.roleRepository.findAll(Sort.by("id")).stream()
             .map(role -> {
-                RoleDto dto = this.roleMapper.roleEntityToRoleDto(role);
+                RoleRequestDto dto = this.roleMapper.roleEntityToRoleDto(role);
                 return dto;
             })
             .collect(Collectors.toList());
@@ -37,7 +37,7 @@ public class RoleServiceImp implements IRoleService {
     }
 
     @Override
-    public RoleDto getById(Long id) {
+    public RoleRequestDto getById(Long id) {
         
         RoleEntity roleEntity = this.roleRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException(id)
@@ -47,26 +47,26 @@ public class RoleServiceImp implements IRoleService {
     }
 
     @Override
-    public RoleDto post(RoleDto roleDto) {
-        String upperName = roleDto.getName() != null ? roleDto.getName().toUpperCase() : null;
+    public RoleRequestDto post(RoleRequestDto roleRequestDto) {
+        String upperName = roleRequestDto.getName() != null ? roleRequestDto.getName().toUpperCase() : null;
 
-        if (this.roleRepository.findByName(roleDto.getName()).isPresent()) {
-            throw new ResourceAlreadyExistsException(roleDto.getName());
+        if (this.roleRepository.findByName(roleRequestDto.getName()).isPresent()) {
+            throw new ResourceAlreadyExistsException(roleRequestDto.getName());
         }
-        roleDto.setName(upperName);
-        RoleEntity roleEntity = this.roleMapper.roleDtoToRoleEntity(roleDto);
+        roleRequestDto.setName(upperName);
+        RoleEntity roleEntity = this.roleMapper.roleDtoToRoleEntity(roleRequestDto);
         roleEntity = this.roleRepository.save(roleEntity);
 
         return this.roleMapper.roleEntityToRoleDto(roleEntity);
     }
 
     @Override
-    public RoleDto put(Long id, RoleDto roleDto) {
+    public RoleRequestDto put(Long id, RoleRequestDto roleRequestDto) {
 
         RoleEntity roleEntity = this.roleRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException(id));
 
-        roleEntity.setName(roleDto.getName().toUpperCase());
+        roleEntity.setName(roleRequestDto.getName().toUpperCase());
         this.roleRepository.save(roleEntity);
 
         return this.roleMapper.roleEntityToRoleDto(roleEntity);

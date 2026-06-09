@@ -2,7 +2,7 @@ package com.example.taskmanager.task_manager.controllers;
 
 import com.example.taskmanager.task_manager.dtos.task.TaskRequestDto;
 import com.example.taskmanager.task_manager.dtos.task.TaskUpdateRequest;
-import com.example.taskmanager.task_manager.dtos.user.AssignUsersRequest;
+import com.example.taskmanager.task_manager.dtos.user.UsersAssignRequestDto;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -79,13 +79,13 @@ public class TaskController {
     // USERS
     @PreAuthorize(" hasAuthority('tasks:update')")
     @PostMapping("{taskId}/users")
-    public ResponseEntity<?> assignUsers (@PathVariable Long taskId, @RequestBody AssignUsersRequest request){
+    public ResponseEntity<?> assignUsers (@PathVariable Long taskId, @RequestBody UsersAssignRequestDto request){
         this.taskService.assignUsersToProject(taskId, request);
         return ResponseEntity.ok().build();
     }
 
     @PreAuthorize(" hasAuthority('tasks:update')")
-    @PostMapping("{taskId}/users/{userId")
+    @PostMapping("{taskId}/users/{userId}")
     public ResponseEntity<?> removeUsers (@PathVariable Long taskId, @PathVariable Long userId){
         this.taskService.removeUsersFromProject(taskId, userId);
         return ResponseEntity.noContent().build();

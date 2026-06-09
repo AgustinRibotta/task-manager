@@ -2,11 +2,13 @@ package com.example.taskmanager.task_manager.mappers.project;
 
 import com.example.taskmanager.task_manager.dtos.project.ProjectRequestDto;
 import com.example.taskmanager.task_manager.dtos.project.ProjectResponseDto;
-import com.example.taskmanager.task_manager.dtos.project.ProjectTaskDto;
-import com.example.taskmanager.task_manager.dtos.project.ProjectUserDto;
+import com.example.taskmanager.task_manager.dtos.task.TaskSummaryDto;
+import com.example.taskmanager.task_manager.dtos.user.UserSummaryDto;
 import com.example.taskmanager.task_manager.entities.ProjectEntity;
 import com.example.taskmanager.task_manager.entities.TaskEntity;
 import com.example.taskmanager.task_manager.entities.UserEntity;
+import com.example.taskmanager.task_manager.mappers.task.ITaskSummaryMapper;
+import com.example.taskmanager.task_manager.mappers.user.IUserSummaryMapper;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -17,16 +19,16 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2026-06-02T10:39:43+0200",
+    date = "2026-06-09T22:20:16+0200",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.11 (Arch Linux)"
 )
 @Component
 public class IProjectMapperImpl implements IProjectMapper {
 
     @Autowired
-    private IProjectTaskMapper iProjectTaskMapper;
+    private ITaskSummaryMapper iTaskSummaryMapper;
     @Autowired
-    private IProjectUserMapper iProjectUserMapper;
+    private IUserSummaryMapper iUserSummaryMapper;
 
     @Override
     public ProjectEntity requestToEntity(ProjectRequestDto dto) {
@@ -50,9 +52,9 @@ public class IProjectMapperImpl implements IProjectMapper {
 
         ProjectResponseDto projectResponseDto = new ProjectResponseDto();
 
-        projectResponseDto.setTasks( taskEntityListToProjectTaskDtoList( entity.getTasks() ) );
-        projectResponseDto.setUsers( userEntitySetToProjectUserDtoSet( entity.getUsers() ) );
-        projectResponseDto.setOwner( iProjectUserMapper.toProjectTaskDto( entity.getOwner() ) );
+        projectResponseDto.setTasks( taskEntityListToTaskSummaryDtoList( entity.getTasks() ) );
+        projectResponseDto.setUsers( userEntitySetToUserSummaryDtoSet( entity.getUsers() ) );
+        projectResponseDto.setOwner( iUserSummaryMapper.toDto( entity.getOwner() ) );
         projectResponseDto.setId( entity.getId() );
         projectResponseDto.setName( entity.getName() );
         projectResponseDto.setDescription( entity.getDescription() );
@@ -60,27 +62,27 @@ public class IProjectMapperImpl implements IProjectMapper {
         return projectResponseDto;
     }
 
-    protected List<ProjectTaskDto> taskEntityListToProjectTaskDtoList(List<TaskEntity> list) {
+    protected List<TaskSummaryDto> taskEntityListToTaskSummaryDtoList(List<TaskEntity> list) {
         if ( list == null ) {
             return null;
         }
 
-        List<ProjectTaskDto> list1 = new ArrayList<ProjectTaskDto>( list.size() );
+        List<TaskSummaryDto> list1 = new ArrayList<TaskSummaryDto>( list.size() );
         for ( TaskEntity taskEntity : list ) {
-            list1.add( iProjectTaskMapper.toProjectTaskDto( taskEntity ) );
+            list1.add( iTaskSummaryMapper.toDto( taskEntity ) );
         }
 
         return list1;
     }
 
-    protected Set<ProjectUserDto> userEntitySetToProjectUserDtoSet(Set<UserEntity> set) {
+    protected Set<UserSummaryDto> userEntitySetToUserSummaryDtoSet(Set<UserEntity> set) {
         if ( set == null ) {
             return null;
         }
 
-        Set<ProjectUserDto> set1 = new LinkedHashSet<ProjectUserDto>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
+        Set<UserSummaryDto> set1 = new LinkedHashSet<UserSummaryDto>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
         for ( UserEntity userEntity : set ) {
-            set1.add( iProjectUserMapper.toProjectTaskDto( userEntity ) );
+            set1.add( iUserSummaryMapper.toDto( userEntity ) );
         }
 
         return set1;

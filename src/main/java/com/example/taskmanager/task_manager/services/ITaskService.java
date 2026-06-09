@@ -5,7 +5,7 @@ import java.util.List;
 import com.example.taskmanager.task_manager.dtos.task.TaskRequestDto;
 import com.example.taskmanager.task_manager.dtos.task.TaskResponseDto;
 import com.example.taskmanager.task_manager.dtos.task.TaskUpdateRequest;
-import com.example.taskmanager.task_manager.dtos.user.AssignUsersRequest;
+import com.example.taskmanager.task_manager.dtos.user.UsersAssignRequestDto;
 
 public interface ITaskService {
 
@@ -18,6 +18,6 @@ public interface ITaskService {
     void delete (Long taskId);
     void deleteUserFromTask(Long userId);
 
-    void assignUsersToProject(Long taskId, AssignUsersRequest request);
+    void assignUsersToProject(Long taskId, UsersAssignRequestDto request);
     void removeUsersFromProject(Long taskId, Long userId);
 }

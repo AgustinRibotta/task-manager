@@ -2,12 +2,14 @@ package com.example.taskmanager.task_manager.mappers.project;
 
 import com.example.taskmanager.task_manager.dtos.project.ProjectRequestDto;
 import com.example.taskmanager.task_manager.dtos.project.ProjectResponseDto;
+import com.example.taskmanager.task_manager.mappers.task.ITaskSummaryMapper;
+import com.example.taskmanager.task_manager.mappers.user.IUserSummaryMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import com.example.taskmanager.task_manager.entities.ProjectEntity;
 
-@Mapper(componentModel = "spring", uses = {IProjectTaskMapper.class, IProjectUserMapper.class})
+@Mapper(componentModel = "spring", uses = {ITaskSummaryMapper.class, IUserSummaryMapper.class})
 public interface IProjectMapper {
 
     @Mapping(target = "id", ignore = true)

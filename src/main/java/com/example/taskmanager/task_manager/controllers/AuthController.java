@@ -1,8 +1,8 @@
 package com.example.taskmanager.task_manager.controllers;
 
-import com.example.taskmanager.task_manager.dtos.AuthenticationRequest;
-import com.example.taskmanager.task_manager.dtos.AuthenticationResponse;
-import com.example.taskmanager.task_manager.dtos.user.UserDto;
+import com.example.taskmanager.task_manager.dtos.AuthenticationRequestDto;
+import com.example.taskmanager.task_manager.dtos.AuthenticationResponseDto;
+import com.example.taskmanager.task_manager.dtos.user.UserResponseDto;
 import com.example.taskmanager.task_manager.services.IUserService;
 import com.example.taskmanager.task_manager.services.JwtService;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +27,7 @@ public class AuthController {
 
     // POST - 200 OK - 401 Unauthorized
     @PostMapping()
-    public ResponseEntity<AuthenticationResponse> createToken(@RequestBody AuthenticationRequest request) {
+    public ResponseEntity<AuthenticationResponseDto> createToken(@RequestBody AuthenticationRequestDto request) {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
@@ -35,9 +35,9 @@ public class AuthController {
         } catch (AuthenticationException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-        UserDto user = userService.findByUsername(request.getUsername())
+        UserResponseDto user = userService.findByUsername(request.getUsername())
                 .orElseThrow();
         String jwtToken = jwtService.generateToken(user);
-        return ResponseEntity.ok(new AuthenticationResponse(jwtToken));
+        return ResponseEntity.ok(new AuthenticationResponseDto(jwtToken));
     }
 }
