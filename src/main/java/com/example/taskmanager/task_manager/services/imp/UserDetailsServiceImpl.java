@@ -10,6 +10,7 @@ import com.example.taskmanager.task_manager.entities.RoleEntity;
 import com.example.taskmanager.task_manager.entities.UserEntity;
 import com.example.taskmanager.task_manager.repositories.IUserRepository;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -22,23 +23,17 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username)
+            throws UsernameNotFoundException {
 
-        UserEntity user = this.userRepository.findByUsername(username)
-            .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-
-        List<SimpleGrantedAuthority> authorities = user.getRoles().stream()
-            .map(role -> {
-                String roleName = role.getName();
-                return roleName.startsWith("ROLE_") ? roleName : "ROLE_" + roleName;
-            })
-            .map(SimpleGrantedAuthority::new)
-            .toList();
+        UserEntity user = userRepository.findByUsername(username)
+                .orElseThrow(() ->
+                        new UsernameNotFoundException("User not found"));
 
         return new org.springframework.security.core.userdetails.User(
-            user.getUsername(),
-            user.getPassword(),
-            authorities
+                user.getUsername(),
+                user.getPassword(),
+                Collections.emptyList()
         );
     }
 }

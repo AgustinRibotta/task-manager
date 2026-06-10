@@ -1,5 +1,6 @@
 package com.example.taskmanager.task_manager.services;
 
+import com.example.taskmanager.task_manager.dtos.auht.AuthenticatedUser;
 import com.example.taskmanager.task_manager.dtos.role.RoleRequestDto;
 import com.example.taskmanager.task_manager.dtos.role.RoleResponseDto;
 import com.example.taskmanager.task_manager.dtos.role.RoleSummaryDto;
@@ -10,6 +11,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -24,14 +26,11 @@ public class JwtService {
     @Value("${jwt.expiration}")
     private long expirationTimeInMillis;
 
-    public String generateToken(UserResponseDto userDetails) {
-        Claims claims = Jwts.claims().setSubject(userDetails.getUsername());
-        claims.put("userId", userDetails.getId());
-        claims.put("roles", userDetails.getRoles().stream()
-                                    .map(RoleSummaryDto::getName)
-                                    .collect(Collectors.toList()));
-        claims.put("permissions", userDetails.getRoles().stream()
-                .flatMap(role -> role.getPermissions().stream()
+    public String generateToken(AuthenticatedUser user) {
+        Claims claims = Jwts.claims().setSubject(user.getUsername());
+        claims.put("userId", user.getId());
+        claims.put("permissions", user.getRoles().stream()
+                .flatMap(role -> role.getPermission().stream()
                         .map(PermissionDto::getName))
                         .distinct()
                         .collect(Collectors.toList())

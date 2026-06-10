@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.example.taskmanager.task_manager.dtos.auht.AuthenticatedUser;
 import com.example.taskmanager.task_manager.dtos.user.UserRequestDto;
 import com.example.taskmanager.task_manager.dtos.user.UserResponseDto;
 import org.springframework.data.domain.Sort;
@@ -66,7 +67,7 @@ public class UserServiceImp implements IUserService {
     }
 
     @Override
-    public UserResponseDto put(Long id, UserResponseDto userResponseDto) {
+    public UserResponseDto update(Long id, UserRequestDto userResponseDto) {
 
         UserEntity user = this.userRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException(id));
@@ -84,7 +85,7 @@ public class UserServiceImp implements IUserService {
 
         user = this.userRepository.save(user);
 
-        return this.userMapper.userToUserDto(user);
+        return this.userMapper.toDto(user);
     }
 
     @Override
@@ -93,9 +94,8 @@ public class UserServiceImp implements IUserService {
     }
 
     @Override
-    public Optional<UserResponseDto> findByUsername(String username) {
-        return userRepository.findByUsername(username)
-                .map(userMapper::userToUserDto);
+    public Optional<AuthenticatedUser> findByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 
 }

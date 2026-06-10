@@ -1,5 +1,6 @@
 package com.example.taskmanager.task_manager.dtos.role;
 
+import com.example.taskmanager.task_manager.dtos.permission.PermissionDto;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,6 +21,6 @@ public class RoleResponseDto {
     private String name;
 
     @NotBlank
-    private Set<Long> permissionId;
+    private Set<PermissionDto> permission;
 
 }
