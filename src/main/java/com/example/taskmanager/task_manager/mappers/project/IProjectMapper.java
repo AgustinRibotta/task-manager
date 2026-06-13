@@ -16,10 +16,10 @@ public interface IProjectMapper {
     @Mapping(target = "users", ignore = true)
     @Mapping(target = "tasks", ignore = true)
     @Mapping(target = "owner", ignore = true)
-    ProjectEntity requestToEntity(ProjectRequestDto dto);
+    ProjectEntity toEntity(ProjectRequestDto dto);
 
     @Mapping(source = "tasks" , target = "tasks")
     @Mapping(source = "users" , target = "users")
     @Mapping(source = "owner", target = "owner")
-    ProjectResponseDto entityToResponse(ProjectEntity entity);
+    ProjectResponseDto toDto(ProjectEntity entity);
 }

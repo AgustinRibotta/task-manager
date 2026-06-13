@@ -3,6 +3,7 @@ package com.example.taskmanager.task_manager.controllers;
 import java.net.URI;
 import java.util.List;
 
+import com.example.taskmanager.task_manager.dtos.user.UserRequestDto;
 import com.example.taskmanager.task_manager.dtos.user.UserResponseDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -54,7 +55,7 @@ public class UserController {
     // POST - 201 Create - 400 Bad Request - 409 Conflict
     @PreAuthorize("hasAuthority('users:create')")
     @PostMapping()
-    public ResponseEntity<UserResponseDto> create(@Valid @RequestBody UserResponseDto request) {
+    public ResponseEntity<UserResponseDto> create(@Valid @RequestBody UserRequestDto request) {
         UserResponseDto response = this.userService.create(request);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
             .path("/{id}")
@@ -66,7 +67,7 @@ public class UserController {
  
     @PreAuthorize("hasAuthority('users:update')")
     @PutMapping("{id}")
-    public ResponseEntity<UserResponseDto> update(@PathVariable Long id, @RequestBody UserResponseDto request) {
+    public ResponseEntity<UserResponseDto> update(@PathVariable Long id, @RequestBody UserRequestDto request) {
         UserResponseDto response = this.userService.update(id, request);
         return ResponseEntity.ok(response);
     }

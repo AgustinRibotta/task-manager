@@ -32,7 +32,7 @@ public class ProjectServiceImp implements IProjectService {
     public List<ProjectResponseDto> findAll() {
 
         return this.projectRepository.findAll(Sort.by("id")).stream()
-        .map(this.projectMapper::entityToResponse)
+        .map(this.projectMapper::toDto)
         .collect(Collectors.toList());
     }
 
@@ -41,7 +41,7 @@ public class ProjectServiceImp implements IProjectService {
         ProjectEntity projectEntity = this.projectRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException(id)
             );
-        return this.projectMapper.entityToResponse(projectEntity);
+        return this.projectMapper.toDto(projectEntity);
     }
 
     @Override
@@ -49,14 +49,14 @@ public class ProjectServiceImp implements IProjectService {
         if (this.projectRepository.findByName(request.getName()).isPresent()) {
             throw new ResourceAlreadyExistsException(request.getName());
         }
-        ProjectEntity projectEntity = this.projectMapper.requestToEntity(request);
+        ProjectEntity projectEntity = this.projectMapper.toEntity(request);
 
         UserEntity userEntity = this.userRepository.findById(request.getOwner())
                 .orElseThrow(() -> new ResourceNotFoundException(request.getOwner()));
 
         projectEntity.setOwner(userEntity);
         projectEntity = this.projectRepository.save(projectEntity);
-        return this.projectMapper.entityToResponse(projectEntity);
+        return this.projectMapper.toDto(projectEntity);
     }
 
     @Override
@@ -79,7 +79,7 @@ public class ProjectServiceImp implements IProjectService {
         projectEntity.setDescription(request.getDescription());
         projectEntity = this.projectRepository.save(projectEntity);
 
-        return this.projectMapper.entityToResponse(projectEntity);
+        return this.projectMapper.toDto(projectEntity);
     }
 
     @Override
@@ -133,7 +133,7 @@ public class ProjectServiceImp implements IProjectService {
 
         return this.projectRepository.findByUsers_Id(userId)
                 .stream()
-                .map(projectMapper::entityToResponse)
+                .map(projectMapper::toDto)
                 .toList();
     }
 

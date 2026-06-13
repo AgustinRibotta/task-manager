@@ -32,7 +32,6 @@ public class TaskController {
 
     private final ITaskService taskService;
 
-    // CRUD
     @PreAuthorize("hasAuthority('tasks:read:all')")
     @GetMapping()
     public ResponseEntity<List<TaskResponseDto>> getAll () {
@@ -45,11 +44,13 @@ public class TaskController {
         return ResponseEntity.ok(this.taskService.findById(id));
     }
 
+    //////////////////
     @PreAuthorize("@securytiConfigUser.isUser(#id)")
     @GetMapping("/users/{id}/tasks")
     public ResponseEntity<List<TaskResponseDto>> getByUserId(@PathVariable Long id) {
         return ResponseEntity.ok(this.taskService.findByUsersId(id));
     }
+    /////////////////
 
     @PreAuthorize("hasAuthority('tasks:create')")
     @PostMapping()
@@ -90,4 +91,19 @@ public class TaskController {
         this.taskService.removeUsersFromProject(taskId, userId);
         return ResponseEntity.noContent().build();
     }
+
+    //PROJECT
+    @PreAuthorize("hasAuthority('projects:tasks')")
+    @PostMapping("/{projectId}")
+    public ResponseEntity<TaskResponseDto> createTaskProject(@PathVariable Long projectId, @Valid @RequestBody TaskRequestDto request ) {
+
+        TaskResponseDto response = this.taskService.postTaskProject(request, projectId);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(response.getId())
+                .toUri();
+
+        return ResponseEntity.created(location).body(response);
+    }
+
 }

@@ -33,7 +33,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 public class ProjectController {
 
     private final IProjectService projectService;
-    private final ITaskService taskService;
 
     @PreAuthorize("hasAuthority('projects:read:all')")
     @GetMapping("")
@@ -41,12 +40,14 @@ public class ProjectController {
         return ResponseEntity.ok(this.projectService.findAll());
     }
 
+    ///////////////////////////
     @PreAuthorize("@securityConfigProject.isProject(#id) or hasAuthority('projects:read')")
     @GetMapping("/{id}")
     public ResponseEntity<ProjectResponseDto> getById(@PathVariable Long id) {
         ProjectResponseDto response = this.projectService.findById(id);
         return ResponseEntity.ok(response);
     }
+    ///////////////////////
 
     @PreAuthorize("@securytiConfigUser.isUser(#id)")
     @GetMapping("/user/{id}/projects")
@@ -65,24 +66,19 @@ public class ProjectController {
         return ResponseEntity.created(location).body(response);
     }
 
-    @PreAuthorize("hasAuthority('projects:tasks')")
-    @PostMapping("/{projectId}/tasks")
-    public ResponseEntity<TaskResponseDto> createTaskProject(@PathVariable Long projectId, @Valid @RequestBody TaskRequestDto request ) {
-
-        TaskResponseDto response = this.taskService.postTaskProject(request, projectId);
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(response.getId())
-                .toUri();
-
-        return ResponseEntity.created(location).body(response);
-    }
 
     @PreAuthorize("hasAuthority('projects:update')")
     @PutMapping("{id}")
     public ResponseEntity<ProjectResponseDto> update(@PathVariable Long id, @RequestBody ProjectRequestDto request) {
         ProjectResponseDto response = this.projectService.update(request, id);
         return ResponseEntity.ok(response);
+    }
+
+    @PreAuthorize("hasAuthority('projects:delete')")
+    @DeleteMapping("{id}")
+    public ResponseEntity<?> delete (@PathVariable Long id) {
+        this.projectService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 
     @PreAuthorize("hasAuthority('projects:manager')")
@@ -92,6 +88,7 @@ public class ProjectController {
         return ResponseEntity.ok().build();
     }
 
+    // USERS
     @PreAuthorize("hasAuthority('projects:users')")
     @PostMapping("{projectId}/users")
     public ResponseEntity<?> assignUsers(@PathVariable Long projectId, @RequestBody UsersAssignRequestDto request) {
@@ -103,13 +100,6 @@ public class ProjectController {
     @DeleteMapping("{projectId}/users/{userId}")
     public ResponseEntity<?> removeUserProject(@PathVariable Long projectId, @PathVariable Long userId) {
         this.projectService.removeUserFromAllProject(projectId, userId);
-        return ResponseEntity.noContent().build();
-    }
-
-    @PreAuthorize("hasAuthority('projects:delete')")
-    @DeleteMapping("{id}")
-    public ResponseEntity<?> delete (@PathVariable Long id) {
-        this.projectService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }

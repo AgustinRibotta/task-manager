@@ -1,7 +1,5 @@
 package com.example.taskmanager.task_manager.repositories;
 
-import com.example.taskmanager.task_manager.dtos.auht.AuthenticatedUser;
-import com.example.taskmanager.task_manager.entities.ProjectEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -13,7 +11,7 @@ import java.util.Optional;
 
 public interface IUserRepository extends JpaRepository<UserEntity, Long> {
 
-    Optional<AuthenticatedUser> findByUsername(String username);
+    Optional<UserEntity> findByUsername(String username);
 
     @Query("SELECT DISTINCT u FROM UserEntity u JOIN FETCH u.projects WHERE u.username = :username")
     Optional<UserEntity> findByUsernameWithProjects(@Param("username") String username);

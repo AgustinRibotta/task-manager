@@ -1,6 +1,7 @@
 package com.example.taskmanager.task_manager.controllers;
 
 import com.example.taskmanager.task_manager.dtos.role.RoleRequestDto;
+import com.example.taskmanager.task_manager.dtos.role.RoleResponseDto;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -33,25 +34,25 @@ public class RoleController {
      // GET - 200 OK - []
     @PreAuthorize("hasAuthority('roles:read:all')")
     @GetMapping()
-    public ResponseEntity<List<RoleRequestDto>> getAll() {
-        List<RoleRequestDto> response = this.roleService.getAll();
+    public ResponseEntity<List<RoleResponseDto>> getAll() {
+        List<RoleResponseDto> response = this.roleService.getAll();
         return ResponseEntity.ok().body(response);
     }
 
     // GET - 200 OK - 404 Not Found
     @PreAuthorize("hasAuthority('roles:read')")
     @GetMapping("/{id}")
-    public ResponseEntity<RoleRequestDto> getById (@PathVariable Long id) {
-        RoleRequestDto response = this.roleService.getById(id);
+    public ResponseEntity<RoleResponseDto> getById (@PathVariable Long id) {
+        RoleResponseDto response = this.roleService.getById(id);
         return ResponseEntity.ok().body(response);
     }
 
     // POST - 201 Created - 400 Bad Request - 409 Conflict
     @PostMapping()
     @PreAuthorize("hasAuthority('roles:create')")
-    public ResponseEntity<RoleRequestDto> post(@RequestBody RoleRequestDto request) {
+    public ResponseEntity<RoleResponseDto> post(@RequestBody RoleRequestDto request) {
 
-        RoleRequestDto response = this.roleService.post(request);
+        RoleResponseDto response = this.roleService.post(request);
         URI location = ServletUriComponentsBuilder
             .fromCurrentRequest()
             .path("/{id}")
@@ -64,9 +65,9 @@ public class RoleController {
     // PUT - 200 OK - 404 Not Found
     @PreAuthorize("hasAuthority('roles:update')")
     @PutMapping("/{id}")
-    public ResponseEntity<RoleRequestDto> put(@PathVariable Long id, @RequestBody RoleRequestDto rquest) {
+    public ResponseEntity<RoleResponseDto> put(@PathVariable Long id, @RequestBody RoleRequestDto request) {
     
-        RoleRequestDto response = this.roleService.put(id, rquest);
+        RoleResponseDto response = this.roleService.put(id, request);
     
         return ResponseEntity.ok().body(response);
     }

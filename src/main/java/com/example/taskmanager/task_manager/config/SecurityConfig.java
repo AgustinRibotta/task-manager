@@ -29,12 +29,6 @@ import java.util.stream.Collectors;
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
-//    @Autowired
-//    private UserDetailsServiceImpl userDetailsServiceImpl;
-//
-//    public SecurityConfig(UserDetailsServiceImpl userDetailsServiceImpl) {
-//        this.userDetailsServiceImpl = userDetailsServiceImpl;
-//    }
 
     @Value("${jwt.secret}")
     private String secretKey;
@@ -47,7 +41,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 // Public endpoints accessible without authentication
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                    .requestMatchers("/login").permitAll()
+                    .requestMatchers("/auth/login").permitAll()
                     .requestMatchers("/doc/**").permitAll()
                     .requestMatchers("/roles/**").hasAuthority("roles:read")
                     .requestMatchers("/permissions/**").hasAuthority("permissions:read")

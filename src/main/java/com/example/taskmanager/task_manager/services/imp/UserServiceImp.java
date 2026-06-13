@@ -2,17 +2,14 @@ package com.example.taskmanager.task_manager.services.imp;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.example.taskmanager.task_manager.dtos.auht.AuthenticatedUser;
 import com.example.taskmanager.task_manager.dtos.user.UserRequestDto;
 import com.example.taskmanager.task_manager.dtos.user.UserResponseDto;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.taskmanager.task_manager.entities.RoleEntity;
 import com.example.taskmanager.task_manager.entities.UserEntity;
 import com.example.taskmanager.task_manager.exceptions.ResourceAlreadyExistsException;
 import com.example.taskmanager.task_manager.exceptions.ResourceNotFoundException;
@@ -57,10 +54,10 @@ public class UserServiceImp implements IUserService {
         if (this.userRepository.findByUsername(request.getUsername()).isPresent()) {
             throw new ResourceAlreadyExistsException(request.getUsername());
         }
+
         UserEntity user = this.userMapper.toEntity(request);
 
         user.setPassword(this.passwordEncoder.encode(user.getPassword()));
-
         user = this.userRepository.save(user);
 
         return this.userMapper.toDto(user);
@@ -76,13 +73,6 @@ public class UserServiceImp implements IUserService {
         user.setEmail(userResponseDto.getEmail());
         user.setPassword(passwordEncoder.encode((userResponseDto.getPassword())));
         
-        Set<RoleEntity> roles = userResponseDto.getRoles().stream()
-            .map( roleDto -> this.roleRepository.findById(roleDto.getId())
-                .orElseThrow(() -> new ResourceNotFoundException(roleDto.getId())))
-            .collect(Collectors.toSet());
-        
-        user.setRoles(roles);
-
         user = this.userRepository.save(user);
 
         return this.userMapper.toDto(user);
@@ -94,8 +84,8 @@ public class UserServiceImp implements IUserService {
     }
 
     @Override
-    public Optional<AuthenticatedUser> findByUsername(String username) {
-        return userRepository.findByUsername(username);
+    public Optional<UserEntity> findByUsername(String username) {
+        return this.userRepository.findByUsername(username);
     }
 
 }

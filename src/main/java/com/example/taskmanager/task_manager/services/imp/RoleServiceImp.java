@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.example.taskmanager.task_manager.dtos.role.RoleRequestDto;
+import com.example.taskmanager.task_manager.dtos.role.RoleResponseDto;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -22,46 +23,40 @@ public class RoleServiceImp implements IRoleService {
     
     private final IRoleRepository roleRepository;
     private final IRoleMapper roleMapper;
+
     @Override
-
-    public List<RoleRequestDto> getAll() {
-
-       List<RoleRequestDto> dtos = this.roleRepository.findAll(Sort.by("id")).stream()
-            .map(role -> {
-                RoleRequestDto dto = this.roleMapper.roleEntityToRoleDto(role);
-                return dto;
-            })
-            .collect(Collectors.toList());
-
-        return dtos;
+    public List<RoleResponseDto> getAll() {
+        return this.roleRepository.findAll(Sort.by("id")).stream()
+                        .map(this.roleMapper::toDto)
+                        .collect(Collectors.toList());
     }
 
     @Override
-    public RoleRequestDto getById(Long id) {
+    public RoleResponseDto getById(Long id) {
         
         RoleEntity roleEntity = this.roleRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException(id)
             );
 
-        return this.roleMapper.roleEntityToRoleDto(roleEntity);
+        return this.roleMapper.toDto(roleEntity);
     }
 
     @Override
-    public RoleRequestDto post(RoleRequestDto roleRequestDto) {
+    public RoleResponseDto post(RoleRequestDto roleRequestDto) {
         String upperName = roleRequestDto.getName() != null ? roleRequestDto.getName().toUpperCase() : null;
 
         if (this.roleRepository.findByName(roleRequestDto.getName()).isPresent()) {
             throw new ResourceAlreadyExistsException(roleRequestDto.getName());
         }
         roleRequestDto.setName(upperName);
-        RoleEntity roleEntity = this.roleMapper.roleDtoToRoleEntity(roleRequestDto);
+        RoleEntity roleEntity = this.roleMapper.toEntity(roleRequestDto);
         roleEntity = this.roleRepository.save(roleEntity);
 
-        return this.roleMapper.roleEntityToRoleDto(roleEntity);
+        return this.roleMapper.toDto(roleEntity);
     }
 
     @Override
-    public RoleRequestDto put(Long id, RoleRequestDto roleRequestDto) {
+    public RoleResponseDto put(Long id, RoleRequestDto roleRequestDto) {
 
         RoleEntity roleEntity = this.roleRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException(id));
@@ -69,7 +64,7 @@ public class RoleServiceImp implements IRoleService {
         roleEntity.setName(roleRequestDto.getName().toUpperCase());
         this.roleRepository.save(roleEntity);
 
-        return this.roleMapper.roleEntityToRoleDto(roleEntity);
+        return this.roleMapper.toDto(roleEntity);
     }
 
     @Override

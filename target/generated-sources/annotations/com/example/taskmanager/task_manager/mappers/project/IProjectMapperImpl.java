@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2026-06-10T18:47:43+0200",
+    date = "2026-06-13T22:40:51+0200",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.11 (Arch Linux)"
 )
 @Component
@@ -31,7 +31,7 @@ public class IProjectMapperImpl implements IProjectMapper {
     private IUserSummaryMapper iUserSummaryMapper;
 
     @Override
-    public ProjectEntity requestToEntity(ProjectRequestDto dto) {
+    public ProjectEntity toEntity(ProjectRequestDto dto) {
         if ( dto == null ) {
             return null;
         }
@@ -45,7 +45,7 @@ public class IProjectMapperImpl implements IProjectMapper {
     }
 
     @Override
-    public ProjectResponseDto entityToResponse(ProjectEntity entity) {
+    public ProjectResponseDto toDto(ProjectEntity entity) {
         if ( entity == null ) {
             return null;
         }

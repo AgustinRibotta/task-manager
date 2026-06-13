@@ -1,6 +1,7 @@
 package com.example.taskmanager.task_manager.mappers.role;
 
 import com.example.taskmanager.task_manager.dtos.role.RoleRequestDto;
+import com.example.taskmanager.task_manager.dtos.role.RoleResponseDto;
 import com.example.taskmanager.task_manager.entities.RoleEntity;
 import org.mapstruct.Mapper;
 
@@ -9,5 +10,5 @@ public interface IRoleMapper {
 
     RoleEntity toEntity(RoleRequestDto dto);
 
-    RoleRequestDto toDto(RoleEntity entity);
+    RoleResponseDto toDto(RoleEntity entity);
 }
