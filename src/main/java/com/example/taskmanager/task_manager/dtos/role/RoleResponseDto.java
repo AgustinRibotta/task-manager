@@ -21,6 +21,6 @@ public class RoleResponseDto {
     private String name;
 
     @NotBlank
-    private Set<PermissionDto> permission;
+    private Set<PermissionDto> permissions;
 
 }

@@ -38,7 +38,6 @@ public class UserController {
     private final TaskServiceImp taskService;
 
 
-    // GET - 200 OK - []
     @Operation(summary = "Find all")
     @PreAuthorize("hasAuthority('users:read:all')")
     @GetMapping()
@@ -47,17 +46,14 @@ public class UserController {
         
     }
 
-    // GET - 200 OK - 404 Not Found
     @Operation(summary = "Find By id")
     @PreAuthorize("@securytiConfigUser.isUser(#id) or hasAuthority('users:read')")
     @GetMapping("{id}")
     public ResponseEntity<UserResponseDto> getById(@PathVariable Long id) {
         UserResponseDto response = this.userService.findById(id);
-
         return ResponseEntity.ok(response);
     }
 
-    // POST - 201 Create - 400 Bad Request - 409 Conflict
     @Operation(summary = "Create New")
     @PreAuthorize("hasAuthority('users:create')")
     @PostMapping()
@@ -79,7 +75,6 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    // DELETE - 204 No Content - 404 Not Found
     @Operation(summary = "Delete")
     @PreAuthorize("hasAuthority('users:delete')")
     @DeleteMapping("{id}")
@@ -88,6 +83,23 @@ public class UserController {
         this.taskService.deleteUserFromTask(id);
         this.userService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    // ROLES
+    @Operation(summary = "Assign Role")
+    @PreAuthorize("hasAuthority('users:create')")
+    @PostMapping("{userId}/roles")
+    public ResponseEntity<?> assignPermission (@PathVariable Long userId, @RequestBody List<Long> request){
+        this.userService.assignRoleToUser(userId, request);
+        return ResponseEntity.ok().build();
+    }
+
+    @Operation(summary = "Remove Role")
+    @PreAuthorize("hasAuthority('users:create')")
+    @DeleteMapping("{userId}/roles/{roleId}")
+    public ResponseEntity<?> removePermission (@PathVariable Long userId, @PathVariable Long roleId ){
+        this.userService.removeRoleToUser(userId, roleId);
+        return ResponseEntity.ok().build();
     }
 
 }

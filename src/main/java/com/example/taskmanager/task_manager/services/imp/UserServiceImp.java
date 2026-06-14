@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import com.example.taskmanager.task_manager.dtos.user.UserRequestDto;
 import com.example.taskmanager.task_manager.dtos.user.UserResponseDto;
+import com.example.taskmanager.task_manager.entities.RoleEntity;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -86,6 +87,26 @@ public class UserServiceImp implements IUserService {
     @Override
     public Optional<UserEntity> findByUsername(String username) {
         return this.userRepository.findByUsername(username);
+    }
+
+    @Override
+    public void assignRoleToUser(Long userId, List<Long> request) {
+        UserEntity user = this.userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException(userId));
+
+        List<RoleEntity> roles = this.roleRepository.findAllById(request);
+
+        user.getRoles().addAll(roles);
+        this.userRepository.save(user);
+    }
+
+    @Override
+    public void removeRoleToUser(Long userId, Long roleId) {
+        UserEntity user = this.userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException(userId));
+
+        user.getRoles().removeIf( r -> r.getId().equals(roleId));
+        this.userRepository.save(user);
     }
 
 }

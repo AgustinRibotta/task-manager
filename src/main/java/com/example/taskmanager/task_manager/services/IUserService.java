@@ -15,4 +15,7 @@ public interface IUserService {
     UserResponseDto update(Long id, UserRequestDto user);
     void delete (Long id);
     Optional<UserEntity> findByUsername(String username);
+
+    void assignRoleToUser(Long userId, List<Long> request);
+    void removeRoleToUser(Long userId, Long roleId);
 }

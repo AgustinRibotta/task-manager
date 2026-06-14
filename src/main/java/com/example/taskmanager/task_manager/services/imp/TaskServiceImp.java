@@ -7,6 +7,7 @@ import com.example.taskmanager.task_manager.dtos.user.UsersAssignRequestDto;
 import com.example.taskmanager.task_manager.entities.ProjectEntity;
 import com.example.taskmanager.task_manager.entities.TaskEntity;
 import com.example.taskmanager.task_manager.entities.UserEntity;
+import com.example.taskmanager.task_manager.enums.TaskStatus;
 import com.example.taskmanager.task_manager.exceptions.ResourceAlreadyExistsException;
 import com.example.taskmanager.task_manager.exceptions.ResourceNotFoundException;
 import com.example.taskmanager.task_manager.mappers.task.ITaskMapper;
@@ -135,7 +136,7 @@ public class TaskServiceImp implements ITaskService {
     }
 
     @Override
-    public void assignUsersToProject(Long taskId, UsersAssignRequestDto request) {
+    public void assignUsersToTask(Long taskId, UsersAssignRequestDto request) {
         TaskEntity task = this.taskRepository.findById(taskId)
                 .orElseThrow(() -> new ResourceNotFoundException(taskId));
 
@@ -146,7 +147,7 @@ public class TaskServiceImp implements ITaskService {
     }
 
     @Override
-    public void removeUsersFromProject(Long taskId, Long userId) {
+    public void removeUsersFromTask(Long taskId, Long userId) {
         TaskEntity task = this.taskRepository.findById(taskId)
                 .orElseThrow(() -> new ResourceNotFoundException(taskId));
         this.userRepository.existsById(userId);
@@ -154,5 +155,22 @@ public class TaskServiceImp implements ITaskService {
         task.getUsers().removeIf(user -> user.getId().equals(userId));
 
         this.taskRepository.save(task);
+    }
+
+    @Override
+    public void updateStatus(Long taskId, String status) {
+
+        TaskEntity task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new ResourceNotFoundException(taskId));
+
+        TaskStatus taskStatus;
+        try {
+            taskStatus = TaskStatus.valueOf(status.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid status: " + status);
+        }
+
+        task.setStatus(taskStatus);
+        taskRepository.save(task);
     }
 }

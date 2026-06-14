@@ -5,6 +5,7 @@ import com.example.taskmanager.task_manager.dtos.task.TaskUpdateRequest;
 import com.example.taskmanager.task_manager.dtos.user.UsersAssignRequestDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.apache.coyote.Response;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -68,6 +69,13 @@ public class TaskController {
             .toUri();
         return ResponseEntity.created(location).body(response);
     }
+    @Operation(summary = "Update status")
+    @PostMapping("/{taskId}/{status}")
+    @PreAuthorize("@securityConfigTask.isTask(#taskId) or hasAuthority('tasks:update')")
+    public ResponseEntity<?> updateStatus (@PathVariable Long taskId, @PathVariable String status){
+        this.taskService.updateStatus(taskId, status);
+        return ResponseEntity.ok().build();
+    }
 
     @Operation(summary = "Update")
     @PreAuthorize("@securityConfigTask.isTask(#id) or hasAuthority('tasks:update')")
@@ -89,15 +97,15 @@ public class TaskController {
     @PreAuthorize(" hasAuthority('tasks:update')")
     @PostMapping("{taskId}/users")
     public ResponseEntity<?> assignUsers (@PathVariable Long taskId, @RequestBody UsersAssignRequestDto request){
-        this.taskService.assignUsersToProject(taskId, request);
+        this.taskService.assignUsersToTask(taskId, request);
         return ResponseEntity.ok().build();
     }
 
     @Operation(summary = "Remove User")
     @PreAuthorize(" hasAuthority('tasks:update')")
-    @PostMapping("{taskId}/users/{userId}")
+    @DeleteMapping("{taskId}/users/{userId}")
     public ResponseEntity<?> removeUsers (@PathVariable Long taskId, @PathVariable Long userId){
-        this.taskService.removeUsersFromProject(taskId, userId);
+        this.taskService.removeUsersFromTask(taskId, userId);
         return ResponseEntity.noContent().build();
     }
 

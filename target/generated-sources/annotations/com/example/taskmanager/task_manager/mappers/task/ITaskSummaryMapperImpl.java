@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2026-06-14T15:20:17+0200",
+    date = "2026-06-14T22:01:00+0200",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.11 (Arch Linux)"
 )
 @Component
@@ -23,6 +23,7 @@ public class ITaskSummaryMapperImpl implements ITaskSummaryMapper {
 
         taskSummaryDto.setId( entity.getId() );
         taskSummaryDto.setName( entity.getName() );
+        taskSummaryDto.setStatus( entity.getStatus() );
 
         return taskSummaryDto;
     }

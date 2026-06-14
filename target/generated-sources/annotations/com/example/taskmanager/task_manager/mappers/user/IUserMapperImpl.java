@@ -1,31 +1,28 @@
 package com.example.taskmanager.task_manager.mappers.user;
 
+import com.example.taskmanager.task_manager.dtos.permission.PermissionDto;
 import com.example.taskmanager.task_manager.dtos.project.ProjectSummaryDto;
-import com.example.taskmanager.task_manager.dtos.role.RoleSummaryDto;
+import com.example.taskmanager.task_manager.dtos.role.RoleResponseDto;
 import com.example.taskmanager.task_manager.dtos.task.TaskSummaryDto;
 import com.example.taskmanager.task_manager.dtos.user.UserRequestDto;
 import com.example.taskmanager.task_manager.dtos.user.UserResponseDto;
+import com.example.taskmanager.task_manager.entities.PermissionEntity;
 import com.example.taskmanager.task_manager.entities.ProjectEntity;
 import com.example.taskmanager.task_manager.entities.RoleEntity;
 import com.example.taskmanager.task_manager.entities.TaskEntity;
 import com.example.taskmanager.task_manager.entities.UserEntity;
-import com.example.taskmanager.task_manager.mappers.role.IRoleSummaryMapper;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import javax.annotation.processing.Generated;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2026-06-14T15:20:16+0200",
+    date = "2026-06-14T22:01:00+0200",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.11 (Arch Linux)"
 )
 @Component
 public class IUserMapperImpl implements IUserMapper {
-
-    @Autowired
-    private IRoleSummaryMapper iRoleSummaryMapper;
 
     @Override
     public UserEntity toEntity(UserRequestDto dto) {
@@ -53,21 +50,61 @@ public class IUserMapperImpl implements IUserMapper {
         userResponseDto.setId( entity.getId() );
         userResponseDto.setUsername( entity.getUsername() );
         userResponseDto.setEmail( entity.getEmail() );
-        userResponseDto.setRoles( roleEntitySetToRoleSummaryDtoSet( entity.getRoles() ) );
+        userResponseDto.setRoles( roleEntitySetToRoleResponseDtoSet( entity.getRoles() ) );
         userResponseDto.setProjects( projectEntitySetToProjectSummaryDtoSet( entity.getProjects() ) );
         userResponseDto.setTasks( taskEntitySetToTaskSummaryDtoSet( entity.getTasks() ) );
 
         return userResponseDto;
     }
 
-    protected Set<RoleSummaryDto> roleEntitySetToRoleSummaryDtoSet(Set<RoleEntity> set) {
+    protected PermissionDto permissionEntityToPermissionDto(PermissionEntity permissionEntity) {
+        if ( permissionEntity == null ) {
+            return null;
+        }
+
+        PermissionDto permissionDto = new PermissionDto();
+
+        permissionDto.setId( permissionEntity.getId() );
+        permissionDto.setName( permissionEntity.getName() );
+
+        return permissionDto;
+    }
+
+    protected Set<PermissionDto> permissionEntitySetToPermissionDtoSet(Set<PermissionEntity> set) {
         if ( set == null ) {
             return null;
         }
 
-        Set<RoleSummaryDto> set1 = new LinkedHashSet<RoleSummaryDto>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
+        Set<PermissionDto> set1 = new LinkedHashSet<PermissionDto>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
+        for ( PermissionEntity permissionEntity : set ) {
+            set1.add( permissionEntityToPermissionDto( permissionEntity ) );
+        }
+
+        return set1;
+    }
+
+    protected RoleResponseDto roleEntityToRoleResponseDto(RoleEntity roleEntity) {
+        if ( roleEntity == null ) {
+            return null;
+        }
+
+        RoleResponseDto roleResponseDto = new RoleResponseDto();
+
+        roleResponseDto.setId( roleEntity.getId() );
+        roleResponseDto.setName( roleEntity.getName() );
+        roleResponseDto.setPermissions( permissionEntitySetToPermissionDtoSet( roleEntity.getPermissions() ) );
+
+        return roleResponseDto;
+    }
+
+    protected Set<RoleResponseDto> roleEntitySetToRoleResponseDtoSet(Set<RoleEntity> set) {
+        if ( set == null ) {
+            return null;
+        }
+
+        Set<RoleResponseDto> set1 = new LinkedHashSet<RoleResponseDto>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
         for ( RoleEntity roleEntity : set ) {
-            set1.add( iRoleSummaryMapper.toDto( roleEntity ) );
+            set1.add( roleEntityToRoleResponseDto( roleEntity ) );
         }
 
         return set1;
@@ -108,6 +145,7 @@ public class IUserMapperImpl implements IUserMapper {
 
         taskSummaryDto.setId( taskEntity.getId() );
         taskSummaryDto.setName( taskEntity.getName() );
+        taskSummaryDto.setStatus( taskEntity.getStatus() );
 
         return taskSummaryDto;
     }

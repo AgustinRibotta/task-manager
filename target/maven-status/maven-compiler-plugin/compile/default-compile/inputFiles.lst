@@ -6,12 +6,12 @@
 /home/agustin/Projects/task-manager/src/main/java/com/example/taskmanager/task_manager/dtos/role/RoleSummaryDto.java
 /home/agustin/Projects/task-manager/src/main/java/com/example/taskmanager/task_manager/mappers/task/ITaskUpdateMapper.java
 /home/agustin/Projects/task-manager/src/main/java/com/example/taskmanager/task_manager/exceptions/ResourceAlreadyExistsException.java
+/home/agustin/Projects/task-manager/src/main/java/com/example/taskmanager/task_manager/repositories/IPermissionRepository.java
 /home/agustin/Projects/task-manager/src/main/java/com/example/taskmanager/task_manager/controllers/AuthController.java
 /home/agustin/Projects/task-manager/src/main/java/com/example/taskmanager/task_manager/mappers/user/IUserSummaryMapper.java
 /home/agustin/Projects/task-manager/src/main/java/com/example/taskmanager/task_manager/repositories/IProjectRepository.java
 /home/agustin/Projects/task-manager/src/main/java/com/example/taskmanager/task_manager/services/imp/AuthenticationService.java
 /home/agustin/Projects/task-manager/src/main/java/com/example/taskmanager/task_manager/repositories/IUserRepository.java
-/home/agustin/Projects/task-manager/src/main/java/com/example/taskmanager/task_manager/dtos/auht/AuthenticatedUser.java
 /home/agustin/Projects/task-manager/src/main/java/com/example/taskmanager/task_manager/services/IProjectService.java
 /home/agustin/Projects/task-manager/src/main/java/com/example/taskmanager/task_manager/exceptions/ResourceNotFoundException.java
 /home/agustin/Projects/task-manager/src/main/java/com/example/taskmanager/task_manager/services/imp/ProjectServiceImp.java

@@ -54,7 +54,8 @@ VALUES (2, 2),
 (2, 18),
 (2, 20),
 (2, 23),
-(2, 24);
+(2, 24),
+(2, 1);
 
 -- USER
 INSERT INTO role_permission (role_id, permission_id)

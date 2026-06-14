@@ -5,6 +5,7 @@ import java.util.Set;
 import com.example.taskmanager.task_manager.dtos.project.ProjectSummaryDto;
 import com.example.taskmanager.task_manager.dtos.role.RoleRequestDto;
 import com.example.taskmanager.task_manager.dtos.project.ProjectResponseDto;
+import com.example.taskmanager.task_manager.dtos.role.RoleResponseDto;
 import com.example.taskmanager.task_manager.dtos.role.RoleSummaryDto;
 import com.example.taskmanager.task_manager.dtos.task.TaskResponseDto;
 
@@ -30,7 +31,7 @@ public class UserResponseDto {
 
     private String email;
 
-    private Set<RoleSummaryDto> roles;
+    private Set<RoleResponseDto> roles;
 
     private Set<ProjectSummaryDto> projects;
 
