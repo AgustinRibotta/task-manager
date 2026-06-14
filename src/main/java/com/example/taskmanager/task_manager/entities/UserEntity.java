@@ -1,5 +1,6 @@
 package com.example.taskmanager.task_manager.entities;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -15,6 +16,7 @@ import lombok.Setter;
 
 import java.util.Set;
 
+@Schema(hidden = true)
 @Entity
 @Getter
 @Setter

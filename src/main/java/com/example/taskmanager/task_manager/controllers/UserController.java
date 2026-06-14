@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.example.taskmanager.task_manager.dtos.user.UserRequestDto;
 import com.example.taskmanager.task_manager.dtos.user.UserResponseDto;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +27,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 
 
+@Tag(name = "Users")
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
@@ -36,6 +39,7 @@ public class UserController {
 
 
     // GET - 200 OK - []
+    @Operation(summary = "Find all")
     @PreAuthorize("hasAuthority('users:read:all')")
     @GetMapping()
     public ResponseEntity<List<UserResponseDto>> getAll() {
@@ -44,6 +48,7 @@ public class UserController {
     }
 
     // GET - 200 OK - 404 Not Found
+    @Operation(summary = "Find By id")
     @PreAuthorize("@securytiConfigUser.isUser(#id) or hasAuthority('users:read')")
     @GetMapping("{id}")
     public ResponseEntity<UserResponseDto> getById(@PathVariable Long id) {
@@ -53,6 +58,7 @@ public class UserController {
     }
 
     // POST - 201 Create - 400 Bad Request - 409 Conflict
+    @Operation(summary = "Create New")
     @PreAuthorize("hasAuthority('users:create')")
     @PostMapping()
     public ResponseEntity<UserResponseDto> create(@Valid @RequestBody UserRequestDto request) {
@@ -64,7 +70,8 @@ public class UserController {
         
             return ResponseEntity.created(location).body(response);
     }
- 
+
+    @Operation(summary = "Update")
     @PreAuthorize("hasAuthority('users:update')")
     @PutMapping("{id}")
     public ResponseEntity<UserResponseDto> update(@PathVariable Long id, @RequestBody UserRequestDto request) {
@@ -73,6 +80,7 @@ public class UserController {
     }
 
     // DELETE - 204 No Content - 404 Not Found
+    @Operation(summary = "Delete")
     @PreAuthorize("hasAuthority('users:delete')")
     @DeleteMapping("{id}")
     public ResponseEntity<?> delete (@PathVariable Long id){

@@ -2,6 +2,8 @@ package com.example.taskmanager.task_manager.controllers;
 
 import com.example.taskmanager.task_manager.dtos.role.RoleRequestDto;
 import com.example.taskmanager.task_manager.dtos.role.RoleResponseDto;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -23,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 
 
-
+@Tag(name = "Roles")
 @RestController
 @RequestMapping("/roles")
 @RequiredArgsConstructor
@@ -31,7 +33,7 @@ public class RoleController {
 
     final private IRoleService roleService;
 
-     // GET - 200 OK - []
+     @Operation(summary = "Find all")
     @PreAuthorize("hasAuthority('roles:read:all')")
     @GetMapping()
     public ResponseEntity<List<RoleResponseDto>> getAll() {
@@ -39,7 +41,7 @@ public class RoleController {
         return ResponseEntity.ok().body(response);
     }
 
-    // GET - 200 OK - 404 Not Found
+    @Operation(summary = "Find By id")
     @PreAuthorize("hasAuthority('roles:read')")
     @GetMapping("/{id}")
     public ResponseEntity<RoleResponseDto> getById (@PathVariable Long id) {
@@ -47,7 +49,7 @@ public class RoleController {
         return ResponseEntity.ok().body(response);
     }
 
-    // POST - 201 Created - 400 Bad Request - 409 Conflict
+    @Operation(summary = "Create New")
     @PostMapping()
     @PreAuthorize("hasAuthority('roles:create')")
     public ResponseEntity<RoleResponseDto> post(@RequestBody RoleRequestDto request) {
@@ -62,7 +64,7 @@ public class RoleController {
         return ResponseEntity.created(location).body(response) ;
     }
     
-    // PUT - 200 OK - 404 Not Found
+    @Operation(summary = "Update")
     @PreAuthorize("hasAuthority('roles:update')")
     @PutMapping("/{id}")
     public ResponseEntity<RoleResponseDto> put(@PathVariable Long id, @RequestBody RoleRequestDto request) {
@@ -72,11 +74,29 @@ public class RoleController {
         return ResponseEntity.ok().body(response);
     }
 
-    // DELETE - 204 No Content - 404 Not Found
+    @Operation(summary = "Delete")
     @PreAuthorize("hasAuthority('roles:delete')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete (@PathVariable Long id) {
         this.roleService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    // PERMISSION
+    @Operation(summary = "Assign Permission")
+    @PreAuthorize("hasAuthority('roles:create')")
+    @PostMapping("{roleId}/permission")
+    public ResponseEntity<?> assignPermission (@PathVariable Long roleId, @RequestBody List<Long> request){
+         this.roleService.assignPermissionToRole(roleId, request);
+         return ResponseEntity.ok().build();
+    }
+
+    @Operation(summary = "Remove Permission")
+    @PreAuthorize("hasAuthority('roles:create')")
+    @DeleteMapping("{roleId}/permission/{permissionId}")
+    public ResponseEntity<?> removePermission (@PathVariable Long roleId, @PathVariable Long permissionId ){
+        this.roleService.removePermissionToRole(roleId, permissionId);
+        return ResponseEntity.ok().build();
+    }
+
 }

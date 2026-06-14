@@ -9,22 +9,14 @@ import java.util.List;
 public interface IProjectService {
 
     List<ProjectResponseDto> findAll();
-
     ProjectResponseDto findById(Long id);
-
     List<ProjectResponseDto> findByUsersId(Long userId);
-
     ProjectResponseDto create(ProjectRequestDto projectDto);
-
     ProjectResponseDto update(ProjectRequestDto projectDto, Long id);
-
     void delete(Long id);
-
     void removeUserFromAllProject(Long userId);
-
     void changeOwner(Long projectId, Long ownerId);
-
+    // USER
     void assignUsersToProject(Long projectId, UsersAssignRequestDto userIds);
-
     void removeUserFromAllProject(Long projectId, Long userId);
 }

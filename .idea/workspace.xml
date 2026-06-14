@@ -5,34 +5,44 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ebc6aaab-f144-4903-9c50-57745ab66cc0" name="Changes" comment="Correction in authentication and user login, improvement in toke generation.">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/repositories/IPermissionRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/controllers/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/controllers/AuthController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/controllers/ProjectController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/controllers/ProjectController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/controllers/RoleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/controllers/RoleController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/controllers/TaskController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/controllers/TaskController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/controllers/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/dtos/auht/AuthenticatedUser.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/mappers/project/IProjectMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/mappers/project/IProjectMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/mappers/role/IRoleMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/mappers/role/IRoleMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/mappers/user/IUserSummaryMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/mappers/user/IUserSummaryMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/repositories/IUserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/repositories/IUserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/services/IUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/services/IUserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/services/JwtService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/services/JwtService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/services/imp/AuthenticationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/services/imp/AuthenticationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/services/imp/ProjectServiceImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/services/imp/ProjectServiceImp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/entities/PermissionEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/entities/PermissionEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/entities/ProjectEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/entities/ProjectEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/entities/RoleEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/entities/RoleEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/entities/TaskEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/entities/TaskEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/entities/UserEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/entities/UserEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/mappers/user/IUserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/mappers/user/IUserMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/services/IProjectService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/services/IProjectService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/services/IRoleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/services/IRoleService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/services/imp/RoleServiceImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/services/imp/RoleServiceImp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/services/imp/UserDetailsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/services/imp/UserDetailsServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/services/imp/UserServiceImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/taskmanager/task_manager/services/imp/UserServiceImp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/mappers/project/IProjectMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/mappers/project/IProjectMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/services/imp/UserDetailsServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/services/imp/UserDetailsServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/controllers/AuthController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/controllers/AuthController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/controllers/ProjectController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/controllers/ProjectController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/controllers/RoleController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/controllers/RoleController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/controllers/TaskController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/controllers/TaskController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/controllers/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/controllers/UserController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/entities/PermissionEntity.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/entities/PermissionEntity.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/entities/ProjectEntity.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/entities/ProjectEntity.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/entities/RoleEntity.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/entities/RoleEntity.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/entities/TaskEntity.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/entities/TaskEntity.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/entities/UserEntity.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/entities/UserEntity.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/mappers/user/IUserMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/mappers/user/IUserMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/mappers/user/IUserMapperImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/taskmanager/task_manager/mappers/user/IUserMapperImpl.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/generated-sources/annotations/com/example/taskmanager/task_manager/mappers/IPermissionDtoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/annotations/com/example/taskmanager/task_manager/mappers/IPermissionDtoImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/generated-sources/annotations/com/example/taskmanager/task_manager/mappers/project/IProjectMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/annotations/com/example/taskmanager/task_manager/mappers/project/IProjectMapperImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/generated-sources/annotations/com/example/taskmanager/task_manager/mappers/project/IProjectSummaryMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/annotations/com/example/taskmanager/task_manager/mappers/project/IProjectSummaryMapperImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/generated-sources/annotations/com/example/taskmanager/task_manager/mappers/role/IRoleMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/annotations/com/example/taskmanager/task_manager/mappers/role/IRoleMapperImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/generated-sources/annotations/com/example/taskmanager/task_manager/mappers/role/IRoleSummaryMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/annotations/com/example/taskmanager/task_manager/mappers/role/IRoleSummaryMapperImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/generated-sources/annotations/com/example/taskmanager/task_manager/mappers/task/ITaskMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/annotations/com/example/taskmanager/task_manager/mappers/task/ITaskMapperImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/generated-sources/annotations/com/example/taskmanager/task_manager/mappers/task/ITaskSummaryMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/annotations/com/example/taskmanager/task_manager/mappers/task/ITaskSummaryMapperImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/generated-sources/annotations/com/example/taskmanager/task_manager/mappers/task/ITaskUpdateMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/annotations/com/example/taskmanager/task_manager/mappers/task/ITaskUpdateMapperImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/generated-sources/annotations/com/example/taskmanager/task_manager/mappers/user/IUserMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/annotations/com/example/taskmanager/task_manager/mappers/user/IUserMapperImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/generated-sources/annotations/com/example/taskmanager/task_manager/mappers/user/IUserSummaryMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/annotations/com/example/taskmanager/task_manager/mappers/user/IUserSummaryMapperImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,8 +52,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -86,7 +96,7 @@
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "settings.editor.selected.configurable": "reference.settings.ide.settings.web.browsers",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>

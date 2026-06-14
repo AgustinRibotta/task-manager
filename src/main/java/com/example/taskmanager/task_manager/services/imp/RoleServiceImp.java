@@ -5,6 +5,9 @@ import java.util.stream.Collectors;
 
 import com.example.taskmanager.task_manager.dtos.role.RoleRequestDto;
 import com.example.taskmanager.task_manager.dtos.role.RoleResponseDto;
+import com.example.taskmanager.task_manager.entities.PermissionEntity;
+import com.example.taskmanager.task_manager.repositories.IPermissionRepository;
+import com.example.taskmanager.task_manager.repositories.IProjectRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +26,7 @@ public class RoleServiceImp implements IRoleService {
     
     private final IRoleRepository roleRepository;
     private final IRoleMapper roleMapper;
+    private final IPermissionRepository permissionRepository;
 
     @Override
     public List<RoleResponseDto> getAll() {
@@ -72,6 +76,26 @@ public class RoleServiceImp implements IRoleService {
         this.roleRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException(id));
         this.roleRepository.deleteById(id);
+    }
+
+    @Override
+    public void assignPermissionToRole(Long roleId, List<Long> request) {
+        RoleEntity entity = this.roleRepository.findById(roleId)
+                .orElseThrow(() -> new ResourceNotFoundException(roleId));
+
+        List<PermissionEntity> permission = this.permissionRepository.findAllById(request);
+        entity.getPermissions().addAll(permission);
+
+        this.roleRepository.save(entity);
+    }
+
+    @Override
+    public void removePermissionToRole(Long roleId, Long permissionId) {
+        RoleEntity role = this.roleRepository.findById(roleId)
+                .orElseThrow(() -> new ResourceNotFoundException(roleId));
+
+        role.getPermissions().removeIf(u -> u.getId().equals(permissionId));
+        this.roleRepository.save(role);
     }
 
 

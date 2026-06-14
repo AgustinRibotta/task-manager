@@ -6,12 +6,15 @@ import com.example.taskmanager.task_manager.entities.UserEntity;
 import com.example.taskmanager.task_manager.mappers.role.IRoleMapper;
 import com.example.taskmanager.task_manager.mappers.role.IRoleSummaryMapper;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 
 @Mapper(componentModel = "spring", uses = {IRoleSummaryMapper.class})
 public interface IUserMapper {
 
     UserEntity toEntity (UserRequestDto dto);
+
+    @Mapping(target = "password", ignore = true)
     UserResponseDto toDto (UserEntity entity);
 
 }

@@ -7,6 +7,7 @@ com/example/taskmanager/task_manager/entities/ProjectEntity.class
 com/example/taskmanager/task_manager/entities/RoleEntity.class
 com/example/taskmanager/task_manager/dtos/task/TaskRequestDto.class
 com/example/taskmanager/task_manager/controllers/RoleController.class
+com/example/taskmanager/task_manager/repositories/IPermissionRepository.class
 com/example/taskmanager/task_manager/entities/PermissionEntity.class
 com/example/taskmanager/task_manager/dtos/role/RoleRequestDto.class
 com/example/taskmanager/task_manager/entities/UserEntity.class

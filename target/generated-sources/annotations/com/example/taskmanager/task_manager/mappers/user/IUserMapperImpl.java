@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2026-06-13T22:40:51+0200",
+    date = "2026-06-14T15:20:16+0200",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.11 (Arch Linux)"
 )
 @Component
@@ -52,7 +52,6 @@ public class IUserMapperImpl implements IUserMapper {
 
         userResponseDto.setId( entity.getId() );
         userResponseDto.setUsername( entity.getUsername() );
-        userResponseDto.setPassword( entity.getPassword() );
         userResponseDto.setEmail( entity.getEmail() );
         userResponseDto.setRoles( roleEntitySetToRoleSummaryDtoSet( entity.getRoles() ) );
         userResponseDto.setProjects( projectEntitySetToProjectSummaryDtoSet( entity.getProjects() ) );
