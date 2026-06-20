@@ -3,14 +3,14 @@ package com.example.taskmanager.task_manager.services.imp;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.example.taskmanager.task_manager.dtos.project.ProjectRequestDto;
-import com.example.taskmanager.task_manager.dtos.project.ProjectResponseDto;
-import com.example.taskmanager.task_manager.dtos.user.UsersAssignRequestDto;
-import com.example.taskmanager.task_manager.entities.UserEntity;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.example.taskmanager.task_manager.dtos.project.ProjectRequestDto;
+import com.example.taskmanager.task_manager.dtos.project.ProjectResponseDto;
+import com.example.taskmanager.task_manager.dtos.user.UsersAssignRequestDto;
 import com.example.taskmanager.task_manager.entities.ProjectEntity;
+import com.example.taskmanager.task_manager.entities.UserEntity;
 import com.example.taskmanager.task_manager.exceptions.ResourceAlreadyExistsException;
 import com.example.taskmanager.task_manager.exceptions.ResourceNotFoundException;
 import com.example.taskmanager.task_manager.mappers.project.IProjectMapper;
@@ -131,7 +131,7 @@ public class ProjectServiceImp implements IProjectService {
     @Override
     public List<ProjectResponseDto> findByUsersId(Long userId) {
 
-        return this.projectRepository.findByUsers_Id(userId)
+        return this.projectRepository.findByUsers_IdOrOwner_Id(userId, userId)
                 .stream()
                 .map(projectMapper::toDto)
                 .toList();

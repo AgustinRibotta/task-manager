@@ -3,18 +3,17 @@ package com.example.taskmanager.task_manager.services.imp;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.example.taskmanager.task_manager.dtos.role.RoleRequestDto;
-import com.example.taskmanager.task_manager.dtos.role.RoleResponseDto;
-import com.example.taskmanager.task_manager.entities.PermissionEntity;
-import com.example.taskmanager.task_manager.repositories.IPermissionRepository;
-import com.example.taskmanager.task_manager.repositories.IProjectRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.example.taskmanager.task_manager.dtos.role.RoleRequestDto;
+import com.example.taskmanager.task_manager.dtos.role.RoleResponseDto;
+import com.example.taskmanager.task_manager.entities.PermissionEntity;
 import com.example.taskmanager.task_manager.entities.RoleEntity;
 import com.example.taskmanager.task_manager.exceptions.ResourceAlreadyExistsException;
 import com.example.taskmanager.task_manager.exceptions.ResourceNotFoundException;
 import com.example.taskmanager.task_manager.mappers.role.IRoleMapper;
+import com.example.taskmanager.task_manager.repositories.IPermissionRepository;
 import com.example.taskmanager.task_manager.repositories.IRoleRepository;
 import com.example.taskmanager.task_manager.services.IRoleService;
 
@@ -72,10 +71,13 @@ public class RoleServiceImp implements IRoleService {
     }
 
     @Override
-    public void delete(Long id) {
-        this.roleRepository.findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException(id));
-        this.roleRepository.deleteById(id);
+    public void delete(Long roleId) {
+        this.roleRepository.findById(roleId)
+            .orElseThrow(() -> new ResourceNotFoundException(roleId));
+
+
+        roleRepository.deleteRoleUsers(roleId);
+        roleRepository.deleteById(roleId);
     }
 
     @Override

@@ -1,5 +1,7 @@
 package com.example.taskmanager.task_manager.config;
 
+import java.util.Objects;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -17,8 +19,9 @@ public class SecurityConfigProject {
 
     @Transactional
     public boolean isProject(Long projectId) {
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        
+
         if (authentication == null || !authentication.isAuthenticated()) {
             return false;
         }
@@ -27,7 +30,13 @@ public class SecurityConfigProject {
 
         return userRepository.findByUsernameWithProjects(username)
             .map(user -> user.getProjects().stream()
-                    .anyMatch(project -> project.getId() == projectId))
+                .anyMatch(project ->
+
+                    Objects.equals(project.getOwner().getUsername(), username)
+
+                    || Objects.equals(project.getId(), projectId)
+                )
+            )
             .orElse(false);
     }
 }

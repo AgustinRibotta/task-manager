@@ -33,11 +33,14 @@
 /home/agustin/Projects/task-manager/src/main/java/com/example/taskmanager/task_manager/dtos/user/UserSummaryDto.java
 /home/agustin/Projects/task-manager/src/main/java/com/example/taskmanager/task_manager/mappers/task/ITaskSummaryMapper.java
 /home/agustin/Projects/task-manager/src/main/java/com/example/taskmanager/task_manager/entities/PermissionEntity.java
+/home/agustin/Projects/task-manager/src/main/java/com/example/taskmanager/task_manager/services/imp/PermissionServiceImpl.java
 /home/agustin/Projects/task-manager/src/main/java/com/example/taskmanager/task_manager/dtos/user/UsersAssignRequestDto.java
 /home/agustin/Projects/task-manager/src/main/java/com/example/taskmanager/task_manager/mappers/IPermissionDto.java
 /home/agustin/Projects/task-manager/src/main/java/com/example/taskmanager/task_manager/dtos/task/TaskResponseDto.java
+/home/agustin/Projects/task-manager/src/main/java/com/example/taskmanager/task_manager/services/IPermissionService.java
 /home/agustin/Projects/task-manager/src/main/java/com/example/taskmanager/task_manager/dtos/project/ProjectSummaryDto.java
 /home/agustin/Projects/task-manager/src/main/java/com/example/taskmanager/task_manager/mappers/project/IProjectMapper.java
+/home/agustin/Projects/task-manager/src/main/java/com/example/taskmanager/task_manager/controllers/PermissionController.java
 /home/agustin/Projects/task-manager/src/main/java/com/example/taskmanager/task_manager/config/CorsConfig.java
 /home/agustin/Projects/task-manager/src/main/java/com/example/taskmanager/task_manager/dtos/permission/PermissionDto.java
 /home/agustin/Projects/task-manager/src/main/java/com/example/taskmanager/task_manager/entities/ProjectEntity.java

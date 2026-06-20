@@ -1,5 +1,7 @@
 package com.example.taskmanager.task_manager.entities;
 
+import java.util.Set;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,8 +15,6 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.Set;
 
 @Schema(hidden = true)
 @Entity

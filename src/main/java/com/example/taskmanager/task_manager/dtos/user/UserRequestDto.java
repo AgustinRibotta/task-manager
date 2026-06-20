@@ -1,6 +1,6 @@
 package com.example.taskmanager.task_manager.dtos.user;
 
-import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,6 +19,7 @@ public class UserRequestDto {
     @NotNull(message = "Password is required")
     private String password;
 
+    @Email
     @NotNull(message = "Email is required")
     private String email;
 }
